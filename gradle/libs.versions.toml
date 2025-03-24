@@ -1,15 +1,17 @@
 [versions]
 agp = "8.5.2"
-kotlin = "2.1.0"
+kotlin = "2.1.10"
 android-minSdk = "24"
 android-compileSdk = "35"
 kotlinxSerializationJson = "1.8.0"
 nexus-publish = "2.0.0"
-jetbrainsKotlinJvm = "1.9.22"
+jetbrainsKotlinJvm = "2.1.10"
 testng = "7.10.2"
-okio = "3.9.1"
-okioNodefilesystem = "3.9.0"
+okio = "3.10.2"
+okioNodefilesystem = "3.10.2"
 binaryCompatibility = "0.17.0"
+spotless = "7.0.2"
+
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -25,3 +27,4 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 binaryCompatibility = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binaryCompatibility" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
