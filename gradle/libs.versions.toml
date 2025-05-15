@@ -25,4 +25,4 @@ jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 binaryCompatibility = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binaryCompatibility" }
 modulegraph-souza = { id = "dev.iurysouza.modulegraph", version.ref = "moduleGraphSouza" }
-vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.31.0" }
+vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.32.0" }
