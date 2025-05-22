@@ -7,6 +7,7 @@ import sk.ai.net.nn.Flatten
 import sk.ai.net.nn.Input
 import sk.ai.net.nn.Linear
 import sk.ai.net.nn.Conv2d
+import sk.ai.net.nn.MaxPool2d
 import sk.ai.net.nn.Module
 import sk.ai.net.nn.topology.MLP
 
@@ -31,6 +32,8 @@ interface NeuralNetworkDsl : NetworkDslItem {
 
     fun conv2d(id: String = "", content: CONV2D.() -> Unit = {})
 
+    fun maxPool2d(id: String = "", content: MAXPOOL2D.() -> Unit = {})
+
     fun dense(outputDimension: Int, id: String = "", content: DENSE.() -> Unit = {})
 }
 
@@ -53,6 +56,12 @@ interface CONV2D : NetworkDslItem {
     var kernelSize: Int
     var stride: Int
     var padding: Int
+}
+
+@NetworkDsl
+interface MAXPOOL2D : NetworkDslItem {
+    var kernelSize: Int
+    var stride: Int
 }
 
 
@@ -157,6 +166,18 @@ class Conv2dImpl(
     )
 }
 
+class MaxPool2dImpl(
+    override var kernelSize: Int = 2,
+    override var stride: Int = 2,
+    private val id: String
+) : MAXPOOL2D {
+    fun create(): Module = MaxPool2d(
+        kernelSize = kernelSize,
+        stride = stride,
+        name = id
+    )
+}
+
 private class NeuralNetworkDslImpl : NeuralNetworkDsl {
 
     val modules = mutableListOf<Module>()
@@ -183,6 +204,14 @@ private class NeuralNetworkDslImpl : NeuralNetworkDsl {
         )
         impl.content()
         lastDimension = impl.outChannels
+        modules += impl.create()
+    }
+
+    override fun maxPool2d(id: String, content: MAXPOOL2D.() -> Unit) {
+        val impl = MaxPool2dImpl(
+            id = getDefaultName(id, "maxPool2d", modules.size)
+        )
+        impl.content()
         modules += impl.create()
     }
 
