@@ -6,6 +6,7 @@ import sk.ai.net.Tensor
 import sk.ai.net.nn.Flatten
 import sk.ai.net.nn.Input
 import sk.ai.net.nn.Linear
+import sk.ai.net.nn.Conv2d
 import sk.ai.net.nn.Module
 import sk.ai.net.nn.topology.MLP
 
@@ -28,6 +29,8 @@ interface NeuralNetworkDsl : NetworkDslItem {
 
     fun flatten(id: String = "", content: FLATTEN.() -> Unit = {})
 
+    fun conv2d(id: String = "", content: CONV2D.() -> Unit = {})
+
     fun dense(outputDimension: Int, id: String = "", content: DENSE.() -> Unit = {})
 }
 
@@ -42,6 +45,14 @@ interface DENSE : NetworkDslItem {
 interface FLATTEN : NetworkDslItem {
     var startDim: Int
     var endDim: Int
+}
+
+@NetworkDsl
+interface CONV2D : NetworkDslItem {
+    var outChannels: Int
+    var kernelSize: Int
+    var stride: Int
+    var padding: Int
 }
 
 
@@ -128,6 +139,24 @@ class DenseImpl(
     }
 }
 
+class Conv2dImpl(
+    private val inChannels: Int,
+    override var outChannels: Int = 1,
+    override var kernelSize: Int = 3,
+    override var stride: Int = 1,
+    override var padding: Int = 0,
+    private val id: String
+) : CONV2D {
+    fun create(): Module = Conv2d(
+        inChannels = inChannels,
+        outChannels = outChannels,
+        kernelSize = kernelSize,
+        stride = stride,
+        padding = padding,
+        name = id
+    )
+}
+
 private class NeuralNetworkDslImpl : NeuralNetworkDsl {
 
     val modules = mutableListOf<Module>()
@@ -144,6 +173,16 @@ private class NeuralNetworkDslImpl : NeuralNetworkDsl {
             id = getDefaultName(id, "flatten", modules.size)
         )
         impl.content()
+        modules += impl.create()
+    }
+
+    override fun conv2d(id: String, content: CONV2D.() -> Unit) {
+        val impl = Conv2dImpl(
+            inChannels = lastDimension,
+            id = getDefaultName(id, "conv2d", modules.size)
+        )
+        impl.content()
+        lastDimension = impl.outChannels
         modules += impl.create()
     }
 

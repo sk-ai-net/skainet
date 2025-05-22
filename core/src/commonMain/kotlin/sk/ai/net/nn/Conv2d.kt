@@ -13,12 +13,12 @@ class Conv2d(
     val kernelSize: Int,
     val stride: Int = 1,
     val padding: Int = 0,
-    useBias: Boolean = true
+    useBias: Boolean = true,
+    name: String = "Conv2d"
 ) : Module() {
+    override val name: String = name
     val weight: Tensor
     val bias: Tensor?
-    override val name: String
-        get() = "Conv2d"
     override val modules: List<Module>
         get() = emptyList()
 
