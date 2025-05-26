@@ -1,4 +1,4 @@
-name: Build Feature Branch Apk
+name: Build and test project
 
 on: [ push, pull_request ]
 

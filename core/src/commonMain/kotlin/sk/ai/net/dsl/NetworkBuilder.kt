@@ -3,6 +3,7 @@ package sk.ai.net.dsl
 import sk.ai.net.nn.activations.ActivationsWrapperModule
 import sk.ai.net.Shape
 import sk.ai.net.Tensor
+import sk.ai.net.nn.Dropout
 import sk.ai.net.nn.Flatten
 import sk.ai.net.nn.Input
 import sk.ai.net.nn.Linear
@@ -34,6 +35,8 @@ interface NeuralNetworkDsl : NetworkDslItem {
 
     fun maxPool2d(id: String = "", content: MAXPOOL2D.() -> Unit = {})
 
+    fun dropout(id: String = "", content: DROPOUT.() -> Unit = {})
+
     fun dense(outputDimension: Int, id: String = "", content: DENSE.() -> Unit = {})
 }
 
@@ -62,6 +65,12 @@ interface CONV2D : NetworkDslItem {
 interface MAXPOOL2D : NetworkDslItem {
     var kernelSize: Int
     var stride: Int
+}
+
+@NetworkDsl
+interface DROPOUT : NetworkDslItem {
+    var p: Double
+    var inplace: Boolean
 }
 
 
@@ -178,6 +187,18 @@ class MaxPool2dImpl(
     )
 }
 
+class DropoutImpl(
+    override var p: Double = 0.5,
+    override var inplace: Boolean = false,
+    private val id: String
+) : DROPOUT {
+    fun create(): Module = Dropout(
+        p = p,
+        inplace = inplace,
+        name = id
+    )
+}
+
 private class NeuralNetworkDslImpl : NeuralNetworkDsl {
 
     val modules = mutableListOf<Module>()
@@ -210,6 +231,14 @@ private class NeuralNetworkDslImpl : NeuralNetworkDsl {
     override fun maxPool2d(id: String, content: MAXPOOL2D.() -> Unit) {
         val impl = MaxPool2dImpl(
             id = getDefaultName(id, "maxPool2d", modules.size)
+        )
+        impl.content()
+        modules += impl.create()
+    }
+
+    override fun dropout(id: String, content: DROPOUT.() -> Unit) {
+        val impl = DropoutImpl(
+            id = getDefaultName(id, "dropout", modules.size)
         )
         impl.content()
         modules += impl.create()
