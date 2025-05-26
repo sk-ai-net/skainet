@@ -1,6 +1,5 @@
 package sk.ai.net
 
-import sk.ai.net.Shape
 import sk.ai.net.impl.DoublesTensor
 import sk.ai.net.impl.createTensor
 import sk.ai.net.impl.zipMap

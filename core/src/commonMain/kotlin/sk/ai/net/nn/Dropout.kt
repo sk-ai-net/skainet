@@ -1,6 +1,5 @@
 package sk.ai.net.nn
 
-import sk.ai.net.Shape
 import sk.ai.net.Tensor
 import sk.ai.net.impl.DoublesTensor
 import kotlin.random.Random

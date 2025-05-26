@@ -5,13 +5,9 @@ import sk.ai.net.Shape
 import sk.ai.net.Tensor
 import sk.ai.net.core.Slice
 import sk.ai.net.core.TypedTensor
-import sk.ai.net.core.end
-import sk.ai.net.core.start
 import kotlin.collections.map
 import kotlin.math.exp
 import kotlin.math.pow
-import kotlin.random.Random
-import kotlin.text.toInt
 
 data class DoublesTensor(override val shape: Shape, val elements: DoubleArray) : TypedTensor<Double> {
     constructor(shape: Shape, element: Double = 0.0) : this(
