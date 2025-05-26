@@ -5,9 +5,10 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.dokka)
+    //alias(libs.plugins.dokka)
 
-    alias(libs.plugins.vanniktech.mavenPublish)
+    // Commenting out for now as it's causing issues with the build
+     alias(libs.plugins.vanniktech.mavenPublish)
 }
 
 kotlin {

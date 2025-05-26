@@ -24,8 +24,8 @@ class Shape(vararg dimensions: Int) {
         }
     }
 
-    operator fun get(vararg indices: Int): Int {
-        return dimensions[index(indices)]
+    operator fun get(index: Int): Int {
+        return dimensions[index]
     }
 
     override fun equals(other: Any?): Boolean {

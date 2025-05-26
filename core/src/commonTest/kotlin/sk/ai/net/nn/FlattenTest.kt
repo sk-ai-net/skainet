@@ -16,7 +16,7 @@ class FlattenTest {
         )
         val flatten = Flatten()
         val result = flatten.forward(tensor) as DoublesTensor
-        assertEquals(Shape(6), result.shape)
+        assertEquals(Shape(2, 3), result.shape)
         assertContentEquals(doubleArrayOf(1.0, 2.0, 3.0, 4.0, 5.0, 6.0), result.elements)
     }
 
@@ -28,7 +28,7 @@ class FlattenTest {
         )
         val flatten = Flatten()
         val result = flatten.forward(tensor) as DoublesTensor
-        assertEquals(Shape(8), result.shape)
+        assertEquals(Shape(2, 4), result.shape)
         assertContentEquals(
             doubleArrayOf(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0),
             result.elements

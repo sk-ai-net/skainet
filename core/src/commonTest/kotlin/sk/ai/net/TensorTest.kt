@@ -66,7 +66,7 @@ class TensorTest {
         val matrix1 = createTensor(Shape(3, 2), doubleArrayOf(1.0, 2.0, 3.0, 4.0, 5.0, 6.0))
         val matrix2 = createTensor(Shape(3, 2), doubleArrayOf(7.0, 8.0, 9.0, 10.0, 11.0, 12.0))
         val exception = assertFailsWith<IllegalArgumentException> { matrix1.matmul(matrix2) }
-        assertEquals("Shapes do not align.", exception.message)
+        assertEquals("Incompatible shapes for matrix-matrix multiplication: first matrix shape Shape: Dimensions = [3 x 2], Size (Volume) = 6 and second matrix shape Shape: Dimensions = [3 x 2], Size (Volume) = 6. Inner dimensions must match: 2 != 3", exception.message)
     }
 
     @Test

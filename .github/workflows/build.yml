@@ -30,3 +30,39 @@ jobs:
 
       - name: Build
         run: ./gradlew --stacktrace clean assemble
+
+      - name: Run Tests
+        run: ./gradlew --stacktrace test
+
+      - name: Display Test Results
+        if: always()
+        run: |
+          echo "Test Results Summary:"
+          find . -type f -path "*/build/test-results/*/TEST-*.xml" | while read file; do
+            echo "File: $file"
+            # Extract test class name
+            class_name=$(grep 'testcase classname=' "$file" | head -1 | sed 's/.*classname="\([^"]*\)".*/\1/')
+            echo "Class: $class_name"
+
+            # Count total, failures, and errors
+            total=$(grep -c '<testcase' "$file" || echo 0)
+            failures=$(grep -c '<failure' "$file" || echo 0)
+            errors=$(grep -c '<error' "$file" || echo 0)
+            echo "Total: $total, Failures: $failures, Errors: $errors"
+
+            # Print details of failures and errors
+            if [ $failures -gt 0 ] || [ $errors -gt 0 ]; then
+              echo "Failed Tests:"
+              grep -A 3 '<failure\|<error' "$file" | grep -v '^--$'
+            fi
+            echo "----------------------------------------"
+          done
+
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: |
+            */build/reports/tests/
+            */build/test-results/

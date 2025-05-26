@@ -72,34 +72,126 @@ data class DoublesTensor(override val shape: Shape, val elements: DoubleArray) :
     }
 
 
+    /**
+     * Checks if two shapes can be broadcast together according to standard broadcasting rules.
+     * 
+     * Broadcasting rules:
+     * 1. If the two arrays have different numbers of dimensions, the shape of the array with fewer dimensions
+     *    is padded with ones on the left.
+     * 2. If the shape of the two arrays does not match in any dimension, the array with shape equal to 1
+     *    in that dimension is stretched to match the other shape.
+     * 3. If in any dimension the sizes disagree and neither is equal to 1, an error is raised.
+     * 
+     * @param shape1 First shape
+     * @param shape2 Second shape
+     * @return The resulting broadcast shape if compatible, null otherwise
+     */
+    private fun canBroadcast(shape1: IntArray, shape2: IntArray): IntArray? {
+        val resultDims = IntArray(maxOf(shape1.size, shape2.size))
+
+        // Pad the shorter shape with ones on the left
+        val paddedShape1 = IntArray(resultDims.size) { 1 }
+        val paddedShape2 = IntArray(resultDims.size) { 1 }
+
+        for (i in shape1.indices) {
+            paddedShape1[paddedShape1.size - shape1.size + i] = shape1[i]
+        }
+
+        for (i in shape2.indices) {
+            paddedShape2[paddedShape2.size - shape2.size + i] = shape2[i]
+        }
+
+        // Check if the shapes are compatible and determine the result shape
+        for (i in resultDims.indices) {
+            if (paddedShape1[i] == paddedShape2[i]) {
+                resultDims[i] = paddedShape1[i]
+            } else if (paddedShape1[i] == 1) {
+                resultDims[i] = paddedShape2[i]
+            } else if (paddedShape2[i] == 1) {
+                resultDims[i] = paddedShape1[i]
+            } else {
+                // Incompatible shapes
+                return null
+            }
+        }
+
+        return resultDims
+    }
+
     private inline fun commutativeBinaryOperation(
         tensor: DoublesTensor,
         operation: (Double, Double) -> Double
     ): TypedTensor<Double> {
-        val lSize = shape.dimensions.size
-        val rSize = tensor.shape.dimensions.size
-
-        if (lSize == rSize) {
-            assert(
-                { shape == tensor.shape },
-                { "Incompatible shapes of tensors: this.shape = ${shape}, tensor.shape = ${tensor.shape}" })
+        // If shapes are identical, perform element-wise operation directly
+        if (shape == tensor.shape) {
             return DoublesTensor(shape, zipMap(elements, tensor.elements, operation))
         }
 
-        val a: DoublesTensor
-        val b: DoublesTensor
-        if (lSize < rSize) {
-            a = tensor
-            b = this
-        } else {
-            a = this
-            b = tensor
+        // Check if shapes can be broadcast
+        val broadcastShape = canBroadcast(shape.dimensions, tensor.shape.dimensions)
+        require(broadcastShape != null) {
+            "Cannot broadcast shapes ${shape} and ${tensor.shape} together"
         }
-        assert(
-            { a.shape.dimensions.endsWith(b.shape.dimensions) },
-            { "Incompatible shapes of tensors: this.shape = ${shape}, tensor.shape = ${tensor.shape}" })
 
-        return DoublesTensor(a.shape, zipMapRepeat(a.elements, b.elements, operation))
+        // Create result tensor with broadcast shape
+        val resultShape = Shape(*broadcastShape)
+        val resultElements = DoubleArray(resultShape.volume)
+
+        // Compute strides for each tensor
+        val thisStrides = computeBroadcastStrides(shape.dimensions, broadcastShape)
+        val otherStrides = computeBroadcastStrides(tensor.shape.dimensions, broadcastShape)
+        val resultStrides = computeStrides(broadcastShape)
+
+        // Perform the operation with broadcasting
+        for (i in 0 until resultShape.volume) {
+            val resultIndices = unravelIndex(i, broadcastShape, resultStrides)
+
+            val thisIndex = getIndexWithBroadcast(resultIndices, shape.dimensions, thisStrides)
+            val otherIndex = getIndexWithBroadcast(resultIndices, tensor.shape.dimensions, otherStrides)
+
+            resultElements[i] = operation(elements[thisIndex], tensor.elements[otherIndex])
+        }
+
+        return DoublesTensor(resultShape, resultElements)
+    }
+
+    /**
+     * Computes strides for broadcasting a shape to a target shape.
+     */
+    private fun computeBroadcastStrides(originalShape: IntArray, targetShape: IntArray): IntArray {
+        val originalStrides = computeStrides(originalShape)
+        val result = IntArray(targetShape.size)
+
+        // Pad with zeros for dimensions that will be broadcast
+        val offset = targetShape.size - originalShape.size
+        for (i in 0 until offset) {
+            result[i] = 0
+        }
+
+        // Copy strides for existing dimensions, set to 0 for dimensions with size 1 (to be broadcast)
+        for (i in 0 until originalShape.size) {
+            val targetIndex = i + offset
+            result[targetIndex] = if (originalShape[i] == 1) 0 else originalStrides[i]
+        }
+
+        return result
+    }
+
+    /**
+     * Gets the index in the original array for a given set of indices in the broadcast array.
+     */
+    private fun getIndexWithBroadcast(indices: IntArray, originalShape: IntArray, strides: IntArray): Int {
+        var index = 0
+        val offset = indices.size - originalShape.size
+
+        for (i in 0 until originalShape.size) {
+            val targetIndex = i + offset
+            // For dimensions with size 1, use index 0
+            val dimIndex = if (originalShape[i] == 1) 0 else indices[targetIndex]
+            index += dimIndex * strides[targetIndex]
+        }
+
+        return index
     }
 
     private inline fun nonCommutativeBinaryOperation(
@@ -107,25 +199,52 @@ data class DoublesTensor(override val shape: Shape, val elements: DoubleArray) :
         operation: (Double, Double) -> Double,
         reverseOperation: (Double, Double) -> Double
     ): DoublesTensor {
-        val lSize = shape.dimensions.size
-        val rSize = tensor.shape.dimensions.size
-
-        if (lSize == rSize) {
-            assert(
-                { shape == tensor.shape },
-                { "Incompatible shapes of tensors: this.shape = ${shape}, tensor.shape = ${tensor.shape}" })
+        // If shapes are identical, perform element-wise operation directly
+        if (shape == tensor.shape) {
             return DoublesTensor(shape, zipMap(elements, tensor.elements, operation))
-        } else if (lSize < rSize) {
-            assert(
-                { tensor.shape.dimensions.endsWith(shape.dimensions) },
-                { "Incompatible shapes of tensors: this.shape = ${shape}, tensor.shape = ${tensor.shape}" })
-            return DoublesTensor(tensor.shape, zipMapRepeat(tensor.elements, elements, reverseOperation))
-        } else {
-            assert(
-                { shape.dimensions.endsWith(tensor.shape.dimensions) },
-                { "Incompatible shapes of tensors: this.shape = ${shape}, tensor.shape = ${tensor.shape}" })
-            return DoublesTensor(shape, zipMapRepeat(elements, tensor.elements, operation))
         }
+
+        // Check if shapes can be broadcast
+        val broadcastShape = canBroadcast(shape.dimensions, tensor.shape.dimensions)
+        require(broadcastShape != null) {
+            "Cannot broadcast shapes ${shape} and ${tensor.shape} together"
+        }
+
+        // Create result tensor with broadcast shape
+        val resultShape = Shape(*broadcastShape)
+        val resultElements = DoubleArray(resultShape.volume)
+
+        // Compute strides for each tensor
+        val thisStrides = computeBroadcastStrides(shape.dimensions, broadcastShape)
+        val otherStrides = computeBroadcastStrides(tensor.shape.dimensions, broadcastShape)
+        val resultStrides = computeStrides(broadcastShape)
+
+        // For non-commutative operations, we need to be careful about which operation to use
+        // If this tensor is broadcast to match tensor's shape, we need to use the reverse operation
+        // in some cases
+        val thisIsBroadcast = shape.dimensions.size < tensor.shape.dimensions.size ||
+                shape.dimensions.any { it == 1 }
+        val otherIsBroadcast = tensor.shape.dimensions.size < shape.dimensions.size ||
+                tensor.shape.dimensions.any { it == 1 }
+
+        // Perform the operation with broadcasting
+        for (i in 0 until resultShape.volume) {
+            val resultIndices = unravelIndex(i, broadcastShape, resultStrides)
+
+            val thisIndex = getIndexWithBroadcast(resultIndices, shape.dimensions, thisStrides)
+            val otherIndex = getIndexWithBroadcast(resultIndices, tensor.shape.dimensions, otherStrides)
+
+            // Use the appropriate operation based on which tensor is being broadcast
+            resultElements[i] = if (thisIsBroadcast && !otherIsBroadcast) {
+                // If only this tensor is being broadcast, use the reverse operation
+                reverseOperation(tensor.elements[otherIndex], elements[thisIndex])
+            } else {
+                // Otherwise, use the normal operation
+                operation(elements[thisIndex], tensor.elements[otherIndex])
+            }
+        }
+
+        return DoublesTensor(resultShape, resultElements)
     }
 
     override operator fun plus(other: Tensor): Tensor {
@@ -257,7 +376,9 @@ data class DoublesTensor(override val shape: Shape, val elements: DoubleArray) :
 
         // Vector and Matrix multiplication
         if (shape.dimensions.size == 1 && other.shape.dimensions.size == 2) {
-            if (shape.dimensions[0] != other.shape.dimensions[0]) throw IllegalArgumentException("Shapes do not align.")
+            if (shape.dimensions[0] != other.shape.dimensions[0]) {
+                throw IllegalArgumentException("Incompatible shapes for vector-matrix multiplication: vector shape ${shape} and matrix shape ${other.shape}")
+            }
             val result = DoubleArray(other.shape.dimensions[1]) { 0.0 }
             for (i in elements.indices) {
                 for (j in 0 until other.shape.dimensions[1]) {
@@ -269,7 +390,9 @@ data class DoublesTensor(override val shape: Shape, val elements: DoubleArray) :
 
         // Matrix and Matrix multiplication
         if (shape.dimensions.size == 2 && other.shape.dimensions.size == 2) {
-            if (shape.dimensions[1] != other.shape.dimensions[0]) throw IllegalArgumentException("Shapes do not align.")
+            if (shape.dimensions[1] != other.shape.dimensions[0]) {
+                throw IllegalArgumentException("Incompatible shapes for matrix-matrix multiplication: first matrix shape ${shape} and second matrix shape ${other.shape}. Inner dimensions must match: ${shape.dimensions[1]} != ${other.shape.dimensions[0]}")
+            }
             val newShape = Shape(shape.dimensions[0], other.shape.dimensions[1])
             val result = DoubleArray(newShape.volume) { 0.0 }
             for (i in 0 until shape.dimensions[0]) {
@@ -282,7 +405,7 @@ data class DoublesTensor(override val shape: Shape, val elements: DoubleArray) :
             return DoublesTensor(newShape, result)
         }
 
-        throw IllegalArgumentException("Unsupported tensor shapes for multiplication.")
+        throw IllegalArgumentException("Unsupported tensor shapes for matrix multiplication: this.shape = ${shape} and other.shape = ${other.shape}. Supported combinations are: scalar-scalar, scalar-vector, vector-scalar, vector-matrix, and matrix-matrix.")
     }
 
     override fun t(): Tensor {
@@ -316,19 +439,25 @@ data class DoublesTensor(override val shape: Shape, val elements: DoubleArray) :
         DoublesTensor(shape, elements.map { elem -> if (elem > 0) elem else 0.0 }.toDoubleArray())
 
     override fun softmax(): Tensor {
-        val sum = elements.fold(0.0) { r, x -> r + x }
-        return this / sum
+        // Apply softmax to the last dimension by default
+        val lastDim = shape.dimensions.size - 1
+        return if (lastDim >= 0) {
+            softmax(lastDim)
+        } else {
+            // For scalar tensors, just return exp(x) / exp(x) = 1
+            this
+        }
     }
 
     override fun pow(tensor: Tensor): Tensor {
-        assert(
-            { shape == tensor.shape },
-            { "Incompatible shapes of tensors: this.shape = ${shape}, tensor.shape = ${tensor.shape}" })
+        require(shape == tensor.shape) {
+            "Incompatible shapes for pow operation: this.shape = ${shape}, tensor.shape = ${tensor.shape}"
+        }
         return DoublesTensor(shape, zipMap(elements, (tensor as DoublesTensor).elements) { a, b -> a.pow(b) })
     }
 
     override fun pow(scalar: Double): Tensor {
-        TODO("Not yet implemented")
+        return DoublesTensor(shape, elements.map { it.pow(scalar) }.toDoubleArray())
     }
 
 
@@ -420,25 +549,49 @@ data class DoublesTensor(override val shape: Shape, val elements: DoubleArray) :
             throw IllegalArgumentException("Dimension out of range")
         }
 
-        // Compute the exponential of each element and the sum of exponential along the specified dimension.
-        val exps = DoubleArray(elements.size)
-        val sumExps = DoubleArray(shape.volume / shape.dimensions[actualDim]) { 0.0 }
-
         val strides = computeStrides(shape.dimensions)
-        for (index in elements.indices) {
-            val indices = unravelIndex(index, shape.dimensions, strides)
-            val dimIndex = indices[actualDim]
-            val exp = exp(elements[index])
-            exps[index] = exp
-            sumExps[dimIndex] += exp
+
+        // Create a unique key for each group of elements that share the same indices except for the specified dimension
+        fun getGroupKey(indices: IntArray): Int {
+            var key = 0
+            for (i in indices.indices) {
+                if (i != actualDim) {
+                    key = key * shape.dimensions[i] + indices[i]
+                }
+            }
+            return key
         }
 
-        // Normalize by the sum of exponential to get softmax probabilities.
+        // Calculate the number of groups
+        val numGroups = shape.volume / shape.dimensions[actualDim]
+
+        // Find the maximum value for each group for numerical stability
+        val maxValues = DoubleArray(numGroups) { Double.NEGATIVE_INFINITY }
+        for (index in elements.indices) {
+            val indices = unravelIndex(index, shape.dimensions, strides)
+            val groupKey = getGroupKey(indices)
+            maxValues[groupKey] = maxOf(maxValues[groupKey], elements[index])
+        }
+
+        // Compute the exponential of (element - max) for each element and the sum for each group
+        val exps = DoubleArray(elements.size)
+        val sumExps = DoubleArray(numGroups) { 0.0 }
+
+        for (index in elements.indices) {
+            val indices = unravelIndex(index, shape.dimensions, strides)
+            val groupKey = getGroupKey(indices)
+            val shiftedValue = elements[index] - maxValues[groupKey]
+            val expValue = exp(shiftedValue)
+            exps[index] = expValue
+            sumExps[groupKey] += expValue
+        }
+
+        // Normalize by the sum of exponential to get softmax probabilities
         val softmaxElements = DoubleArray(elements.size)
         for (index in elements.indices) {
             val indices = unravelIndex(index, shape.dimensions, strides)
-            val dimIndex = indices[actualDim]
-            softmaxElements[index] = exps[index] / sumExps[dimIndex]
+            val groupKey = getGroupKey(indices)
+            softmaxElements[index] = exps[index] / sumExps[groupKey]
         }
 
         return DoublesTensor(shape, softmaxElements)

@@ -6,22 +6,21 @@ import kotlinx.io.buffered
 import org.junit.Test
 
 
-class GGUFReaderTest {
+class GGUFStringReaderTest {
 
     @Test
     fun testReadMetadataFields() {
-        javaClass.getResourceAsStream("/skainet-small.gguf").use { inputStream ->
+        javaClass.getResourceAsStream("/test_experiment.gguf").use { inputStream ->
 
             val reader = GGUFReader(inputStream.asSource().buffered())
 
-            // Verify the 'model_name' metadata is correct
-            val modelName = reader.getString("model_name")
-            assertEquals("model_name should match", "skainet-small", modelName)
+            // Verify the 'general.name' metadata is correct
+            val modelName = reader.getString("general.name")
+            assertEquals("general.name should match", "addition_op", modelName)
 
-            // Verify the 'authors' metadata list is correct
-            val authorsList = reader.getStringList("authors")
-            assertEquals("authors list should match", 2, authorsList.size)
-            //assertEquals (listOf("Alice", "Bob"), authorsList, "authors list should match")
+            // Verify the 'general.architecture' metadata is correct
+            val architecture = reader.getString("general.architecture")
+            assertEquals("general.architecture should match", "llama", architecture)
         }
     }
 }

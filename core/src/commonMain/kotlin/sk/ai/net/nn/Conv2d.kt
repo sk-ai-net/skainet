@@ -79,49 +79,44 @@ class Conv2d(
             "Conv2d output size is invalid (outH=$outH, outW=$outW). Check input dimensions and padding."
         }
 
-        // Apply padding if needed
-        val paddedInput: Tensor = if (padding > 0) {
-            val paddedH = inH + 2 * padding
-            val paddedW = inW + 2 * padding
-            val temp = zeros(Shape(batchSize, inC, paddedH, paddedW))
-            for (n in 0 until batchSize) {
-                for (c in 0 until inC) {
-                    for (i in 0 until inH) {
-                        for (j in 0 until inW) {
-                            // temp[n, c, i + padding, j + padding] = input[n, c, i, j]
-                        }
-                    }
-                }
-            }
-            temp
-        } else {
-            input  // no padding needed
-        }
+        // Since we can't directly set values in tensors, we'll use a different approach
+        // We'll create a DoubleArray to hold the output values and then create a new tensor from it
 
-        // Prepare output tensor
-        val output = zeros(Shape(batchSize, outChannels, outH, outW))
+        val outputElements = DoubleArray(batchSize * outChannels * outH * outW)
 
         // Convolution: iterate over batch, out channels, and output spatial positions
         for (n in 0 until batchSize) {
             for (oc in 0 until outChannels) {
-                val biasVal = 0f // if (bias != null) 0f// bias[oc] else 0f
+                val biasVal = if (bias != null) (bias as DoublesTensor)[oc] else 0.0
                 for (i in 0 until outH) {
                     for (j in 0 until outW) {
-                        var sum = 0f
+                        var sum = 0.0
                         // Sum over all input channels and kernel elements
                         for (c in 0 until inChannels) {
                             for (ki in 0 until kernelSize) {
                                 for (kj in 0 until kernelSize) {
-                                    //sum += paddedInput[n, c, i * stride + ki, j * stride + kj] *                                            weight[oc, c, ki, kj]
+                                    // Calculate input position with padding consideration
+                                    val inPosH = i * stride + ki - padding
+                                    val inPosW = j * stride + kj - padding
+
+                                    // Skip if outside input bounds (zero padding)
+                                    if (inPosH >= 0 && inPosH < inH && inPosW >= 0 && inPosW < inW) {
+                                        sum += (input as DoublesTensor)[n, c, inPosH, inPosW] *
+                                                (weight as DoublesTensor)[oc, c, ki, kj]
+                                    }
                                 }
                             }
                         }
-                        // Add bias and assign to output
-                        //output[n, oc, i, j] = sum //+ biasVal
+
+                        // Add bias and store in output array
+                        val outputIndex = ((n * outChannels + oc) * outH + i) * outW + j
+                        outputElements[outputIndex] = sum + biasVal
                     }
                 }
             }
         }
-        return output
+
+        // Create and return the output tensor
+        return DoublesTensor(Shape(batchSize, outChannels, outH, outW), outputElements)
     }
 }

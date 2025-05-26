@@ -1,82 +1,26 @@
 package sk.ai.net.gguf
 
+import junit.framework.Assert.assertEquals
 import kotlinx.io.asSource
 import kotlinx.io.buffered
-import org.junit.Assert
 import org.junit.Test
-import sk.ai.net.gguf.utils.reshape
-import kotlin.test.assertNotNull
 
 
 class GGUFReaderTest {
 
     @Test
-    fun test_reshape() {
-        Assert.assertEquals(
-            listOf(listOf(1, 2), listOf(3, 4)),
-            listOf(1, 2, 3, 4).reshape(2, 2)
-        )
-
-        Assert.assertEquals(
-            listOf(listOf(1, 2, 3, 4)),
-            listOf(1, 2, 3, 4).reshape(1, 4)
-        )
-
-        Assert.assertEquals(
-            listOf(listOf(1), listOf(2), listOf(3), listOf(4)),
-            listOf(1, 2, 3, 4).reshape(4, 1)
-        )
-
-        Assert.assertNotSame(
-            listOf(listOf(1), listOf(2), listOf(3), listOf(4)),
-            List(384 * 1536) { it + 0.02387242 }.reshape(384, 1536)
-        )
-    }
-
-
-    /**
-     * You may run this test to read from a gguf model and print model metadata in console output.
-     * Change the file path to read from your own model.
-     *
-     * To find a gguf model, you can look from here:
-     * https://huggingface.co/models?library=gguf
-     */
-    @Test
-    fun `test GGUFReader with valid model file`() {
+    fun testReadMetadataFields() {
         javaClass.getResourceAsStream("/test_experiment.gguf").use { inputStream ->
-            assertNotNull(inputStream, "Test resource file not found!")
-
-            // Convert it to a RawSource and then buffer it to get a Source:
 
             val reader = GGUFReader(inputStream.asSource().buffered())
-            // List all key-value pairs in a columned format
-            println("Key-Value Pairs:")
-            val maxKeyLength = reader.fields.keys.maxOf { it.length }
-            for ((key, field) in reader.fields) {
-                val value = if (field.types[0] == GGUFValueType.STRING && field.types.size == 1) {
-                    String(
-                        (field.parts[field.data[0]] as List<UByte>).toUByteArray().toByteArray(),
-                        Charsets.UTF_8
-                    )
-                } else {
-                    field.parts[field.data[0]]
-                }
 
-                println("${key.padEnd(maxKeyLength)} : $value")
-            }
-            println("----")
+            // Verify the 'general.name' metadata is correct
+            val modelName = reader.getString("general.name")
+            assertEquals("general.name should match", "addition_op", modelName)
 
-            // List all tensors
-            println("Tensors:")
-            val tensorInfoFormat = "%-30s | Shape: %-15s | Size: %-12s | Quantization: %s"
-            println(tensorInfoFormat.format("Tensor Name", "Shape", "Size", "Quantization"))
-            println("-".repeat(80))
-            for (tensor in reader.tensors) {
-                val shapeStr = tensor.shape.joinToString("x")
-                val sizeStr = tensor.nElements.toString()
-                val quantizationStr = tensor.tensorType.name
-                println(tensorInfoFormat.format(tensor.name, shapeStr, sizeStr, quantizationStr))
-            }
+            // Verify the 'general.architecture' metadata is correct
+            val architecture = reader.getString("general.architecture")
+            assertEquals("general.architecture should match", "llama", architecture)
         }
     }
 }

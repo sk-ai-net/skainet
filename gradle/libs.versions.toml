@@ -1,5 +1,5 @@
 [versions]
-agp = "8.10.0"
+agp = "8.10.0-alpha05"
 kotlin = "2.1.21"
 kotlinx-coroutines = "1.10.2"
 android-minSdk = "24"
@@ -26,4 +26,4 @@ kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versio
 binaryCompatibility = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binaryCompatibility" }
 modulegraph-souza = { id = "dev.iurysouza.modulegraph", version.ref = "moduleGraphSouza" }
 vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.32.0" }
-dokka = { id = "org.jetbrains.dokka", version = "1.9.20" }
+#dokka = { id = "org.jetbrains.dokka", version = "2.0.0" }

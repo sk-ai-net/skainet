@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.binaryCompatibility)
-    alias(libs.plugins.dokka)
+//    alias(libs.plugins.dokka)
     alias(libs.plugins.vanniktech.mavenPublish)
 }
 
@@ -43,7 +43,7 @@ kotlin {
 }
 
 android {
-    namespace = "sk.ai.net.core"
+    namespace = "sk.ai.net.io"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
