@@ -31,6 +31,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":core"))
+                implementation(project(":gguf"))
                 implementation(libs.kotlinx.io.core)
 
                 implementation(libs.kotlinx.serialization.json)
