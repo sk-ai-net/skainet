@@ -25,11 +25,10 @@ actual class DiskBackedTensor actual constructor(
     actual val filePath: String = filePath
 
     private val data: DoubleArray
-    private val size: Int
+    // Calculate the total size of the tensor
+    private val size: Int = shape.volume
 
     init {
-        // Calculate the total size of the tensor
-        size = shape.volume
 
         // Create an in-memory array to store the data
         data = DoubleArray(size)

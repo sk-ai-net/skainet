@@ -5,8 +5,6 @@ kotlinx-coroutines = "1.10.2"
 android-minSdk = "24"
 android-compileSdk = "35"
 kotlinxSerializationJson = "1.8.1"
-nexus-publish = "2.0.0"
-testng = "7.10.2"
 binaryCompatibility = "0.17.0"
 moduleGraphSouza = "0.12.0"
 kotlinxIo = "0.7.0"
@@ -14,8 +12,8 @@ kotlinxIo = "0.7.0"
 [libraries]
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlinx-io-core-wasm-js = { module = "org.jetbrains.kotlinx:kotlinx-io-core-wasm-js", version.ref = "kotlinxIo" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
-nexus-publish = { module = "io.github.gradle-nexus.publish-plugin:io.github.gradle-nexus.publish-plugin.gradle.plugin", version.ref = "nexus-publish" }
 kotlinx-io-core = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinxIo" }
 
 [plugins]
