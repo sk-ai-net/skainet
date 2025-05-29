@@ -14,6 +14,8 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "skainet"
-include(":core")
+include(":skainet-graph")
+//include(":core")
 include(":io")
 include(":gguf")
+include(":safetensors")

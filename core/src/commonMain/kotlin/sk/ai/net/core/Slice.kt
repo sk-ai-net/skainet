@@ -1,6 +1,7 @@
 package sk.ai.net.core
 
-import sk.ai.net.Tensor
+import sk.ai.net.graph.tensor.Tensor
+
 
 data class Slice(val tensor: Tensor, val dimensionIndex: Int, val startIndex: Long, val endIndex: Long) {
     fun toRange() = startIndex..endIndex

@@ -1,6 +1,6 @@
 package sk.ai.net.factory
 
-import sk.ai.net.Shape
+import sk.ai.net.graph.tensor.shape.Shape
 import sk.ai.net.impl.DoublesTensor
 import sk.ai.net.impl.createTensor
 import kotlin.test.Test

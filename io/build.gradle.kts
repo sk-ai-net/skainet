@@ -1,4 +1,7 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -30,7 +33,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":core"))
+                implementation(project(":skainet-graph"))
                 implementation(project(":gguf"))
                 implementation(libs.kotlinx.io.core)
 
@@ -62,7 +65,9 @@ android {
 }
 
 publishing {
+
     repositories {
+
         maven {
             name = "githubPackages"
             url = uri("https://maven.pkg.github.com/sk-ai-net/skainet")
@@ -74,7 +79,6 @@ publishing {
 }
 
 mavenPublishing {
-
     coordinates(group.toString(), "io", version.toString())
 
     pom {

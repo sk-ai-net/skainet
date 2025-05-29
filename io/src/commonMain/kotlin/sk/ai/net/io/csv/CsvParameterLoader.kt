@@ -4,10 +4,9 @@ import kotlinx.io.Source
 import kotlinx.io.readByteArray
 import kotlinx.io.readString
 import kotlinx.serialization.json.Json
-import sk.ai.net.Shape
+import sk.ai.net.graph.tensor.shape.Shape
 
-import sk.ai.net.Tensor
-import sk.ai.net.impl.DoublesTensor
+import sk.ai.net.graph.tensor.Tensor
 import sk.ai.net.io.ParametersLoader
 
 class CsvParametersLoader(private val handleSource: () -> Source) :

@@ -1,6 +1,6 @@
 package sk.ai.net.nn
 
-import sk.ai.net.Shape
+import sk.ai.net.graph.tensor.shape.Shape
 import sk.ai.net.dsl.network
 import sk.ai.net.impl.DoublesTensor
 import kotlin.test.Test

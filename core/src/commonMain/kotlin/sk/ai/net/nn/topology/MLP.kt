@@ -1,6 +1,6 @@
 package sk.ai.net.nn.topology
 
-import sk.ai.net.Tensor
+import sk.ai.net.graph.tensor.Tensor
 import sk.ai.net.nn.Module
 import sk.ai.net.nn.reflection.ModuleParameter
 import sk.ai.net.nn.reflection.ModuleParameters

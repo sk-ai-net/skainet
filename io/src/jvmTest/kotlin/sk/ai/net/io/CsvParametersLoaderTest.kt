@@ -5,7 +5,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.io.asSource
 import kotlinx.io.buffered
 
-import sk.ai.net.Shape
+import sk.ai.net.graph.tensor.shape.Shape
 import sk.ai.net.dsl.network
 import sk.ai.net.impl.DoublesTensor
 import sk.ai.net.io.csv.CsvParametersLoader

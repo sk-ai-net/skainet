@@ -1,7 +1,7 @@
 package sk.ai.net.nn
 
-import sk.ai.net.Shape
-import sk.ai.net.Tensor
+import sk.ai.net.graph.tensor.shape.Shape
+import sk.ai.net.graph.tensor.Tensor
 import sk.ai.net.impl.DoublesTensor
 import sk.ai.net.nn.reflection.ModuleParameter
 import sk.ai.net.nn.reflection.ModuleParameters

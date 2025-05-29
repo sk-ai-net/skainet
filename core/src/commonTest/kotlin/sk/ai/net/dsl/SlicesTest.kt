@@ -1,6 +1,6 @@
 package sk.ai.net.dsl
 
-import sk.ai.net.Shape
+import sk.ai.net.graph.tensor.shape.Shape
 import sk.ai.net.core.TypedTensor
 import sk.ai.net.impl.DoublesTensor
 import sk.ai.net.impl.createTensor

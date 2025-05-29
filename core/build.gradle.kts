@@ -32,6 +32,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":skainet-graph"))
             }
         }
         val commonTest by getting {

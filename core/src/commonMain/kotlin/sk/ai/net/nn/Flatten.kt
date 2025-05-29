@@ -1,6 +1,6 @@
 package sk.ai.net.nn
 
-import sk.ai.net.Tensor
+import sk.ai.net.graph.tensor.Tensor
 
 /**
  * A simple layer that flattens an input tensor into a 1D tensor.

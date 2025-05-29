@@ -1,8 +1,8 @@
 package sk.ai.net.io.gguf
 
 import kotlinx.io.Source
-import sk.ai.net.Shape
-import sk.ai.net.Tensor
+import sk.ai.net.graph.tensor.shape.Shape
+import sk.ai.net.graph.tensor.Tensor
 import sk.ai.net.impl.DoublesTensor
 import sk.ai.net.io.ParametersLoader
 import sk.ai.net.gguf.GGUFReader

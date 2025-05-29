@@ -1,6 +1,6 @@
 package sk.ai.net.nn.reflection
 
-import sk.ai.net.Tensor
+import sk.ai.net.graph.tensor.Tensor
 
 sealed class ModuleParameter {
     abstract val name: String
