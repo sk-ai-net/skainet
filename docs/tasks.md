@@ -31,13 +31,13 @@ This document outlines a comprehensive list of improvement tasks for the SK-AI-N
 
 ## 4. Documentation Improvements
 
-- [ ] Add comprehensive KDoc comments to all public APIs
-- [ ] Create a getting started guide
-- [ ] Add examples for common use cases
-- [ ] Document the tensor operations and their behavior
-- [ ] Create architecture diagrams
-- [ ] Add benchmarks and performance guidelines
-- [ ] Document the module system and how to create custom modules
+- [x] Add comprehensive KDoc comments to all public APIs
+- [x] Create a getting started guide
+- [x] Add examples for common use cases
+- [x] Document the tensor operations and their behavior
+- [x] Create architecture diagrams
+- [x] Add benchmarks and performance guidelines
+- [x] Document the module system and how to create custom modules
 
 ## 5. Testing Improvements
 
