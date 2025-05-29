@@ -86,6 +86,21 @@ class DoublesTensor(
      */
     override fun toString() =
         "DoublesTensor(shape=$shape, data=${data.contentToString()})"
+
+    /**
+     * Raises each element of the tensor to the power of the given scalar.
+     *
+     * This method creates a new tensor where each element is the result of
+     * raising the corresponding element in the original tensor to the power
+     * of the provided scalar value.
+     *
+     * @param scalar The exponent to raise each element to.
+     * @return A new tensor with each element raised to the power of the scalar.
+     */
+    fun pow(scalar: Double): TypedTensor<Double> {
+        val newData = DoubleArray(data.size) { i -> Math.pow(data[i], scalar) }
+        return DoublesTensor(shape, newData)
+    }
 }
 
 /**
