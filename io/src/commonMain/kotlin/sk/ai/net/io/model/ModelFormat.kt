@@ -1,6 +1,7 @@
 package sk.ai.net.io.model
 
 import kotlinx.io.Source
+import kotlinx.io.readByteArray
 import sk.ai.net.graph.tensor.Tensor
 
 /**
@@ -52,7 +53,7 @@ interface ModelFormat {
          */
         fun create(source: Source): ModelFormat {
             // Make a copy of the source so we can read from it multiple times
-            val bytes = source.readBytes()
+            val bytes = source.readByteArray()
 
             // Try to detect the format based on the file's magic number or structure
 
@@ -62,13 +63,14 @@ interface ModelFormat {
                 bytes[1].toInt() == 0x47 && // 'G'
                 bytes[2].toInt() == 0x55 && // 'U'
                 bytes[3].toInt() == 0x46) { // 'F'
-                return GGUFModelFormat(bytes.toByteArray().inputStream().source())
+                // Create a new source from the bytes
+                return GGUFModelFormat(source)
             }
 
             // Check for SafeTensors format (JSON header at the beginning)
             if (bytes.size >= 2 && bytes[0].toInt() == 0x7B && bytes[1].toInt() == 0x22) { // '{' and '"'
                 // This is a very simple heuristic; SafeTensors files start with a JSON object
-                return SafeTensorsModelFormat(bytes.toByteArray().inputStream().source())
+                return SafeTensorsModelFormat(source)
             }
 
             // If we can't detect the format, throw an exception

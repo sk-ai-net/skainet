@@ -1,6 +1,7 @@
 package sk.ai.net.io.model
 
 import kotlinx.io.Source
+import kotlinx.io.readByteArray
 import sk.ai.net.graph.tensor.Tensor
 import sk.ai.net.safetensors.SafeTensorsReader
 
@@ -18,8 +19,8 @@ class SafeTensorsModelFormat(private val reader: SafeTensorsReader) : ModelForma
      * 
      * @param source The source to read the SafeTensors file from.
      */
-    constructor(source: Source) : this(SafeTensorsReader.fromByteArray(source.readBytes()))
-    
+    constructor(source: Source) : this(SafeTensorsReader.fromByteArray(source.readByteArray()))
+
     /**
      * Gets the metadata from the SafeTensors file.
      * 
@@ -32,7 +33,7 @@ class SafeTensorsModelFormat(private val reader: SafeTensorsReader) : ModelForma
         // SafeTensors files don't have a standard metadata format like GGUF files
         return emptyMap()
     }
-    
+
     /**
      * Gets the names of all tensors in the SafeTensors file.
      * 
@@ -41,7 +42,7 @@ class SafeTensorsModelFormat(private val reader: SafeTensorsReader) : ModelForma
     override fun getTensorNames(): List<String> {
         return reader.getTensorNames()
     }
-    
+
     /**
      * Gets a specific tensor from the SafeTensors file.
      * 
@@ -51,7 +52,7 @@ class SafeTensorsModelFormat(private val reader: SafeTensorsReader) : ModelForma
     override fun getTensor(name: String): Tensor? {
         return reader.readTensor(name)
     }
-    
+
     /**
      * Gets all tensors from the SafeTensors file.
      * 

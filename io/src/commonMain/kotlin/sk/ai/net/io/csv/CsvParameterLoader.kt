@@ -5,8 +5,8 @@ import kotlinx.io.readByteArray
 import kotlinx.io.readString
 import kotlinx.serialization.json.Json
 import sk.ai.net.graph.tensor.shape.Shape
+import sk.ai.net.graph.tensor.SimpleTensor
 import sk.ai.net.graph.tensor.Tensor
-import sk.ai.net.impl.DoublesTensor
 import sk.ai.net.io.ParametersLoader
 
 /**
@@ -37,7 +37,7 @@ class CsvParametersLoader(private val handleSource: () -> Source) :
 
             json.decodeFromString<List<Parameter>>(source.readString()).also { values ->
                 values.forEach { parameter ->
-                    val tensor = DoublesTensor(Shape(*parameter.tensor.shape.toIntArray()), parameter.tensor.values.toDoubleArray())
+                    val tensor = SimpleTensor(Shape(*parameter.tensor.shape.toIntArray()), parameter.tensor.values.toDoubleArray())
                     onTensorLoaded(parameter.unique_parameter_name, tensor)
                 }
             }

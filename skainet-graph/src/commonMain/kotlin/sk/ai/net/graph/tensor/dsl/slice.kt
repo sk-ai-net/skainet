@@ -4,8 +4,6 @@ import sk.ai.net.graph.tensor.shape.Shape
 import sk.ai.net.graph.tensor.Tensor
 import sk.ai.net.graph.tensor.core.Slice
 import sk.ai.net.core.TypedTensor
-import sk.ai.net.graph.tensor.impl.DoublesTensor
-import sk.ai.net.graph.tensor.impl.createTensor
 import kotlin.math.abs
 
 
@@ -116,6 +114,7 @@ fun printVarargs(vararg elements: Slice) {
 }
 
 fun main() {
+    /*
     val tensor = DoublesTensor(
         Shape(3, 3),
         doubleArrayOf(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0)
@@ -135,4 +134,6 @@ fun main() {
 
     println(tensor)
     println(slicedTensor)
+
+     */
 }

@@ -41,6 +41,10 @@ kotlin {
         }
     }
 
+    macosX64 ()
+    linuxX64 ()
+
+
     jvm()
 
     @OptIn(ExperimentalWasmDsl::class)

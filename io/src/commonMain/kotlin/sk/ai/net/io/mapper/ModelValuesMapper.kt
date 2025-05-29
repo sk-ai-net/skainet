@@ -1,7 +1,8 @@
 package sk.ai.net.io.mapper
 
 import sk.ai.net.graph.tensor.Tensor
-import sk.ai.net.nn.Module
+import sk.ai.net.graph.nn.Module
+import sk.ai.net.graph.core.ComputeNode
 
 /**
  * Interface for mapping tensor values to a model's parameters.
@@ -21,5 +22,5 @@ interface ModelValuesMapper {
      * @param model The model to map the values to.
      * @param wandb A map of tensor names to tensor values.
      */
-    fun mapToModel(model: Module, wandb: Map<String, Tensor>)
+    fun <T> mapToModel(model: Module<T>, wandb: Map<String, Tensor>)
 }
