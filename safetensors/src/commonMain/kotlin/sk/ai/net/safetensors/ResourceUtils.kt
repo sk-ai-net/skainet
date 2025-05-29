@@ -1,4 +1,4 @@
-package sk.ai.net.safetensor
+package sk.ai.net.safetensors
 
 /**
  * Utility class for loading resources in a platform-independent way.

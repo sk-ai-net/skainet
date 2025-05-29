@@ -1,4 +1,4 @@
-package sk.ai.net.safetensor
+package sk.ai.net.safetensors
 
 import java.io.File
 import java.io.RandomAccessFile
@@ -27,12 +27,12 @@ import sk.ai.net.graph.tensor.shape.Shape
  * @property headerBuffer The memory-mapped buffer for the header and metadata.
  * @property randomAccessFile The random access file for accessing the file.
  */
-class MemoryMappedSafeTensorReader private constructor(
+class MemoryMappedSafeTensorsReader private constructor(
     private val file: File,
     private val fileChannel: FileChannel,
     private val headerBuffer: MappedByteBuffer,
     private val randomAccessFile: RandomAccessFile
-) : SafeTensorReader {
+) : SafeTensorsReader {
     // Header information
     private val headerSize: Long
     private val metadata: Map<String, MappedTensorMetadata>
@@ -227,7 +227,7 @@ class MemoryMappedSafeTensorReader private constructor(
          * @param file The file containing the safetensor data.
          * @return A MemoryMappedSafeTensorReader instance.
          */
-        fun fromFile(file: File): MemoryMappedSafeTensorReader {
+        fun fromFile(file: File): MemoryMappedSafeTensorsReader {
             val randomAccessFile = RandomAccessFile(file, "r")
             val fileChannel = randomAccessFile.channel
 
@@ -243,7 +243,7 @@ class MemoryMappedSafeTensorReader private constructor(
                 (8 + headerSize).coerceAtMost(Int.MAX_VALUE.toLong())
             )
 
-            return MemoryMappedSafeTensorReader(file, fileChannel, headerBuffer, randomAccessFile)
+            return MemoryMappedSafeTensorsReader(file, fileChannel, headerBuffer, randomAccessFile)
         }
 
         /**
@@ -256,7 +256,7 @@ class MemoryMappedSafeTensorReader private constructor(
          * @param filePath The path to the file containing the safetensor data.
          * @return A MemoryMappedSafeTensorReader instance.
          */
-        fun fromFilePath(filePath: String): MemoryMappedSafeTensorReader {
+        fun fromFilePath(filePath: String): MemoryMappedSafeTensorsReader {
             return fromFile(File(filePath))
         }
     }

@@ -1,4 +1,4 @@
-package sk.ai.net.safetensor
+package sk.ai.net.safetensors
 
 import java.io.File
 
@@ -19,8 +19,8 @@ import java.io.File
  * @return A SafeTensorReader instance.
  */
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER")
-fun SafeTensorReader.Companion.fromFilePath(filePath: String): SafeTensorReader {
-    return MemoryMappedSafeTensorReader.fromFilePath(filePath)
+fun SafeTensorsReader.Companion.fromFilePath(filePath: String): SafeTensorsReader {
+    return MemoryMappedSafeTensorsReader.fromFilePath(filePath)
 }
 
 /**
@@ -33,11 +33,11 @@ fun SafeTensorReader.Companion.fromFilePath(filePath: String): SafeTensorReader 
  * @return A SafeTensorReader instance.
  */
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER", "UNCHECKED_CAST")
-fun SafeTensorReader.Companion.fromFile(file: Any): SafeTensorReader {
+fun SafeTensorsReader.Companion.fromFile(file: Any): SafeTensorsReader {
     if (file !is File) {
         throw IllegalArgumentException("Expected java.io.File, got ${file::class.java.name}")
     }
-    return MemoryMappedSafeTensorReader.fromFile(file)
+    return MemoryMappedSafeTensorsReader.fromFile(file)
 }
 
 // Keep the top-level functions for backward compatibility with existing tests
@@ -50,8 +50,8 @@ fun SafeTensorReader.Companion.fromFile(file: Any): SafeTensorReader {
  * @param filePath The path to the file containing the safetensor data.
  * @return A SafeTensorReader instance.
  */
-fun fromFilePath(filePath: String): SafeTensorReader {
-    return MemoryMappedSafeTensorReader.fromFilePath(filePath)
+fun fromFilePath(filePath: String): SafeTensorsReader {
+    return MemoryMappedSafeTensorsReader.fromFilePath(filePath)
 }
 
 /**
@@ -63,6 +63,6 @@ fun fromFilePath(filePath: String): SafeTensorReader {
  * @param file The file containing the safetensor data.
  * @return A SafeTensorReader instance.
  */
-fun fromFile(file: File): SafeTensorReader {
-    return MemoryMappedSafeTensorReader.fromFile(file)
+fun fromFile(file: File): SafeTensorsReader {
+    return MemoryMappedSafeTensorsReader.fromFile(file)
 }

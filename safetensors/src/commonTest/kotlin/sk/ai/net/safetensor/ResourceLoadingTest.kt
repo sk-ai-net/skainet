@@ -1,4 +1,4 @@
-package sk.ai.net.safetensor
+package sk.ai.net.safetensors
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -13,7 +13,7 @@ class ResourceLoadingTest {
         val mockSafeTensorData = createMockSafeTensorData()
 
         // Create a SafeTensorReader from the mock data
-        val reader = SafeTensorReader.fromByteArray(mockSafeTensorData)
+        val reader = SafeTensorsReader.fromByteArray(mockSafeTensorData)
 
         // Verify that the reader was created successfully
         assertNotNull(reader, "SafeTensorReader should be created successfully")

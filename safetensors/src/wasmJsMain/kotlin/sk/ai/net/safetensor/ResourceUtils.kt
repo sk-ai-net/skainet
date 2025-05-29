@@ -1,4 +1,4 @@
-package sk.ai.net.safetensor
+package sk.ai.net.safetensors
 
 /**
  * Wasm/JS implementation of ResourceUtils.

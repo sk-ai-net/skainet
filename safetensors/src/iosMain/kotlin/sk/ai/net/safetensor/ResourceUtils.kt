@@ -1,4 +1,4 @@
-package sk.ai.net.safetensor
+package sk.ai.net.safetensors
 
 import platform.Foundation.*
 import kotlinx.cinterop.*

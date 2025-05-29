@@ -1,4 +1,4 @@
-package sk.ai.net.safetensor
+package sk.ai.net.safetensors
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -13,7 +13,7 @@ class SafeTensorReaderTest {
         val mockSafeTensorData = createMockSafeTensorData()
 
         // Create a SafeTensorReader from the mock data
-        val reader = SafeTensorReader.fromByteArray(mockSafeTensorData)
+        val reader = SafeTensorsReader.fromByteArray(mockSafeTensorData)
 
         // Test getTensorNames
         val tensorNames = reader.getTensorNames()
@@ -33,7 +33,7 @@ class SafeTensorReaderTest {
         val mockSafeTensorData = createSimpleSafeTensorData()
 
         // Create a SafeTensorReader from the mock data
-        val reader = SafeTensorReader.fromByteArray(mockSafeTensorData)
+        val reader = SafeTensorsReader.fromByteArray(mockSafeTensorData)
 
         // Test getTensorNames - should have "a" and "b"
         val tensorNames = reader.getTensorNames()

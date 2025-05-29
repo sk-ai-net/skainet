@@ -1,4 +1,4 @@
-package sk.ai.net.safetensor
+package sk.ai.net.safetensors
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
@@ -32,7 +32,7 @@ import sk.ai.net.graph.tensor.shape.Shape
  *
  * @see <a href="https://huggingface.co/docs/safetensors/index">Hugging Face Safetensors Documentation</a>
  */
-interface SafeTensorReader {
+interface SafeTensorsReader {
     /**
      * Reads a tensor from the safetensor data.
      *
@@ -48,7 +48,7 @@ interface SafeTensorReader {
      */
     fun getTensorNames(): List<String>
 
-    companion object {
+    companion object Companion {
         /**
          * Creates a SafeTensorReader from the given byte array.
          *
@@ -58,7 +58,7 @@ interface SafeTensorReader {
          * @param data The byte array containing the safetensor data.
          * @return A SafeTensorReader instance.
          */
-        fun fromByteArray(data: ByteArray): SafeTensorReader = SafeTensorReaderImpl(data)
+        fun fromByteArray(data: ByteArray): SafeTensorsReader = SafeTensorsReaderImpl(data)
 
         /**
          * Creates a SafeTensorReader from a resource file.
@@ -71,7 +71,7 @@ interface SafeTensorReader {
          * @return A SafeTensorReader instance.
          * @throws IllegalArgumentException If the resource could not be found.
          */
-        fun fromResource(resourcePath: String): SafeTensorReader {
+        fun fromResource(resourcePath: String): SafeTensorsReader {
             val resourceBytes = ResourceUtils.loadResourceAsBytes(resourcePath)
                 ?: throw IllegalArgumentException("Resource not found: $resourcePath")
 
@@ -91,7 +91,7 @@ interface SafeTensorReader {
          * @return A SafeTensorReader instance.
          * @throws IllegalArgumentException If the file could not be found or read.
          */
-        fun fromFilePath(filePath: String): SafeTensorReader {
+        fun fromFilePath(filePath: String): SafeTensorsReader {
             // Default implementation falls back to loading as a resource
             // Platform-specific implementations will override this behavior
             return fromResource(filePath)
@@ -110,7 +110,7 @@ interface SafeTensorReader {
          * @return A SafeTensorReader instance.
          * @throws IllegalArgumentException If the file could not be found or read.
          */
-        fun fromFile(file: Any): SafeTensorReader {
+        fun fromFile(file: Any): SafeTensorsReader {
             // Default implementation falls back to loading as a resource
             // Platform-specific implementations will override this behavior
             return fromResource(file.toString())
@@ -129,7 +129,7 @@ interface SafeTensorReader {
  * The implementation supports different tensor data types (F32, I8) and
  * converts them to the appropriate tensor implementation.
  */
-private class SafeTensorReaderImpl(private val data: ByteArray) : SafeTensorReader {
+private class SafeTensorsReaderImpl(private val data: ByteArray) : SafeTensorsReader {
     // Header information
     private val headerSize: Long
     private val metadata: Map<String, TensorMetadata>
@@ -312,18 +312,3 @@ private data class TensorMetadata(
     val dataOffset: Long,
     val dataLength: Long
 )
-
-/**
- * Dummy tensor implementation for placeholder purposes.
- * 
- * This class provides a minimal implementation of the Tensor interface,
- * returning zero for all element accesses. It's used as a fallback when
- * a proper tensor implementation cannot be created.
- * 
- * @property shape The shape of the tensor as a list of dimensions.
- */
-private class DummyTensor(override val shape: Shape) : Tensor {
-    override fun get(vararg indices: Int): Double {
-        return 0.0
-    }
-}

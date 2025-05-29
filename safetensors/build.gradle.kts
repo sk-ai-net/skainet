@@ -41,7 +41,7 @@ kotlin {
         }
     }
 
-    jvm("desktop")
+    jvm()
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
@@ -67,7 +67,7 @@ kotlin {
     }
 
     sourceSets {
-        val desktopMain by getting
+        val jvmMain by getting
         val wasmJsMain by getting
 
         androidMain.dependencies {
@@ -86,7 +86,7 @@ kotlin {
                 implementation(libs.kotlin.test)
             }
         }
-        desktopMain.dependencies {
+        jvmMain.dependencies {
             // Desktop-specific dependencies if needed
         }
         wasmJsMain.dependencies {
@@ -108,7 +108,7 @@ kotlin {
         val wasmJsTest by getting {
             resources.srcDirs("src/commonMain/resources")
         }
-        val desktopTest by getting {
+        val jvmTest by getting {
             resources.srcDirs("src/commonMain/resources")
         }
         val androidUnitTest by getting {

@@ -1,7 +1,6 @@
-package sk.ai.net.safetensor
+package sk.ai.net.safetensors
 
 import android.content.Context
-import android.content.res.AssetManager
 import java.io.IOException
 
 /**
