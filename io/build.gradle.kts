@@ -35,6 +35,7 @@ kotlin {
             dependencies {
                 implementation(project(":skainet-graph"))
                 implementation(project(":gguf"))
+                implementation(project(":safetensors"))
                 implementation(libs.kotlinx.io.core)
 
                 implementation(libs.kotlinx.serialization.json)
