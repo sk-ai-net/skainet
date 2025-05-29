@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     // Temporarily disable Kover plugin to fix wasmJs build issue
     // alias(libs.plugins.kover)
+    alias(libs.plugins.vanniktech.mavenPublish)
 }
 
 kotlin {
@@ -33,7 +34,7 @@ kotlin {
     linuxX64()
 
     // TODO its lib, just make it jvm
-    jvm("desktop")
+    jvm()
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
@@ -43,7 +44,7 @@ kotlin {
     }
 
     sourceSets {
-        val desktopMain by getting
+        val jvmMain by getting
 
         androidMain.dependencies {
             // Android-specific dependencies if needed
@@ -54,7 +55,7 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
-        desktopMain.dependencies {
+        jvmMain.dependencies {
             // Desktop-specific dependencies if needed
         }
     }
@@ -72,3 +73,44 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 }
+
+publishing {
+    repositories {
+        maven {
+            name = "githubPackages"
+            url = uri("https://maven.pkg.github.com/sk-ai-net/skainet")
+            credentials {
+                credentials(PasswordCredentials::class)
+            }
+        }
+    }
+}
+
+mavenPublishing {
+
+    coordinates(group.toString(), "core", version.toString())
+
+    pom {
+        description.set("skainet")
+        name.set(project.name)
+        url.set("https://github.com/sk-ai-net/skainet/")
+        licenses {
+            license {
+                name.set("MIT")
+                distribution.set("repo")
+            }
+        }
+        scm {
+            url.set("https://github.com/sk-ai-net/skainet/")
+            connection.set("scm:git:git@github.com:sk-ai-net/skainet.git")
+            developerConnection.set("scm:git:ssh://git@github.com:sk-ai-net/skainet.git")
+        }
+        developers {
+            developer {
+                id.set("sk-ai-net")
+                name.set("sk-ai-net")
+            }
+        }
+    }
+}
+
