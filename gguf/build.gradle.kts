@@ -29,6 +29,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.kotlinx.io.core)
+                implementation(project(":skainet-graph"))
             }
         }
         val commonTest by getting {
