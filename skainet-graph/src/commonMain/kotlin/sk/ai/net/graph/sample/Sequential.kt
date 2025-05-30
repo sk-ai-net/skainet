@@ -1,16 +1,17 @@
 package sk.ai.net.graph.sample
 
-import sk.ai.net.graph.nn.Activation
-import sk.ai.net.graph.nn.Linear
-import sk.ai.net.graph.nn.Sequential
-import sk.ai.net.graph.tensor.SimpleTensor
-import sk.ai.net.graph.tensor.Tensor
-import sk.ai.net.graph.tensor.matmul
-import sk.ai.net.graph.tensor.plus
-import sk.ai.net.graph.tensor.relu
+import sk.ai.net.core.nn.Activation
+import sk.ai.net.core.nn.Linear
+import sk.ai.net.core.nn.Sequential
+import sk.ai.net.core.tensor.SimpleTensor
+import sk.ai.net.core.tensor.Tensor
+import sk.ai.net.core.tensor.matmul
+import sk.ai.net.core.tensor.plus
+import sk.ai.net.core.tensor.relu
+import sk.ai.net.core.tensor.shape.Shape
 
 // Define input tensor
-val inputTensor = SimpleTensor(listOf(3, 1), doubleArrayOf(0.5, 0.2, -0.3))
+val inputTensor = SimpleTensor(Shape(3, 1), doubleArrayOf(0.5, 0.2, -0.3))
 
 fun createSimpleDoubleSequential(input: Double): Sequential<Double> {
     val doubleModel = Sequential<Double>(
@@ -20,7 +21,7 @@ fun createSimpleDoubleSequential(input: Double): Sequential<Double> {
             matmul = Double::times,
             add = Double::plus
         ),
-        Activation<Double>(::reluDouble)
+        Activation<Double>(::reluDouble, "ss"), name = "name"
     )
     return doubleModel
 }
@@ -37,11 +38,11 @@ fun createSimpleTensorMLP(): Sequential<Tensor> {
     // The actual model building code is below.
 
 // Define weights and biases tensors
-    val weights1 = SimpleTensor(listOf(2, 3), doubleArrayOf(0.1, 0.2, 0.3, -0.4, 0.5, -0.1))
-    val bias1 = SimpleTensor(listOf(2, 1), doubleArrayOf(0.1, -0.2))
+    val weights1 = SimpleTensor(Shape(2, 3), doubleArrayOf(0.1, 0.2, 0.3, -0.4, 0.5, -0.1))
+    val bias1 = SimpleTensor(Shape(2, 1), doubleArrayOf(0.1, -0.2))
 
-    val weights2 = SimpleTensor(listOf(1, 2), doubleArrayOf(0.3, -0.5))
-    val bias2 = SimpleTensor(listOf(1, 1), doubleArrayOf(0.0))
+    val weights2 = SimpleTensor(Shape(1, 2), doubleArrayOf(0.3, -0.5))
+    val bias2 = SimpleTensor(Shape(1, 1), doubleArrayOf(0.0))
 
     // Build your model
     val mlp = Sequential(

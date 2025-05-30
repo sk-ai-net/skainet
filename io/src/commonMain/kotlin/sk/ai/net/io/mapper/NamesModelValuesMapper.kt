@@ -1,8 +1,7 @@
 package sk.ai.net.io.mapper
 
-import sk.ai.net.graph.tensor.Tensor
-import sk.ai.net.graph.nn.Module
-import sk.ai.net.graph.core.ComputeNode
+import sk.ai.net.core.tensor.Tensor
+import sk.ai.net.core.nn.Module
 
 /**
  * Default function for matching module parameter names with weights and biases keys.

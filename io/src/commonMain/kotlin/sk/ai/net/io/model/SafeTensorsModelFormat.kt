@@ -2,7 +2,7 @@ package sk.ai.net.io.model
 
 import kotlinx.io.Source
 import kotlinx.io.readByteArray
-import sk.ai.net.graph.tensor.Tensor
+import sk.ai.net.core.tensor.Tensor
 import sk.ai.net.safetensors.SafeTensorsReader
 
 /**
@@ -13,25 +13,24 @@ import sk.ai.net.safetensors.SafeTensorsReader
  * 
  * @property reader The SafeTensorsReader to use for reading the SafeTensors file.
  */
-class SafeTensorsModelFormat(private val reader: SafeTensorsReader) : ModelFormat {
+class SafeTensorsModelFormat(private val reader: SafeTensorsReader,
+                             override val formatType: ModelFormatType = ModelFormatType.SAFETENSORS
+) : ModelFormat {
     /**
      * Constructor that creates a SafeTensorsReader from a Source.
      * 
      * @param source The source to read the SafeTensors file from.
      */
-    constructor(source: Source) : this(SafeTensorsReader.fromByteArray(source.readByteArray()))
+    constructor(source: Source) : this(SafeTensorsReader.fromSource { source.peek() })
 
     /**
      * Gets the metadata from the SafeTensors file.
      * 
-     * Note: SafeTensors files don't have a standard metadata format like GGUF files,
-     * so this method returns an empty map.
-     * 
-     * @return An empty map.
+     * @return A map of metadata keys to values.
      */
     override fun getMetadata(): Map<String, String> {
-        // SafeTensors files don't have a standard metadata format like GGUF files
-        return emptyMap()
+        // Get metadata from the reader
+        return reader.getMetadata()
     }
 
     /**

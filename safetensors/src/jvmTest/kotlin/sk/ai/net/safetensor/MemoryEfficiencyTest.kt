@@ -42,7 +42,7 @@ class MemoryEfficiencyTest {
             val standardLoadTime = measureTimeMillis {
                 // Load the file using the standard implementation
                 val fileBytes = tempFile.readBytes()
-                val standardReader = SafeTensorReader.fromByteArray(fileBytes)
+                val standardReader = SafeTensorsReader.fromByteArray(fileBytes)
 
                 // Access some tensors to ensure they're loaded
                 val tensorNames = standardReader.getTensorNames()
@@ -63,7 +63,7 @@ class MemoryEfficiencyTest {
 
             val mappedLoadTime = measureTimeMillis {
                 // Load the file using the memory-mapped implementation
-                val mappedReader = fromFile(tempFile)
+                val mappedReader = MemoryMappedSafeTensorsReader.fromFile(tempFile)
 
                 // Access some tensors to ensure they're loaded
                 val tensorNames = mappedReader.getTensorNames()

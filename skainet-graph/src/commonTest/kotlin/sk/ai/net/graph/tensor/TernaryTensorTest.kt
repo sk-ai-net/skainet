@@ -1,5 +1,8 @@
 package sk.ai.net.graph.tensor
 
+import sk.ai.net.core.tensor.SimpleTensor
+import sk.ai.net.core.tensor.TernaryTensor
+import sk.ai.net.core.tensor.shape.Shape
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -10,7 +13,7 @@ class TernaryTensorTest {
     @Test
     fun testTernaryTensorCreationAndAccess() {
         // Create a simple 2x3 tensor with values
-        val shape = sk.ai.net.graph.tensor.shape.Shape(2, 3)
+        val shape = Shape(2, 3)
         val values = doubleArrayOf(
             -1.0, 0.0, 1.0,
             0.5, -0.7, 0.2
@@ -38,7 +41,7 @@ class TernaryTensorTest {
     @Test
     fun testTernaryTensorWithLargeRandomData() {
         // Create a larger tensor with random values
-        val shape = sk.ai.net.graph.tensor.shape.Shape(10, 10, 10) // 1000 elements
+        val shape = Shape(10, 10, 10) // 1000 elements
         val values = DoubleArray(1000) { Random.nextDouble(-1.0, 1.0) }
 
         // Create tensors
@@ -74,7 +77,7 @@ class TernaryTensorTest {
         val sizes = listOf(100, 1000, 10000, 100000)
 
         for (size in sizes) {
-            val shape = sk.ai.net.graph.tensor.shape.Shape(size)
+            val shape = Shape(size)
             val values = DoubleArray(size) { Random.nextDouble(-1.0, 1.0) }
 
             // Create tensors

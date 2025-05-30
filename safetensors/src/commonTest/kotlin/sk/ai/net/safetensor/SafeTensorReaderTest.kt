@@ -4,7 +4,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
-import sk.ai.net.graph.tensor.shape.Shape
+import sk.ai.net.core.tensor.shape.Shape
 
 class SafeTensorReaderTest {
     @Test

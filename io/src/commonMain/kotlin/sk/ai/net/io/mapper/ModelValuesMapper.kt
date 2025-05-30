@@ -1,8 +1,7 @@
 package sk.ai.net.io.mapper
 
-import sk.ai.net.graph.tensor.Tensor
-import sk.ai.net.graph.nn.Module
-import sk.ai.net.graph.core.ComputeNode
+import sk.ai.net.core.tensor.Tensor
+import sk.ai.net.core.nn.Module
 
 /**
  * Interface for mapping tensor values to a model's parameters.

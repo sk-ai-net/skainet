@@ -1,8 +1,7 @@
 package sk.ai.net.graph.tensor.dsl
 
-import sk.ai.net.graph.tensor.shape.Shape
-import sk.ai.net.graph.tensor.SimpleTensor
-import sk.ai.net.graph.tensor.Tensor
+import sk.ai.net.core.tensor.SimpleTensor
+import sk.ai.net.core.tensor.shape.Shape
 import kotlin.math.abs
 import kotlin.test.Test
 import kotlin.test.assertTrue

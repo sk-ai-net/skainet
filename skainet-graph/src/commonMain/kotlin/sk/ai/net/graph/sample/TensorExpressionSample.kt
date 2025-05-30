@@ -1,11 +1,11 @@
 package sk.ai.net.graph.sample
 
+import sk.ai.net.core.tensor.SimpleTensor
 import sk.ai.net.graph.core.ComputeNode
-import sk.ai.net.graph.tensor.SimpleTensor
-import sk.ai.net.graph.tensor.Tensor
-import sk.ai.net.graph.tensor.expr
-import sk.ai.net.graph.tensor.plus
-import sk.ai.net.graph.tensor.times
+import sk.ai.net.core.tensor.Tensor
+import sk.ai.net.core.tensor.expr
+import sk.ai.net.core.tensor.plus
+import sk.ai.net.core.tensor.times
 
 fun createTensorExpressionSample(aValue: Double, bValue: Double, cValue: Double): ComputeNode<Tensor> {
     // Create tensors with single value

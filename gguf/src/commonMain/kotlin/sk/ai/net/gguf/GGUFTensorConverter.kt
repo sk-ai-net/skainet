@@ -1,8 +1,8 @@
 package sk.ai.net.gguf
 
-import sk.ai.net.graph.tensor.SimpleTensor
-import sk.ai.net.graph.tensor.Tensor
-import sk.ai.net.graph.tensor.shape.Shape
+import sk.ai.net.core.tensor.SimpleTensor
+import sk.ai.net.core.tensor.Tensor
+import sk.ai.net.core.tensor.shape.Shape
 
 /**
  * Utility class for converting GGUF tensors to graph tensors.

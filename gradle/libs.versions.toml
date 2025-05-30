@@ -4,12 +4,14 @@ kotlin = "2.1.21"
 kotlinx-coroutines = "1.10.2"
 android-minSdk = "24"
 android-compileSdk = "35"
+kotlinxCli = "0.3.5"
 kotlinxSerializationJson = "1.8.1"
 binaryCompatibility = "0.17.0"
 moduleGraphSouza = "0.12.0"
 kotlinxIo = "0.7.0"
 
 [libraries]
+kotlinx-cli = { module = "org.jetbrains.kotlinx:kotlinx-cli", version.ref = "kotlinxCli" }
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlinx-io-core-wasm-js = { module = "org.jetbrains.kotlinx:kotlinx-io-core-wasm-js", version.ref = "kotlinxIo" }

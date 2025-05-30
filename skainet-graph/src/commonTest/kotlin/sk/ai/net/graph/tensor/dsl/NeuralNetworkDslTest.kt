@@ -1,13 +1,13 @@
 package sk.ai.net.graph.tensor.dsl
 
-import sk.ai.net.graph.core.ComputeNode
 import sk.ai.net.graph.core.ValueNode
-import sk.ai.net.graph.nn.Module
-import sk.ai.net.graph.tensor.Tensor
-import sk.ai.net.graph.tensor.shape.Shape
+import sk.ai.net.core.tensor.Tensor
+import sk.ai.net.core.tensor.dsl.Context
+import sk.ai.net.core.tensor.dsl.context
+import sk.ai.net.core.tensor.dsl.network
+import sk.ai.net.core.tensor.shape.Shape
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class NeuralNetworkDslTest {
 

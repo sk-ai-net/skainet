@@ -2,14 +2,11 @@ package sk.ai.net.io.model
 
 import kotlinx.io.asSource
 import kotlinx.io.buffered
-import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.test.fail
-import sk.ai.net.graph.tensor.Tensor
-import java.io.File
 
 class ModelFormatTest {
 
@@ -19,7 +16,7 @@ class ModelFormatTest {
         val ggufFile = javaClass.getResourceAsStream("/test_experiment.gguf")
 
         if (ggufFile == null) {
-            System.out.println("[DEBUG_LOG] GGUF test file not found")
+            println("[DEBUG_LOG] GGUF test file not found")
             return
         }
 
@@ -29,26 +26,26 @@ class ModelFormatTest {
 
             // Test getMetadata
             val metadata = modelFormat.getMetadata()
-            System.out.println("[DEBUG_LOG] GGUF metadata: $metadata")
-            assertNotNull("Metadata should not be null", metadata)
+            println("[DEBUG_LOG] GGUF metadata: $metadata")
+            assertNotNull(metadata, "Metadata should not be null")
 
             // Test getTensorNames
             val tensorNames = modelFormat.getTensorNames()
-            System.out.println("[DEBUG_LOG] GGUF tensor names: $tensorNames")
-            assertNotNull("Tensor names should not be null", tensorNames)
+            println("[DEBUG_LOG] GGUF tensor names: $tensorNames")
+            assertNotNull(tensorNames, "Tensor names should not be null")
 
             if (tensorNames.isNotEmpty()) {
                 // Test getTensor
                 val tensorName = tensorNames.first()
                 val tensor = modelFormat.getTensor(tensorName)
-                System.out.println("[DEBUG_LOG] GGUF tensor $tensorName: $tensor")
-                assertNotNull("Tensor should not be null", tensor)
+                println("[DEBUG_LOG] GGUF tensor $tensorName: $tensor")
+                assertNotNull(tensor, "Tensor should not be null")
 
                 // Test getAllTensors
                 val tensors = modelFormat.getAllTensors()
                 System.out.println("[DEBUG_LOG] GGUF tensors: ${tensors.keys}")
-                assertNotNull("Tensors should not be null", tensors)
-                assertEquals("Number of tensors should match", tensorNames.size, tensors.size)
+                assertNotNull(tensors, "Tensors should not be null")
+                assertEquals(tensorNames.size, tensors.size, "Number of tensors should match")
             }
         } catch (e: Exception) {
             System.out.println("[DEBUG_LOG] Error in testGGUFModelFormat: ${e.message}")
@@ -63,7 +60,7 @@ class ModelFormatTest {
         val ggufFile = javaClass.getResourceAsStream("/test_experiment.gguf")
 
         if (ggufFile == null) {
-            System.out.println("[DEBUG_LOG] GGUF test file not found")
+            println("[DEBUG_LOG] GGUF test file not found")
             return
         }
 
@@ -73,30 +70,35 @@ class ModelFormatTest {
 
             // Test getMetadata
             val metadata = loader.getMetadata()
-            System.out.println("[DEBUG_LOG] ModelFormatLoader metadata: $metadata")
-            assertNotNull("Metadata should not be null", metadata)
+            println("[DEBUG_LOG] ModelFormatLoader metadata: $metadata")
+            System.out.println("[DEBUG_LOG] ModelFormatLoader metadata (System.out): $metadata")
+            assertNotNull(metadata, "Metadata should not be null")
 
             // Test getTensorNames
             val tensorNames = loader.getTensorNames()
-            System.out.println("[DEBUG_LOG] ModelFormatLoader tensor names: $tensorNames")
-            assertNotNull("Tensor names should not be null", tensorNames)
+            println("[DEBUG_LOG] ModelFormatLoader tensor names: $tensorNames")
+            assertNotNull(tensorNames, "Tensor names should not be null")
 
             if (tensorNames.isNotEmpty()) {
                 // Test getTensor
                 val tensorName = tensorNames.first()
                 val tensor = loader.getTensor(tensorName)
-                System.out.println("[DEBUG_LOG] ModelFormatLoader tensor $tensorName: $tensor")
-                assertNotNull("Tensor should not be null", tensor)
+                println("[DEBUG_LOG] ModelFormatLoader tensor $tensorName: $tensor")
+                assertNotNull(tensor, "Tensor should not be null")
 
                 // Test load
                 var loadedTensors = 0
                 kotlinx.coroutines.runBlocking {
                     loader.load { name, tensor ->
-                        System.out.println("[DEBUG_LOG] ModelFormatLoader loaded tensor $name: $tensor")
+                        println("[DEBUG_LOG] ModelFormatLoader loaded tensor $name: $tensor")
                         loadedTensors++
                     }
                 }
-                assertEquals("Number of loaded tensors should match", tensorNames.size, loadedTensors)
+                assertEquals(
+                    message = "Number of loaded tensors should match",
+                    expected = tensorNames.size,
+                    actual = loadedTensors
+                )
             }
         } catch (e: Exception) {
             System.out.println("[DEBUG_LOG] Error in testModelFormatLoader: ${e.message}")
@@ -120,16 +122,16 @@ class ModelFormatTest {
             val modelFormat = ModelFormat.create(ggufFile.asSource().buffered())
 
             // Verify that it's a GGUFModelFormat instance
-            assertTrue("ModelFormat should be a GGUFModelFormat", modelFormat is GGUFModelFormat)
+            assertTrue(modelFormat is GGUFModelFormat, "ModelFormat should be a GGUFModelFormat")
 
             // Test basic functionality
             val metadata = modelFormat.getMetadata()
             System.out.println("[DEBUG_LOG] ModelFormat.create metadata: $metadata")
-            assertNotNull("Metadata should not be null", metadata)
+            assertNotNull(metadata, "Metadata should not be null")
 
             val tensorNames = modelFormat.getTensorNames()
             System.out.println("[DEBUG_LOG] ModelFormat.create tensor names: $tensorNames")
-            assertNotNull("Tensor names should not be null", tensorNames)
+            assertNotNull(tensorNames, "Tensor names should not be null")
         } catch (e: Exception) {
             System.out.println("[DEBUG_LOG] Error in testModelFormatCreate: ${e.message}")
             e.printStackTrace()

@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     //alias(libs.plugins.dokka)
-    alias(libs.plugins.vanniktech.mavenPublish)
+    //alias(libs.plugins.vanniktech.mavenPublish)
 }
 
 kotlin {
@@ -21,8 +21,9 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
     wasmJs().nodejs()
-    macosX64 ()
+    macosArm64 ()
     linuxX64 ()
+    linuxArm64 ()
 
 
     sourceSets {
@@ -48,6 +49,7 @@ android {
     }
 }
 
+/*
 publishing {
     repositories {
         maven {
@@ -87,3 +89,6 @@ mavenPublishing {
         }
     }
 }
+
+
+ */

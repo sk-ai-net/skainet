@@ -79,16 +79,29 @@ class GGUFReader(source: Source) {
         GGUFValueType.BOOL to Boolean::class
     )
 
-    /** Retrieve a metadata field as a String, if it exists and is of type string */
+    /** Retrieve a metadata field as a String, if it exists and is of type string or can be converted to string */
     fun getString(key: String): String? {
         val field = this.fields[key] ?: return null  // key not present
-        // Ensure it's a singular string (not an array)
+
+        // Handle string fields
         if (field.types.size == 1 && field.types[0] == GGUFValueType.STRING) {
             // The actual string bytes are at the index specified by data[0]
             val byteList = field.parts[field.data[0]] as? List<UByte> ?: return null
             return byteList.toUByteArray().toByteArray().decodeToString()  // UTF-8 decoding
         }
-        return null  // Not a single string field
+
+        // Handle numeric fields (convert to string)
+        if (field.types.size == 1 && field.parts.isNotEmpty() && field.parts[0].isNotEmpty()) {
+            val value = field.parts[0][0]
+            return value.toString()
+        }
+
+        // Handle array fields (convert to string representation)
+        if (field.types.size >= 1 && field.types[0] == GGUFValueType.ARRAY) {
+            return getStringList(key).toString()
+        }
+
+        return null  // Not a field that can be converted to string
     }
 
     /** Retrieve a metadata field as a list of Strings (for array-of-string fields) */

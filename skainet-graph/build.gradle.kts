@@ -30,8 +30,10 @@ kotlin {
         }
     }
 
-    macosX64()
-    linuxX64()
+    macosArm64 ()
+    linuxX64 ()
+    linuxArm64 ()
+
 
     // TODO its lib, just make it jvm
     jvm()

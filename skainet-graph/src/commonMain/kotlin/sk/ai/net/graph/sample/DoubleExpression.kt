@@ -1,9 +1,9 @@
 package sk.ai.net.graph.sample
 
 import sk.ai.net.graph.core.ComputeNode
-import sk.ai.net.graph.double.expr
-import sk.ai.net.graph.double.plus
-import sk.ai.net.graph.double.times
+import sk.ai.net.core.double.expr
+import sk.ai.net.core.double.plus
+import sk.ai.net.core.double.times
 
 fun createStaticGraph(): ComputeNode<Double> {
     val a = 3.0.expr

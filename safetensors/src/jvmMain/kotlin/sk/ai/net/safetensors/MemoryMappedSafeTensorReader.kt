@@ -7,10 +7,10 @@ import java.nio.ByteOrder
 import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
 import kotlinx.serialization.json.*
-import sk.ai.net.graph.tensor.Int8Tensor
-import sk.ai.net.graph.tensor.SimpleTensor
-import sk.ai.net.graph.tensor.Tensor
-import sk.ai.net.graph.tensor.shape.Shape
+import sk.ai.net.core.tensor.Int8Tensor
+import sk.ai.net.core.tensor.SimpleTensor
+import sk.ai.net.core.tensor.Tensor
+import sk.ai.net.core.tensor.shape.Shape
 
 /**
  * Implementation of SafeTensorReader that uses memory-mapped files for efficient loading of large safetensor files.
@@ -36,11 +36,20 @@ class MemoryMappedSafeTensorsReader private constructor(
     // Header information
     private val headerSize: Long
     private val metadata: Map<String, MappedTensorMetadata>
+    private val headerJson: String
 
     init {
         // Parse the header
         headerSize = readHeaderSize(headerBuffer)
-        metadata = parseHeader(headerBuffer, headerSize)
+
+        // Extract the header JSON string
+        val headerBytes = ByteArray(headerSize.toInt())
+        headerBuffer.position(8)
+        headerBuffer.get(headerBytes)
+        headerJson = headerBytes.decodeToString()
+
+        // Parse the JSON header using kotlinx.serialization
+        metadata = parseHeaderJson(headerJson)
     }
 
     override fun readTensor(name: String): Tensor? {
@@ -50,6 +59,25 @@ class MemoryMappedSafeTensorsReader private constructor(
 
     override fun getTensorNames(): List<String> {
         return metadata.keys.toList()
+    }
+
+    /**
+     * Gets the metadata from the safetensor file.
+     *
+     * @return A map of metadata keys to values.
+     */
+    override fun getMetadata(): Map<String, String> {
+        // SafeTensors files don't have a standard metadata format like GGUF files
+        return emptyMap()
+    }
+
+    /**
+     * Gets the JSON header from the safetensor file.
+     *
+     * @return The JSON header string.
+     */
+    override fun getHeaderJson(): String {
+        return headerJson
     }
 
     /**
@@ -66,26 +94,6 @@ class MemoryMappedSafeTensorsReader private constructor(
         return buffer.order(ByteOrder.LITTLE_ENDIAN).getLong()
     }
 
-    /**
-     * Extracts and parses the JSON header from the safetensor file.
-     * 
-     * The header starts after the 8-byte header size and contains metadata
-     * about all tensors stored in the file.
-     * 
-     * @param buffer The buffer containing the safetensor data.
-     * @param headerSize The size of the JSON header in bytes.
-     * @return A map of tensor names to their metadata.
-     */
-    private fun parseHeader(buffer: ByteBuffer, headerSize: Long): Map<String, MappedTensorMetadata> {
-        // Extract the header JSON string
-        val headerBytes = ByteArray(headerSize.toInt())
-        buffer.position(8)
-        buffer.get(headerBytes)
-        val headerJson = headerBytes.decodeToString()
-
-        // Parse the JSON header using kotlinx.serialization
-        return parseHeaderJson(headerJson)
-    }
 
     /**
      * Parses the JSON header string to extract tensor metadata.
@@ -273,7 +281,7 @@ class MemoryMappedSafeTensorsReader private constructor(
  * @property dataOffset The offset of the tensor data from the start of the data section.
  * @property dataLength The length of the tensor data in bytes.
  */
-private data class MappedTensorMetadata(
+internal data class MappedTensorMetadata(
     val dtype: String,
     val shape: Shape,
     val dataOffset: Long,

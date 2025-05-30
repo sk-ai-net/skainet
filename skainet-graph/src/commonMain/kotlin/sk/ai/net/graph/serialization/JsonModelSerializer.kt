@@ -5,10 +5,11 @@ import sk.ai.net.graph.core.ValueNode
 import sk.ai.net.graph.core.AddNode
 import sk.ai.net.graph.core.MultiplyNode
 import sk.ai.net.graph.core.ActivationNode
-import sk.ai.net.graph.nn.Module
-import sk.ai.net.graph.nn.Sequential
-import sk.ai.net.graph.tensor.Tensor
-import sk.ai.net.graph.tensor.SimpleTensor
+import sk.ai.net.core.nn.Module
+import sk.ai.net.core.nn.Sequential
+import sk.ai.net.core.tensor.SimpleTensor
+import sk.ai.net.core.tensor.Tensor
+import sk.ai.net.core.tensor.shape.Shape
 
 /**
  * A JSON-based implementation of the ModelSerializer interface.
@@ -42,6 +43,7 @@ class JsonModelSerializer<T>(
                 json.append("\"type\":\"ValueNode\",")
                 json.append("\"value\":\"${serializeValue(node.evaluate())}\"")
             }
+
             is AddNode<*> -> {
                 json.append("\"type\":\"AddNode\",")
                 json.append("\"inputs\":[")
@@ -51,6 +53,7 @@ class JsonModelSerializer<T>(
                 }
                 json.append("]")
             }
+
             is MultiplyNode<*> -> {
                 json.append("\"type\":\"MultiplyNode\",")
                 json.append("\"inputs\":[")
@@ -60,6 +63,7 @@ class JsonModelSerializer<T>(
                 }
                 json.append("]")
             }
+
             is ActivationNode<*> -> {
                 json.append("\"type\":\"ActivationNode\",")
                 json.append("\"name\":\"${node}\",")
@@ -70,6 +74,7 @@ class JsonModelSerializer<T>(
                 }
                 json.append("]")
             }
+
             else -> {
                 throw IllegalArgumentException("Unsupported node type: ${node::class.simpleName}")
             }
@@ -94,6 +99,7 @@ class JsonModelSerializer<T>(
                 val value = extractJsonValue(serialized, "value")
                 ValueNode(deserializeValue(value))
             }
+
             "AddNode" -> {
                 val inputs = extractJsonArray(serialized, "inputs")
                 val node = createAddNode { a, b -> a } // Placeholder function
@@ -102,6 +108,7 @@ class JsonModelSerializer<T>(
                 }
                 node
             }
+
             "MultiplyNode" -> {
                 val inputs = extractJsonArray(serialized, "inputs")
                 val node = createMultiplyNode { a, b -> a } // Placeholder function
@@ -110,6 +117,7 @@ class JsonModelSerializer<T>(
                 }
                 node
             }
+
             "ActivationNode" -> {
                 val inputs = extractJsonArray(serialized, "inputs")
                 val name = extractJsonValue(serialized, "name")
@@ -119,6 +127,7 @@ class JsonModelSerializer<T>(
                 }
                 node
             }
+
             else -> {
                 throw IllegalArgumentException("Unsupported node type: $type")
             }
@@ -145,6 +154,7 @@ class JsonModelSerializer<T>(
                 }
                 json.append("]")
             }
+
             else -> {
                 throw IllegalArgumentException("Unsupported module type: ${module::class.simpleName}")
             }
@@ -170,6 +180,7 @@ class JsonModelSerializer<T>(
                 val modules = moduleStrings.map { deserializeModule(it) }.toTypedArray()
                 Sequential(*modules)
             }
+
             else -> {
                 throw IllegalArgumentException("Unsupported module type: $type")
             }
@@ -299,7 +310,7 @@ fun createTensorJsonSerializer(): JsonModelSerializer<Tensor> {
             val parts = serialized.split("|")
             val dimensions = parts[0].split(",").map { it.toInt() }.toIntArray()
             val values = parts[1].split(",").map { it.toDouble() }.toDoubleArray()
-            SimpleTensor(sk.ai.net.graph.tensor.shape.Shape(dimensions), values)
+            SimpleTensor(Shape(dimensions), values)
         },
         createAddNode = { add -> AddNode(add) },
         createMultiplyNode = { multiply -> MultiplyNode(multiply) },

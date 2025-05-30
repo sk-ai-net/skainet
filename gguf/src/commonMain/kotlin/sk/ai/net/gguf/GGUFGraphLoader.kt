@@ -2,8 +2,8 @@ package sk.ai.net.gguf
 
 import kotlinx.io.Source
 import kotlinx.io.buffered
-import sk.ai.net.graph.tensor.Tensor
-import sk.ai.net.graph.tensor.TensorValueNode
+import sk.ai.net.core.tensor.Tensor
+import sk.ai.net.core.tensor.TensorValueNode
 
 /**
  * Utility class for loading GGUF files into the tensor-based neural network engine.
@@ -25,7 +25,7 @@ object GGUFTensorLoader {
      * @return A map of tensor names to tensor value nodes.
      */
     fun loadTensors(source: Source): Map<String, TensorValueNode> {
-        val reader = GGUFReader(source.buffered())
+        val reader = GGUFReader(source)
 
         // Convert each tensor to a graph tensor and create a value node for it
         return reader.tensors.associate { readerTensor ->
@@ -42,7 +42,7 @@ object GGUFTensorLoader {
      * @return A map of metadata keys to values.
      */
     fun getMetadata(source: Source): Map<String, String> {
-        val reader = GGUFReader(source.buffered())
+        val reader = GGUFReader(source.peek())
 
         // Collect all string metadata fields
         return reader.fields.keys
@@ -61,7 +61,7 @@ object GGUFTensorLoader {
      * @return The tensor, or null if not found.
      */
     fun getTensor(source: Source, name: String): Tensor? {
-        val reader = GGUFReader(source.buffered())
+        val reader = GGUFReader(source.peek())
 
         // Find the tensor with the given name
         val readerTensor = reader.tensors.find { it.name == name } ?: return null

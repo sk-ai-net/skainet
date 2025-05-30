@@ -11,7 +11,7 @@ plugins {
     //alias(libs.plugins.dokka)
 
     // Commenting out for now as it's causing issues with the build
-     alias(libs.plugins.vanniktech.mavenPublish)
+   //  alias(libs.plugins.vanniktech.mavenPublish)
 }
 
 kotlin {
@@ -27,7 +27,7 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
     wasmJs().nodejs()
-    macosX64 ()
+    macosArm64 ()
     linuxX64 ()
 
     sourceSets {
@@ -37,7 +37,6 @@ kotlin {
                 implementation(project(":gguf"))
                 implementation(project(":safetensors"))
                 implementation(libs.kotlinx.io.core)
-
                 implementation(libs.kotlinx.serialization.json)
             }
         }
@@ -51,6 +50,7 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation(libs.kotlinx.coroutines)
+                implementation(project(":skainet-graph"))
             }
         }
 
@@ -65,6 +65,7 @@ android {
     }
 }
 
+/*
 publishing {
 
     repositories {
@@ -105,3 +106,5 @@ mavenPublishing {
         }
     }
 }
+
+ */

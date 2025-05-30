@@ -1,7 +1,8 @@
 package sk.ai.net.graph.serialization
 
 import sk.ai.net.graph.core.ComputeNode
-import sk.ai.net.graph.nn.Module
+import sk.ai.net.core.nn.Module
+import sk.ai.net.core.tensor.Tensor
 import java.io.File
 
 /**
@@ -104,6 +105,6 @@ class JvmModelSerializer<T>(
  *
  * @return A JVM model serializer for tensor data.
  */
-fun createJvmTensorSerializer(): JvmModelSerializer<sk.ai.net.graph.tensor.Tensor> {
+fun createJvmTensorSerializer(): JvmModelSerializer<Tensor> {
     return JvmModelSerializer(createTensorJsonSerializer())
 }

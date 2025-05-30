@@ -9,7 +9,7 @@ plugins {
     // Temporarily disable Kover plugin to fix wasmJs build issue
     // alias(libs.plugins.kover)
     alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.vanniktech.mavenPublish)
+    //alias(libs.plugins.vanniktech.mavenPublish)
 }
 
 
@@ -41,7 +41,7 @@ kotlin {
         }
     }
 
-    macosX64 ()
+    macosArm64 ()
     linuxX64 ()
 
 
@@ -139,6 +139,7 @@ tasks.withType<ProcessResources> {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
+/*
 publishing {
     repositories {
         maven {
@@ -177,4 +178,8 @@ mavenPublishing {
             }
         }
     }
+
+
 }
+
+ */

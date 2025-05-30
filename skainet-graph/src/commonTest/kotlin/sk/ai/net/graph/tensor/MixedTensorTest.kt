@@ -1,5 +1,12 @@
 package sk.ai.net.graph.tensor
 
+import sk.ai.net.core.tensor.SimpleTensor
+import sk.ai.net.core.tensor.TernaryTensor
+import sk.ai.net.core.tensor.matmul
+import sk.ai.net.core.tensor.plus
+import sk.ai.net.core.tensor.relu
+import sk.ai.net.core.tensor.shape.Shape
+import sk.ai.net.core.tensor.times
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -10,7 +17,7 @@ class MixedTensorTest {
     @Test
     fun testMixedTensorOperations() {
         // Create a TernaryTensor with values -1, 0, 1
-        val shape = sk.ai.net.graph.tensor.shape.Shape(2, 3)
+        val shape = Shape(2, 3)
         val ternaryValues = doubleArrayOf(-1.0, 0.0, 1.0, -1.0, 0.0, 1.0)
         val ternaryTensor = TernaryTensor.fromDoubles(shape, ternaryValues)
 
@@ -65,12 +72,12 @@ class MixedTensorTest {
 
         // Test matrix multiplication
         val ternaryMatrix1 = TernaryTensor.fromDoubles(
-            sk.ai.net.graph.tensor.shape.Shape(2, 2),
+            Shape(2, 2),
             doubleArrayOf(1.0, 0.0, -1.0, 1.0)
         )
 
         val simpleMatrix2 = SimpleTensor(
-            sk.ai.net.graph.tensor.shape.Shape(2, 2),
+            Shape(2, 2),
             doubleArrayOf(0.5, 0.3, -0.2, 0.7)
         )
 
@@ -101,7 +108,7 @@ class MixedTensorTest {
             val col = i % 2
             matmulResult[row, col]
         }
-        val resultTernary = TernaryTensor.fromDoubles(sk.ai.net.graph.tensor.shape.Shape(2, 2), resultValues)
+        val resultTernary = TernaryTensor.fromDoubles(Shape(2, 2), resultValues)
 
         // Verify quantization to -1, 0, 1
         // Print the actual values for debugging
@@ -122,13 +129,13 @@ class MixedTensorTest {
 
         // Input: 1x3 SimpleTensor
         val input = SimpleTensor(
-            sk.ai.net.graph.tensor.shape.Shape(1, 3),
+            Shape(1, 3),
             doubleArrayOf(0.5, -0.3, 0.7)
         )
 
         // Weights: 3x2 TernaryTensor
         val weights = TernaryTensor.fromDoubles(
-            sk.ai.net.graph.tensor.shape.Shape(3, 2),
+            Shape(3, 2),
             doubleArrayOf(
                 1.0, -1.0,
                 0.0, 1.0,
@@ -140,7 +147,7 @@ class MixedTensorTest {
         val output = input matmul weights
 
         // Verify output shape
-        assertEquals(sk.ai.net.graph.tensor.shape.Shape(1, 2), output.shape)
+        assertEquals(Shape(1, 2), output.shape)
 
         // Verify output values
         // Note: The actual implementation might use a different algorithm or interpretation

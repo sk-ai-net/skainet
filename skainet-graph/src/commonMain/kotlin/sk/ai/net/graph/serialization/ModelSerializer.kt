@@ -1,7 +1,7 @@
 package sk.ai.net.graph.serialization
 
 import sk.ai.net.graph.core.ComputeNode
-import sk.ai.net.graph.nn.Module
+import sk.ai.net.core.nn.Module
 
 /**
  * Interface for serializing and deserializing computation models.
