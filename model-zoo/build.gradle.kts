@@ -67,19 +67,19 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-android:3.1.3")
+                implementation("io.ktor:ktor-client-android:3.2.1")
             }
         }
 
         val wasmJsMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-js:3.1.3")
+                implementation("io.ktor:ktor-client-js:3.2.1")
             }
         }
 
         val iosMain by creating {
             dependencies {
-                implementation("io.ktor:ktor-client-darwin:3.1.3")
+                implementation("io.ktor:ktor-client-darwin:3.2.1")
             }
         }
     }
