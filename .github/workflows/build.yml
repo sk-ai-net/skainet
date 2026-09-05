@@ -40,6 +40,15 @@ jobs:
               jvmTest
               :skainet-apps:skainet-plan:test
               :skainet-backends:benchmarks:jvm-cpu-publish:test
+            # This leg runs nearly every module's jvmTest sequentially, each forking its own
+            # 8g-heap Test JVM (build.gradle.kts `maxHeapSize`). ci-gradle.properties already caps
+            # org.gradle.workers.max=2 repo-wide, but on this leg two 8g forks running at once plus
+            # the 4g Gradle client JVM (GRADLE_OPTS below) can still exceed the 16 GB runner — the
+            # same OOM signature described above ("The operation was canceled" with no BUILD
+            # FAILED), just needing the extra memory pressure SKEEP-005's concurrency tests
+            # (KernelDispatchConcurrencyTest, CoroutineSchedule, parallel SDPA) added to tip it
+            # over. Force this leg fully serial so at most one 8g fork runs at a time.
+            extraGradleArgs: -Dorg.gradle.workers.max=1
           # verifyNpmPins guards the npm-* pins in gradle/libs.versions.toml against
           # lockfile drift; it belongs on the leg that already has the JS toolchain.
           - name: js-wasm
@@ -109,6 +118,7 @@ jobs:
           ./gradlew --no-daemon --stacktrace \
             -Dorg.gradle.caching=true \
             -Dorg.gradle.configuration-cache=true \
+            ${{ matrix.extraGradleArgs }} \
             ${{ matrix.tasks }}
 
       # `cancelled()` matters: an OOM-killed runner reports the job as
