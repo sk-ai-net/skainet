@@ -50,16 +50,21 @@ public interface Schedule {
 
 It is deliberately small, non-suspending and dependency-free: ops are synchronous on every
 Kotlin target, and `skainet-lang-core` takes no coroutine dependency. The JVM implementation,
-`CoroutineSchedule` in `skainet-backend-cpu`, is structured concurrency in the textbook sense —
-one region is one `coroutineScope`:
+`CoroutineSchedule` in `skainet-backend-cpu`, keeps the structured-concurrency guarantees without
+ever letting the caller block on work that still needs a pool thread. One region is one shared
+queue of chunks:
 
-* the calling thread runs the first chunk itself, so no core idles blocked on the join;
-* the other chunks are `launch`ed on the dispatcher (`Dispatchers.Default` by default);
-* the scope closes only when every child has finished or been cancelled — the first failure
-  cancels the siblings and is rethrown to the caller;
-* a region reached from inside another region runs inline, so the dispatcher never waits on
-  itself; `CoroutineSchedule.dedicated(n)` owns its own pool for callers that already live on
-  `Dispatchers.Default`.
+* the calling thread runs the first chunk itself, then keeps claiming chunks until the queue is
+  empty, so no core idles blocked on the join;
+* `tasks - 1` helpers are dispatched to the dispatcher (`Dispatchers.Default` by default) and
+  claim chunks from the same queue; a helper the pool never started finds the queue empty and
+  exits without running a body;
+* the region returns only when every *claimed* chunk has finished — the first failure stops the
+  chunks that have not started and is rethrown to the caller once the running ones are done;
+* because the caller only waits for chunks that are already running somewhere, a region entered
+  from a thread of the dispatcher's own pool cannot deadlock, however many pool threads are busy;
+* a region reached from inside another region runs inline; `CoroutineSchedule.dedicated(n)` owns
+  its own pool for callers that want isolation from `Dispatchers.Default`.
 
 == The contract a body must keep
 

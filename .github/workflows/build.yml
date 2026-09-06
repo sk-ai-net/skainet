@@ -40,14 +40,16 @@ jobs:
               jvmTest
               :skainet-apps:skainet-plan:test
               :skainet-backends:benchmarks:jvm-cpu-publish:test
-            # This leg runs nearly every module's jvmTest sequentially, each forking its own
-            # 8g-heap Test JVM (build.gradle.kts `maxHeapSize`). ci-gradle.properties already caps
-            # org.gradle.workers.max=2 repo-wide, but on this leg two 8g forks running at once plus
-            # the 4g Gradle client JVM (GRADLE_OPTS below) can still exceed the 16 GB runner — the
-            # same OOM signature described above ("The operation was canceled" with no BUILD
-            # FAILED), just needing the extra memory pressure SKEEP-005's concurrency tests
-            # (KernelDispatchConcurrencyTest, CoroutineSchedule, parallel SDPA) added to tip it
-            # over. Force this leg fully serial so at most one 8g fork runs at a time.
+            # This leg runs nearly every module's jvmTest, each forking its own 8g-heap Test JVM
+            # (build.gradle.kts `maxHeapSize`). ci-gradle.properties caps org.gradle.workers.max=2
+            # repo-wide; this leg goes fully serial so at most one 8g fork runs next to the 4g
+            # Gradle client JVM (GRADLE_OPTS below) on the 16 GB runner.
+            #
+            # History: the 40-minute reds after SKEEP-005 (#1262) were NOT memory — the runner had
+            # 11 GB free when the job was killed. `CoroutineSchedule.forRange` blocked a
+            # Dispatchers.Default worker on children that needed the same 4-thread pool, so
+            # `skainet-backend-cpu:jvmTest` deadlocked in CoroutineScheduleTest on the 4-vCPU
+            # runner. Fixed in the schedule itself; the serial setting stays for memory headroom.
             extraGradleArgs: -Dorg.gradle.workers.max=1
           # verifyNpmPins guards the npm-* pins in gradle/libs.versions.toml against
           # lockfile drift; it belongs on the leg that already has the JS toolchain.

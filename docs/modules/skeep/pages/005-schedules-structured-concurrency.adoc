@@ -93,13 +93,22 @@ cancelled; all writes happen-before the return.
 
 === The JVM implementation (`skainet-backend-cpu`)
 
-`CoroutineSchedule(dispatcher = Dispatchers.Default, parallelism = cores, sink)`: a region is
-`runBlocking { coroutineScope { launch(dispatcher) { … } … ; body(first chunk) } }` — the caller
-runs the first chunk itself, so no core idles on the join; a nested region (detected with a
-thread-local) runs inline so the dispatcher never waits on itself; `dedicated(parallelism)` owns
-its own pool for callers that already live on `Dispatchers.Default`. `parallelChunks(outputDim,
-schedule)` replaces the old island; the Panama Q4_K/Q5_K SPI kernels gained a schedule-aware
-overload; `ScheduleRegion` events report what ran when a sink is attached.
+`CoroutineSchedule(dispatcher = Dispatchers.Default, parallelism = cores, sink)`: a region is a
+shared queue of `tasks` chunks — `tasks - 1` helpers are dispatched to the dispatcher, the caller
+runs the first chunk itself and then drains the queue, and finally waits only for chunks some
+thread has already claimed. A caller can therefore always finish a region on its own, which is
+what makes it safe to enter from `Dispatchers.Default`. A nested region (detected with a
+thread-local) runs inline; `dedicated(parallelism)` owns its own pool for callers that want
+isolation from `Dispatchers.Default`. `parallelChunks(outputDim, schedule)` replaces the old
+island; the Panama Q4_K/Q5_K SPI kernels gained a schedule-aware overload; `ScheduleRegion`
+events report what ran when a sink is attached.
+
+NOTE: The first merged version ran a region as
+`runBlocking { coroutineScope { launch(dispatcher) { … } … } }`. A `coroutineScope` waits for
+every child, including the ones the pool never got to start, so once every `Dispatchers.Default`
+worker was inside a region the pool had nobody left to run the children and the region hung.
+That is exactly the 4-vCPU CI runner's situation; it never reproduced on a 14-core laptop. The
+chunk-queue region above replaced it.
 
 === First consumer: `scaledDotProductAttention`
 
@@ -169,8 +178,10 @@ bodies. Behaviour change on the JVM only: `DirectCpuExecutionContext()` now runs
 
 == Risks
 
-* **Nested `runBlocking` on `Dispatchers.Default`** — mitigated by caller participation, inline
-  nested regions and `dedicated()`; tested from inside a Default worker.
+* **Blocking a `Dispatchers.Default` worker on the pool it belongs to** — the region never
+  waits for a chunk that still needs a pool thread: the caller drains the queue itself and only
+  joins chunks already running. Tested from inside a Default worker and, deterministically, from
+  every thread of a saturated two-thread pool.
 * **A body that touches the context** — the contract is documented on `forRange`; the parity
   tests run bodies on foreign threads.
 * **JIT-dependent lane reductions** — the Panama matmul's `reduceLanes` order changes when the
