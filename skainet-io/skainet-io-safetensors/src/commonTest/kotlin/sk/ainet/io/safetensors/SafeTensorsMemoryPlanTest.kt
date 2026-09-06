@@ -1,7 +1,6 @@
 package sk.ainet.io.safetensors
 
 import sk.ainet.io.RandomAccessSource
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -10,7 +9,6 @@ import kotlin.test.assertNull
  * #1169: footprint planning from a safetensors header — sizes come from `data_offsets`, so they
  * are authoritative even for dtypes with no fixed per-element width.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class SafeTensorsMemoryPlanTest {
 
     private class ByteSource(private val data: ByteArray) : RandomAccessSource {

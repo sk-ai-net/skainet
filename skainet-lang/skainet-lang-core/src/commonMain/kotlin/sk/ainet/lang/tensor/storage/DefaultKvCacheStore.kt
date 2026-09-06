@@ -24,7 +24,6 @@ import sk.ainet.lang.types.FP32
  *   the model closes, which is what lets the memory plan be checked against reality (#1074). The
  *   default keeps today's behaviour exactly.
  */
-@OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
 public class DefaultKvCacheStore @kotlin.jvm.JvmOverloads constructor(
     private val config: KvCacheConfig,
     private val scope: sk.ainet.lang.memory.ModelScope? = null,
@@ -44,10 +43,8 @@ public class DefaultKvCacheStore @kotlin.jvm.JvmOverloads constructor(
     override val valueEncoding: TensorEncoding get() = config.valueEncoding
 
     /** The dense ring holds [KvCacheConfig.keyDType] elements (FP32 unless configured otherwise) — #1077. */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     override val keyFormat: sk.ainet.lang.memory.Format get() = sk.ainet.lang.memory.Format(config.keyDType, config.keyEncoding)
 
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     override val valueFormat: sk.ainet.lang.memory.Format get() = sk.ainet.lang.memory.Format(config.valueDType, config.valueEncoding)
     override val placement: Placement get() = config.placement
 
@@ -177,17 +174,13 @@ public class DefaultKvCacheStore @kotlin.jvm.JvmOverloads constructor(
         get() = if (slidingWindow) (_currentSeqLen - maxSeqLen).coerceAtLeast(0) else 0
 
     /** Storage handles over the per-layer arrays, made once so a window costs no allocation. */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     private val keyStorages by lazy { List(numLayers) { sk.ainet.lang.memory.Storage.Heap.wrap(keys[it]) } }
 
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     private val valueStorages by lazy { List(numLayers) { sk.ainet.lang.memory.Storage.Heap.wrap(values[it]) } }
 
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     override fun keyWindow(layer: Int, from: Int, to: Int): sk.ainet.lang.memory.WindowedKV =
         window(keyStorages[layer], layer, from, to, config.keyDType)
 
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     override fun valueWindow(layer: Int, from: Int, to: Int): sk.ainet.lang.memory.WindowedKV =
         window(valueStorages[layer], layer, from, to, config.valueDType)
 
@@ -198,7 +191,6 @@ public class DefaultKvCacheStore @kotlin.jvm.JvmOverloads constructor(
      * stride left at `maxSeqLen * headDim`: contiguous per head, strided across heads. When the run
      * crosses the end of the ring it becomes two such views, oldest first.
      */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     private fun window(
         storage: sk.ainet.lang.memory.Storage,
         layer: Int,
@@ -221,7 +213,6 @@ public class DefaultKvCacheStore @kotlin.jvm.JvmOverloads constructor(
         }
     }
 
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     private fun view(
         storage: sk.ainet.lang.memory.Storage,
         startSlot: Int,

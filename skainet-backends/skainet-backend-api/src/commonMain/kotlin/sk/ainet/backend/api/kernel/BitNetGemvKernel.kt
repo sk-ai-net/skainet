@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.I8Absmax
 import sk.ainet.lang.memory.Storage
@@ -25,7 +24,6 @@ import sk.ainet.lang.tensor.storage.TensorEncoding
  * The weight's codes are read once per call, not once per row: a decode step is one row against
  * the whole matrix, so hoisting it is the difference between O(rows·n·k) decodes and O(n·k).
  */
-@ExperimentalMemoryApi
 public class BitNetGemvKernel(override val key: KernelKey) : ViewKernel {
 
     override val name: String get() = "bitnet_gemv/reference"

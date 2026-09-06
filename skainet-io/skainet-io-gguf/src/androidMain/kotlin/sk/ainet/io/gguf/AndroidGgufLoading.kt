@@ -6,7 +6,6 @@ import sk.ainet.io.RandomAccessSource
 import sk.ainet.io.openRandomAccessSource
 import sk.ainet.lang.memory.plan.WeightForm
 import sk.ainet.lang.memory.plan.WeightResidency
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.plan.Budget
 import sk.ainet.lang.memory.plan.DeviceFit
 import sk.ainet.lang.memory.plan.DeviceMemory
@@ -31,7 +30,6 @@ import sk.ainet.lang.memory.plan.fitOn
  * fit check tells you which of the two pools you are about to run out of, rather than letting the
  * app find out by being killed.
  */
-@OptIn(ExperimentalMemoryApi::class)
 public object AndroidGguf {
 
     /**

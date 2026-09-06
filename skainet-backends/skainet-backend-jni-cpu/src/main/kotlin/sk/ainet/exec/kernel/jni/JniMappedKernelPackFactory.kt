@@ -1,7 +1,6 @@
 package sk.ainet.exec.kernel.jni
 
 import sk.ainet.backend.api.kernel.ViewKernelPack
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * `ServiceLoader`-friendly wrapper around [JniMappedKernelPack], the Android counterpart of
@@ -13,7 +12,6 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * packaging must preserve `META-INF/services` entries for discovery to work; a consumer whose
  * build strips them can still call [JniMappedKernelPack.install] directly.
  */
-@OptIn(ExperimentalMemoryApi::class)
 public class JniMappedKernelPackFactory : ViewKernelPack {
     override val name: String get() = "jni-rowmajor"
     override fun install(): Unit = JniMappedKernelPack.install()

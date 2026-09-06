@@ -18,7 +18,6 @@ public interface ExecutionContext {
      * insertions, allocations. Default [sk.ainet.lang.memory.trace.NoopTraceSink] — nothing is
      * recorded until a context opts in with a recording or exporting sink.
      */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     public val traceSink: sk.ainet.lang.memory.trace.TraceSink get() = sk.ainet.lang.memory.trace.NoopTraceSink
 
     /**
@@ -26,7 +25,6 @@ public interface ExecutionContext {
      * [sk.ainet.lang.memory.Scope.Ambient] — GC-managed, today's behaviour; a generation loop opts
      * in by providing a `ForwardScope` and calling `reset()` per step.
      */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     public val memoryScope: sk.ainet.lang.memory.Scope get() = sk.ainet.lang.memory.Scope.Ambient
 
     public val ops: TensorOps
@@ -74,7 +72,6 @@ public interface ExecutionContext {
      * is already what this context runs — emits [sk.ainet.lang.memory.trace.TraceEvent.ScheduleDowngraded]
      * so an unhonoured schedule is visible in the trace instead of silently sequential.
      */
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     public fun withSchedule(schedule: sk.ainet.context.schedule.Schedule): ExecutionContext {
         if (schedule !== this.schedule && traceSink.isEnabled) {
             traceSink.emit(
@@ -125,7 +122,6 @@ public interface ExecutionContext {
      * factory path is untouched for every context that never opts in. The region is *not* cleared:
      * a slab slice after `reset()` holds old bytes, so callers fill it themselves.
      */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     private fun <T : DType> scopedDenseFloats(
         shape: Shape,
         dtype: KClass<T>,
@@ -135,7 +131,6 @@ public interface ExecutionContext {
         return sk.ainet.lang.tensor.data.StorageFloatTensorData(shape, scope.allocateFloats(shape.volume))
     }
 
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     public fun <T : DType, V> full(shape: Shape, dtype: KClass<T>, value: Number): Tensor<T, V> {
         scopedDenseFloats(shape, dtype)?.let { scoped ->
             val s = scoped.storage
@@ -148,7 +143,6 @@ public interface ExecutionContext {
     }
 
 
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     public fun <T : DType, V> zeros(
         shape: Shape,
         dtype: KClass<T>
@@ -177,7 +171,6 @@ public interface ExecutionContext {
         return fromData(data, dtype)
     }
 
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     public fun <T : DType, V> ones(
         shape: Shape,
         dtype: KClass<T>
@@ -193,7 +186,6 @@ public interface ExecutionContext {
         ops
     )
 
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     public fun <T : DType, V> fromFloatArray(
         shape: Shape,
         dtype: KClass<T>,

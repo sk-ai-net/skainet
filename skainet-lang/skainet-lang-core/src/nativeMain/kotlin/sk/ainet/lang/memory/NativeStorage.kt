@@ -32,7 +32,6 @@ import platform.posix.open
  * (SKEEP-003 §4.8.3). Alignment: `malloc` gives 16 bytes on every supported platform, which is what
  * NEON wants; 64-byte alignment for AMX-class paths is a follow-up with `posix_memalign`.
  */
-@ExperimentalMemoryApi
 public class NativeMallocStorage private constructor(
     override val id: StorageId,
     private val ptr: CPointer<ByteVar>,
@@ -85,7 +84,6 @@ public class NativeMallocStorage private constructor(
 }
 
 /** Kotlin/Native binding of [Storage.Mapped]: `mmap(2)` of a file region, read-only, `munmap` on close. */
-@ExperimentalMemoryApi
 public class NativeMappedStorage private constructor(
     override val id: StorageId,
     public val path: String,

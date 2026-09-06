@@ -20,7 +20,6 @@ import sk.ainet.lang.tensor.ops.turboquant.TurboQuantPresets
  * - Asymmetric K/V policies (e.g., Q8_0 for keys, 4-bit for values)
  * - Backend-specific fused dequant+attention paths
  */
-@OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
 private fun bytesPerElement(format: sk.ainet.lang.memory.Format): Double {
     val probe = 1024L
     val bytes = format.physicalBytes(probe) ?: return format.dtype.sizeInBytes.toDouble()
@@ -28,7 +27,6 @@ private fun bytesPerElement(format: sk.ainet.lang.memory.Format): Double {
 }
 
 /** Average bytes per element of [format]; fractional for packed encodings. */
-@OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
 internal fun kvBytesPerElement(format: sk.ainet.lang.memory.Format): Double {
     val probe = 1024L
     val bytes = format.physicalBytes(probe) ?: return format.dtype.sizeInBytes.toDouble()
@@ -68,21 +66,17 @@ public interface KvCacheStore {
      * memory planner reads this instead of guessing a byte width, and guessing is what made a dense
      * FP32 ring be planned as bf16 and understated by 2× (#1074 caught it; this makes it impossible).
      */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     public val keyFormat: sk.ainet.lang.memory.Format
         get() = sk.ainet.lang.memory.Format(sk.ainet.lang.types.FP32, keyEncoding)
 
     /** What the values are and how they are stored; see [keyFormat]. */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     public val valueFormat: sk.ainet.lang.memory.Format
         get() = sk.ainet.lang.memory.Format(sk.ainet.lang.types.FP32, valueEncoding)
 
     /** Bytes one key element occupies under [keyFormat] (fractional for sub-byte encodings). */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     public val keyBytesPerElement: Double get() = kvBytesPerElement(keyFormat)
 
     /** Bytes one value element occupies under [valueFormat]. */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     public val valueBytesPerElement: Double get() = kvBytesPerElement(valueFormat)
 
     /**
@@ -93,17 +87,14 @@ public interface KvCacheStore {
      * The default implementation copies the range once through [readKeys], which is correct for
      * every store; [DefaultKvCacheStore] overrides it with zero-copy views over the ring itself.
      */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     public fun keyWindow(layer: Int, from: Int = 0, to: Int = currentSeqLen): sk.ainet.lang.memory.WindowedKV =
         copiedWindow(readKeys(layer, from, to), to - from, keyFormat.dtype)
 
     /** The attention window of this layer's values; see [keyWindow]. */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     public fun valueWindow(layer: Int, from: Int = 0, to: Int = currentSeqLen): sk.ainet.lang.memory.WindowedKV =
         copiedWindow(readValues(layer, from, to), to - from, valueFormat.dtype)
 
     /** A single-run window over an already-materialized `[heads, positions, headDim]` array. */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     private fun copiedWindow(
         values: FloatArray,
         positions: Int,

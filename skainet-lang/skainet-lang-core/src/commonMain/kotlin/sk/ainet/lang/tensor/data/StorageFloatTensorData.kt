@@ -1,6 +1,5 @@
 package sk.ainet.lang.tensor.data
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
 import sk.ainet.lang.tensor.Shape
@@ -22,7 +21,6 @@ import sk.ainet.lang.types.FP32
  * [copyToFloatArray] are offset-correct; kernels that want zero-copy take [view], which carries the
  * offset properly.
  */
-@ExperimentalMemoryApi
 public class StorageFloatTensorData<T : DType>(
     initialShape: Shape,
     public val storage: Storage.Heap,

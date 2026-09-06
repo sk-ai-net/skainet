@@ -5,7 +5,6 @@ import sk.ainet.backend.api.kernel.TernaryF32GemvKernel
 import sk.ainet.backend.api.kernel.TernaryKernelPacks
 import sk.ainet.bench.publish.runner.Scenario
 import sk.ainet.exec.kernel.NativeTernaryF32GemvKernel
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Scope
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
@@ -31,7 +30,6 @@ import kotlin.random.Random
  * Dims default to the BitNet-2B FFN projection (k=2560, n=6912); the n=6912 regime also crosses
  * the LUT kernel's internal pthread threshold. Primary metric: GOP/s over `2·k·n` ops.
  */
-@OptIn(ExperimentalMemoryApi::class)
 internal class TernaryF32GemvScenario(
     smoke: Boolean,
     private val providerName: String,

@@ -1,6 +1,5 @@
 package sk.ainet.exec.harness
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.trace.Counters
 import sk.ainet.lang.memory.trace.GenerationMetrics
 import sk.ainet.lang.memory.trace.PerfettoTraceExporter
@@ -17,7 +16,6 @@ import kotlin.test.assertTrue
  * `KernelDispatch` — opens the spans the reader needs and produces numbers that make sense,
  * including the effective bandwidth, on every target the harness runs on.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class GenerationMetricsHarnessTest {
 
     private val promptTokens = 3

@@ -1,6 +1,5 @@
 package sk.ainet.lang.tensor.data
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TernaryCodec
 import sk.ainet.lang.tensor.Shape
@@ -41,11 +40,9 @@ public class BitNetB158TensorData private constructor(
      * they are not on the fast kernel-dispatch path, so that snapshot is the exception, not the
      * steady state.
      */
-    @ExperimentalMemoryApi
     public constructor(initialShape: Shape, storage: Storage) : this(initialShape, null, storage)
 
     /** The façade over the packed bytes (SKEEP-003 §4.1): see [PackedBlockStorage.packedView]. */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     override val view: sk.ainet.lang.memory.TensorView get() = packedView
 
     override val shape: Shape = Shape(initialShape.dimensions.copyOf())
@@ -55,7 +52,6 @@ public class BitNetB158TensorData private constructor(
     override val blockCount: Int get() = 1
     override val blockSize: Int get() = shape.volume
 
-    @ExperimentalMemoryApi
     override val packedStorage: Storage
         get() = backingStorage ?: Storage.Heap.wrap(heapData!!, mutable = false)
 
@@ -133,7 +129,6 @@ public class BitNetB158TensorData private constructor(
             BitNetB158TensorData(shape, bytes)
 
         /** Wrap a `payload + scale` [storage] (validates the size) — see the [Storage] constructor. */
-        @ExperimentalMemoryApi
         public fun fromStorage(shape: Shape, storage: Storage): BitNetB158TensorData =
             BitNetB158TensorData(shape, storage)
 

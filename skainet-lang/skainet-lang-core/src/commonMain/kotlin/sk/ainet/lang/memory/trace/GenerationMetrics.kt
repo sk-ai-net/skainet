@@ -1,9 +1,7 @@
 package sk.ainet.lang.memory.trace
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /** Time spent inside one module span, and how often it ran (the per-layer breakdown). */
-@ExperimentalMemoryApi
 public data class ModuleCost(val path: String, val nanos: Long, val calls: Int) {
     public val averageNanos: Long get() = if (calls == 0) 0L else nanos / calls
 }
@@ -22,7 +20,6 @@ public data class ModuleCost(val path: String, val nanos: Long, val calls: Int) 
  * @property peakBytesPerSecond the device's peak memory bandwidth, if known; only then is
  *   [bandwidthUtilization] computable.
  */
-@ExperimentalMemoryApi
 public data class GenerationMetrics(
     val prefillTokens: Int = 0,
     val prefillNanos: Long = 0L,

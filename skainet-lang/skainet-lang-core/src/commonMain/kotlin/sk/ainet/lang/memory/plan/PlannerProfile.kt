@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.plan
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.tensor.storage.MemoryDomain
 
 /**
@@ -23,7 +22,6 @@ import sk.ainet.lang.tensor.storage.MemoryDomain
  * @property strict turn those warnings into failures
  * @property weightsMapped weights are expected to load through `WeightResidency.MAPPED`
  */
-@ExperimentalMemoryApi
 public data class PlannerProfile(
     val name: String,
     val reserveBytes: Long,
@@ -169,11 +167,9 @@ private fun percent(fraction: Double): String {
 }
 
 /** How bad a dequantization share is under a profile. */
-@ExperimentalMemoryApi
 public enum class DequantSeverity { OK, WARN, ERROR }
 
 /** The verdict of [PlannerProfile.checkDequant]. */
-@ExperimentalMemoryApi
 public data class DequantVerdict(
     val profile: PlannerProfile,
     val share: Double,
@@ -187,7 +183,6 @@ public data class DequantVerdict(
 }
 
 /** A [MemoryPlan] made under a [PlannerProfile], with what the profile decided along the way. */
-@ExperimentalMemoryApi
 public data class ProfiledPlan(
     val profile: PlannerProfile,
     val plan: MemoryPlan,

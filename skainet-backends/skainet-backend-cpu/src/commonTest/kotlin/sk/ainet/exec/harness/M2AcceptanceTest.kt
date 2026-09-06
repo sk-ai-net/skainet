@@ -1,6 +1,5 @@
 package sk.ainet.exec.harness
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.I8Absmax
 import sk.ainet.lang.memory.MemoryProbe
 import sk.ainet.lang.memory.ScopeKind
@@ -19,7 +18,6 @@ import kotlin.test.assertTrue
  * assert is a *model*: BitNet-2B's resident total is the planner's answer (M2-A1) and the decode
  * sample's measurement, not something a synthetic harness can claim.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class M2AcceptanceTest {
 
     private val steps = 12

@@ -2,7 +2,6 @@ package sk.ainet.exec.kernel
 
 import sk.ainet.backend.api.kernel.KernelDispatch
 import sk.ainet.backend.api.kernel.KernelRegistry
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -15,7 +14,6 @@ import kotlin.test.assertTrue
  * first forward pass. Forgetting it is invisible — the decoding reference kernel is correct, just
  * ~1000x slower — and it was forgotten by application entry points and diagnostic harnesses alike.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class KernelDispatchSelfHealTest {
 
     @Test

@@ -1,6 +1,5 @@
 package sk.ainet.lang.tensor.data
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.TernaryCodec
 import sk.ainet.lang.tensor.Shape
 import sk.ainet.lang.tensor.storage.TensorEncoding
@@ -14,7 +13,6 @@ import kotlin.test.assertFailsWith
  * the same reference the kernels and the GGUF loader are defined against — so all three readers
  * agree about the same bytes.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class BitNetB158TensorDataTest {
 
     private fun ternaryValues(count: Int, seed: Int): FloatArray {

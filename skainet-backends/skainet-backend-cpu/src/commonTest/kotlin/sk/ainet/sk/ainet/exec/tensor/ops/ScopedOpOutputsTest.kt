@@ -2,7 +2,6 @@ package sk.ainet.sk.ainet.exec.tensor.ops
 
 import sk.ainet.context.DirectCpuExecutionContext
 import sk.ainet.context.forwardScope
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.StorageClosedException
 import sk.ainet.lang.tensor.Shape
 import sk.ainet.lang.tensor.Tensor
@@ -21,7 +20,6 @@ import kotlin.test.assertTrue
  * results, steady-state decode reuses the slab exactly (flat `peakFloats`, zero overflow), the
  * numbers are bit-identical to Ambient, and a stale read after `reset()` is loud.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class ScopedOpOutputsTest {
 
     private val xVals = FloatArray(8) { (it - 3).toFloat() * 0.5f }         // [2, 4]

@@ -6,7 +6,6 @@ import kotlin.test.AfterTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
 import sk.ainet.backend.api.kernel.KernelDispatch
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.MappedBufferStorage
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
@@ -24,7 +23,6 @@ import sk.ainet.lang.types.FP32
  * names the kernel that ran. Also pins #1193's visibility contract: when the fast path cannot
  * serve, the fallback announces itself in the trace instead of silently decoding.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class FfmRowMajorDispatchTest {
 
     @AfterTest

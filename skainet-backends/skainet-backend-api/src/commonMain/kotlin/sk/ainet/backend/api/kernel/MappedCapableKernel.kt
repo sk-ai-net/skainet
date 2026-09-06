@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * Marks a [ViewKernel] that serves its `BLOCKED_ROW_MAJOR` weight operand straight from off-heap
@@ -17,5 +16,4 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * so a kernel gaining or losing this marker without updating them fails CI instead of drifting
  * silently.
  */
-@ExperimentalMemoryApi
 public interface MappedCapableKernel

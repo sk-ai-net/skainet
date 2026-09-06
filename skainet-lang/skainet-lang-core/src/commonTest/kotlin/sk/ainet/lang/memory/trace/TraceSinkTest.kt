@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.trace
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.ScopeKind
 import sk.ainet.lang.memory.plan.Budget
@@ -19,7 +18,6 @@ import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 /** SKEEP-003 §4.9 / M1-F7 (API half): one event stream, disabled by default, recorded into a ring buffer. */
-@OptIn(ExperimentalMemoryApi::class)
 class TraceSinkTest {
 
     @Test

@@ -8,7 +8,6 @@ import sk.ainet.lang.tensor.storage.MemoryDomain
  * allocates and frees — arrives with milestone M1; this enum is its `kind`, declared now so that
  * memory plans and allocation specs can name the lifetime without depending on the allocator.
  */
-@ExperimentalMemoryApi
 public enum class ScopeKind {
     /** Lives until the model is closed: weights, KV-cache backing, embedding tables. */
     MODEL,
@@ -33,7 +32,6 @@ public enum class ScopeKind {
  * @property mutable whether the bytes may be written after allocation
  * @property alignment required byte alignment of the start of the buffer (SIMD kernels want 16–64)
  */
-@ExperimentalMemoryApi
 public data class AllocationSpec(
     val format: Format,
     val elementCount: Long,

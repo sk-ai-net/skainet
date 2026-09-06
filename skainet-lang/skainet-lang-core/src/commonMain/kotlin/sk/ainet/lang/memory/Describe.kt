@@ -13,7 +13,6 @@ import sk.ainet.lang.tensor.storage.TensorStorage
  *
  * Example: `model.layers.blk.3.attn.q_proj.weight · Float32/Q4_K · [2048, 2048] · Q4_KBlockTensorData · — · scope — · storage —`
  */
-@ExperimentalMemoryApi
 public fun Tensor<*, *>.describe(): String = buildString {
     append(id?.canonical ?: "—"); append(SEP)
     append(formatOrNull?.toString() ?: "?"); append(SEP)
@@ -25,7 +24,6 @@ public fun Tensor<*, *>.describe(): String = buildString {
 }
 
 /** Same rendering for a storage descriptor; origin is the file for file-backed buffers. */
-@ExperimentalMemoryApi
 public fun TensorStorage.describe(id: sk.ainet.lang.tensor.TensorId? = null): String = buildString {
     append(id?.canonical ?: "—"); append(SEP)
     append(format.toString()); append(SEP)

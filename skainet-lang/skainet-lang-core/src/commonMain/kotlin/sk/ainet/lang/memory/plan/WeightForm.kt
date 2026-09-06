@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.plan
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.tensor.storage.TensorEncoding
 import sk.ainet.lang.types.DType
 
@@ -39,7 +38,6 @@ import sk.ainet.lang.types.DType
  * @property shape which way round the dimensions are labelled
  * @property residency whether the bytes live on the heap or in file-backed pages
  */
-@ExperimentalMemoryApi
 public data class WeightForm(
     val encoding: EncodingRequest = EncodingRequest.KeepAsStored,
     val order: WeightByteOrder = WeightByteOrder.AS_STORED,
@@ -60,7 +58,6 @@ public data class WeightForm(
 }
 
 /** What the loaded bytes should encode. */
-@ExperimentalMemoryApi
 public sealed interface EncodingRequest {
 
     /** Whatever the file holds, untouched. The default, and the only one that costs nothing. */
@@ -94,7 +91,6 @@ public sealed interface EncodingRequest {
  * kernel feed order hold the same blocks in different physical positions, and they coincide only at
  * one block per row (#973, #968).
  */
-@ExperimentalMemoryApi
 public enum class WeightByteOrder {
 
     /** The file's own order — canonical row-major blocks, as every GGUF-shaped producer writes. */
@@ -118,7 +114,6 @@ public enum class WeightByteOrder {
  * changing its block order moves every block and leaves the shape alone. A weight can need either,
  * both, or neither.
  */
-@ExperimentalMemoryApi
 public enum class WeightShapeOrientation {
 
     /** The file's own order, unreversed — GGUF `ne`, so `[in, out]` for a 2-D weight. */
@@ -132,7 +127,6 @@ public enum class WeightShapeOrientation {
 }
 
 /** Where a weight's bytes live. The loader-side spelling of `StagingPolicy` (#1037). */
-@ExperimentalMemoryApi
 public enum class WeightResidency {
 
     /** Read onto the managed heap. The historical behaviour, and the only option in a browser. */

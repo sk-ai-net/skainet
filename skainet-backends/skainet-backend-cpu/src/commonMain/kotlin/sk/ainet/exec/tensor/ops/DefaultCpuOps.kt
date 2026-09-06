@@ -204,7 +204,6 @@ public open class DefaultCpuOpsBase(
     // `inline` is load-bearing: a non-inlined `(Float, Float) -> Float` lambda
     // would box through `Function2` and reintroduce the very churn removed.
 
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     private fun <T : DType, V> floatBufferOf(t: Tensor<T, V>): FloatArray? = when (val d = t.data) {
         is FloatArrayTensorData<*> -> d.buffer
         // Slab-backed data (#1145/#1146) has a nonzero base offset, so it cannot hand out its raw
@@ -217,7 +216,6 @@ public open class DefaultCpuOpsBase(
     /** Zero-copy dense-FP32 window: the backing array plus the base offset of element 0 (#1146). */
     private class FloatWindow(val arr: FloatArray, val off: Int)
 
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     private fun <T : DType, V> floatWindowOf(t: Tensor<T, V>): FloatWindow? = when (val d = t.data) {
         is FloatArrayTensorData<*> -> FloatWindow(d.buffer, 0)
         is sk.ainet.lang.tensor.data.StorageFloatTensorData<*> -> {
@@ -232,7 +230,6 @@ public open class DefaultCpuOpsBase(
      * The scope the factory is placing outputs in, or `Ambient` — passed to kernel dispatch so
      * adapter allocations (requantized activations, prepacked weights) land in the slab too (#1146).
      */
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     protected fun dispatchScope(): sk.ainet.lang.memory.Scope =
         (dataFactory as? sk.ainet.lang.tensor.data.ScopedTensorDataFactory)?.currentScope
             ?: sk.ainet.lang.memory.Scope.Ambient
@@ -715,7 +712,6 @@ public open class DefaultCpuOpsBase(
      * Run `matmul` through [KernelDispatch] when both operands can describe themselves as views and
      * the result is float-typed; `null` means "not expressible here, use the legacy path".
      */
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     @Suppress("UNCHECKED_CAST")
     private fun <T : DType, V> dispatchMatmulViaRegistry(a: Tensor<T, V>, b: Tensor<T, V>): Tensor<T, V>? {
         if (!sk.ainet.backend.api.kernel.DispatchMode.useRegistry()) return null
@@ -1067,7 +1063,6 @@ public open class DefaultCpuOpsBase(
      * relayout-and-cache path its vectorized kernels can use. `null` when the operands cannot
      * describe themselves as views.
      */
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     @Suppress("UNCHECKED_CAST")
     protected fun <T : DType, V> matmulWeightTransposedViaViews(x: Tensor<T, V>, weight: Tensor<T, V>): Tensor<T, V>? {
         if (!sk.ainet.backend.api.kernel.DispatchMode.useRegistry()) return null
@@ -1149,7 +1144,6 @@ public open class DefaultCpuOpsBase(
      * same array. `null` when [tensor] is not a feed-order packed weight.
      */
     @Suppress("UNCHECKED_CAST")
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     protected fun <T : DType, V> rewrapFeedOrderWeight(tensor: Tensor<T, V>): Tensor<T, V>? {
         if (tensor.shape.rank != 2) return null
         val packed = tensor.data as? sk.ainet.lang.tensor.storage.PackedBlockStorage ?: return null

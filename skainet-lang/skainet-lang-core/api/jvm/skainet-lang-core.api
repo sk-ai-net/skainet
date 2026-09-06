@@ -897,9 +897,6 @@ public final class sk/ainet/lang/memory/DirectBufferStorage$Companion {
 	public static synthetic fun borrow$default (Lsk/ainet/lang/memory/DirectBufferStorage$Companion;Ljava/nio/ByteBuffer;Lsk/ainet/lang/tensor/TensorId;Lsk/ainet/lang/memory/trace/TraceSink;ILjava/lang/Object;)Lsk/ainet/lang/memory/DirectBufferStorage;
 }
 
-public abstract interface annotation class sk/ainet/lang/memory/ExperimentalMemoryApi : java/lang/annotation/Annotation {
-}
-
 public final class sk/ainet/lang/memory/Format {
 	public static final field Companion Lsk/ainet/lang/memory/Format$Companion;
 	public fun <init> (Lsk/ainet/lang/types/DType;Lsk/ainet/lang/tensor/storage/TensorEncoding;)V

@@ -1,7 +1,6 @@
 package sk.ainet.lang.memory.trace
 
 import android.os.Trace
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * A [TraceSink] that forwards SKaiNET's events to `android.os.Trace`, so a memory-architecture
@@ -14,7 +13,6 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * Section names are truncated to `android.os.Trace`'s limit (127 characters), and tracing is only
  * enabled while the OS is capturing, so a shipping build pays one boolean check per event.
  */
-@ExperimentalMemoryApi
 public class AndroidTraceSink : TraceSink {
 
     override val isEnabled: Boolean get() = Trace.isEnabled()

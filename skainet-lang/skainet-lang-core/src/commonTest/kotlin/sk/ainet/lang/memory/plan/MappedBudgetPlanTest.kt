@@ -5,7 +5,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.tensor.storage.MemoryDomain
 import sk.ainet.lang.tensor.storage.TensorEncoding
@@ -17,7 +16,6 @@ import sk.ainet.lang.types.FP32
  * under a 256 MB ART cap with 566 KB of weight heap; a plan that says "does not fit" about that
  * run is wrong, and this test is what keeps it from saying so again.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class MappedBudgetPlanTest {
 
     private val platform = StorageCapabilities.FULL

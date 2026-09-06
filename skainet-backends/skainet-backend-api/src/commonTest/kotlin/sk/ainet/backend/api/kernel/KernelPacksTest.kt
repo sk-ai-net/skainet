@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
@@ -16,7 +15,6 @@ import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 /** SKEEP-003 §5.2: platform packs register their kernels under view keys; the reference is always present. */
-@OptIn(ExperimentalMemoryApi::class)
 class KernelPacksTest {
 
     @AfterTest fun cleanup() { KernelDispatch.clearForTesting(); KernelRegistry.clearForTesting() }

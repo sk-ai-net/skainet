@@ -6,7 +6,6 @@ import sk.ainet.context.ExecutionContext
 import sk.ainet.context.schedule.Schedule
 import sk.ainet.context.withSchedule
 import sk.ainet.exec.schedule.CoroutineSchedule
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.trace.RecordingTraceSink
 import sk.ainet.lang.memory.trace.TraceEvent
 import sk.ainet.lang.tensor.Shape
@@ -19,7 +18,6 @@ import sk.ainet.lang.types.FP32
  * the trace that says which schedule ran. Every region is included verbatim into
  * `tutorials/schedule-getting-started.adoc`; `SamplesTest` executes it.
  */
-@OptIn(ExperimentalMemoryApi::class)
 object ScheduleDemo {
 
     class Result(

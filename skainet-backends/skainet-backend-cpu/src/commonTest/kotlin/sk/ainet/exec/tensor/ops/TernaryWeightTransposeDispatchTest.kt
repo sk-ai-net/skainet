@@ -1,7 +1,6 @@
 package sk.ainet.exec.tensor.ops
 
 import sk.ainet.context.DirectCpuExecutionContext
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.TernaryCodec
 import sk.ainet.lang.tensor.Shape
 import sk.ainet.lang.tensor.data.BitNetB158TensorData
@@ -22,7 +21,6 @@ import kotlin.test.assertTrue
  * which returns ternary CODES, not values — and threw `ClassCastException` (Byte → Float) on the
  * JVM. The oracle here is the decoded matmul.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class TernaryWeightTransposeDispatchTest {
 
     private val ctx = DirectCpuExecutionContext()

@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.trace
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import jdk.jfr.Category
 import jdk.jfr.Event
 import jdk.jfr.EventFactory
@@ -16,7 +15,6 @@ import jdk.jfr.Name
  * `jcmd JFR.start`) and the events appear under the **SKaiNET** category. Emission is cheap and
  * self-disabling — JFR drops an event whose type is not enabled, and [isEnabled] mirrors that.
  */
-@ExperimentalMemoryApi
 public class JfrTraceSink : TraceSink {
 
     @Name("sk.ainet.KernelRun") @Label("SKaiNET kernel run") @Category("SKaiNET")

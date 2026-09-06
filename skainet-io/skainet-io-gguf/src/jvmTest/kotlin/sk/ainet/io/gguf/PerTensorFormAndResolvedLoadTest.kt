@@ -3,7 +3,6 @@ package sk.ainet.io.gguf
 import kotlinx.coroutines.runBlocking
 import sk.ainet.context.DefaultDataExecutionContext
 import sk.ainet.io.JvmRandomAccessSource
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.plan.EncodingRequest
 import sk.ainet.lang.memory.plan.KernelCapabilities
 import sk.ainet.lang.memory.plan.PlannerProfile
@@ -25,7 +24,6 @@ import kotlin.test.assertTrue
  * feeds the loader what the resolvers decided; the user's override outranks the resolver; and the
  * decisions are priceable and explainable before the payload is read.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class PerTensorFormAndResolvedLoadTest {
 
     private fun file(): File = SyntheticGguf.write(

@@ -6,7 +6,6 @@ import sk.ainet.lang.tensor.storage.MemoryDomain
 import java.nio.file.Path
 
 /** JVM: off-heap = FFM `MemorySegment` ([SegmentStorage]), mapped = `FileChannel.map` ([MappedFileStorage]). */
-@ExperimentalMemoryApi
 public actual object PlatformStorage {
     public actual fun supports(domain: MemoryDomain): Boolean = domain == MemoryDomain.HOST_HEAP || domain == MemoryDomain.HOST_OFFHEAP || domain == MemoryDomain.MMAP_FILE
     public actual val supportsMappedFiles: Boolean get() = true

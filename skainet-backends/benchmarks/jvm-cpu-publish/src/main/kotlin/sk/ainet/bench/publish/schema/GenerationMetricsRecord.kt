@@ -2,7 +2,6 @@ package sk.ainet.bench.publish.schema
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.trace.GenerationMetrics
 
 /**
@@ -49,7 +48,6 @@ public data class GenerationMetricsRecord(
 )
 
 /** This run's metrics as the record the benchmark JSON carries. */
-@OptIn(ExperimentalMemoryApi::class)
 public fun GenerationMetrics.toRecord(): GenerationMetricsRecord = GenerationMetricsRecord(
     prefillTokens = prefillTokens,
     prefillTokensPerSecond = prefillTokensPerSecond,

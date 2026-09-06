@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.trace
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.ScopeKind
 import sk.ainet.lang.tensor.TensorId
@@ -14,7 +13,6 @@ import sk.ainet.lang.tensor.TensorId
  * Events are small value objects; [timeNanos] is a monotonic timestamp in nanoseconds
  * ([TraceClock.nowNanos]), comparable only within one process.
  */
-@ExperimentalMemoryApi
 public sealed interface TraceEvent {
     public val timeNanos: Long
 
@@ -116,7 +114,6 @@ public sealed interface TraceEvent {
 }
 
 /** Monotonic clock for trace timestamps (`kotlin.time.TimeSource.Monotonic`). */
-@ExperimentalMemoryApi
 public object TraceClock {
     private val start = kotlin.time.TimeSource.Monotonic.markNow()
     public fun nowNanos(): Long = start.elapsedNow().inWholeNanoseconds

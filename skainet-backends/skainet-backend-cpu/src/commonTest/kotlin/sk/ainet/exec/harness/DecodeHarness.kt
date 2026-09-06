@@ -1,7 +1,6 @@
 package sk.ainet.exec.harness
 
 import sk.ainet.backend.api.kernel.KernelDispatch
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.ForwardScope
 import sk.ainet.lang.memory.ModelScope
@@ -47,7 +46,6 @@ import sk.ainet.lang.types.FP32
  * The real end-to-end numbers (tok/s, TTFT, peak load RSS, effective bandwidth) belong to the
  * `skainet-decode` sample in SKaiNET-transformers, which owns the model.
  */
-@OptIn(ExperimentalMemoryApi::class)
 public class DecodeHarness(
     // Deliberately tiny: the reference kernel decodes every element, and these tests run in a
     // browser under Karma's 2 s per-test budget as well as on the JVM. The assertions are about

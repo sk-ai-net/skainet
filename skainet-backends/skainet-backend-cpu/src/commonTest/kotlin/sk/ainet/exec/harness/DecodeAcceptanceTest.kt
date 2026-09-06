@@ -1,6 +1,5 @@
 package sk.ainet.exec.harness
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.ScopeKind
 import sk.ainet.lang.memory.plan.ActualMemory
 import sk.ainet.lang.memory.plan.PlanVsActual
@@ -15,7 +14,6 @@ import kotlin.test.assertTrue
  * (#1032 option (c)): the memory behaviour is checked here, where the memory code lives; the real
  * model's tok/s and TTFT belong to `skainet-decode` in SKaiNET-transformers.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class DecodeAcceptanceTest {
 
     // Enough steps to prove the staircase is flat, few enough for Karma's 2 s per-test budget in a

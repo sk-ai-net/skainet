@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.trace
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * Where [TraceEvent]s go. Disabled by default ([NoopTraceSink]) — emitting costs one `isEnabled`
@@ -8,7 +7,6 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * (ring buffer, tests and the debugger), [CompositeTraceSink], and the exporters of M1 slice #1025
  * (Perfetto JSON, JFR, `android.os.Trace`).
  */
-@ExperimentalMemoryApi
 public interface TraceSink {
     /** `false` for a sink that drops everything; producers check it before building an event. */
     public val isEnabled: Boolean get() = true
@@ -17,7 +15,6 @@ public interface TraceSink {
 }
 
 /** The default: nothing is recorded, nothing is allocated. */
-@ExperimentalMemoryApi
 public object NoopTraceSink : TraceSink {
     override val isEnabled: Boolean get() = false
     override fun emit(event: TraceEvent) {}
@@ -27,7 +24,6 @@ public object NoopTraceSink : TraceSink {
  * Keeps the last [capacity] events in a ring buffer. The debugger, tests and the plan-vs-actual
  * check read [events]; [clear] starts over. Not thread-safe by design (one sink per context).
  */
-@ExperimentalMemoryApi
 public class RecordingTraceSink(public val capacity: Int = DEFAULT_CAPACITY) : TraceSink {
     init { require(capacity > 0) { "capacity must be > 0" } }
 
@@ -55,7 +51,6 @@ public class RecordingTraceSink(public val capacity: Int = DEFAULT_CAPACITY) : T
 }
 
 /** Fan-out to several sinks; enabled if any of them is. */
-@ExperimentalMemoryApi
 public class CompositeTraceSink(private val sinks: List<TraceSink>) : TraceSink {
     public constructor(vararg sinks: TraceSink) : this(sinks.toList())
     override val isEnabled: Boolean get() = sinks.any { it.isEnabled }
@@ -66,7 +61,6 @@ public class CompositeTraceSink(private val sinks: List<TraceSink>) : TraceSink 
  * Run [block] inside a phase span: emits [TraceEvent.PhaseBegin], then [TraceEvent.PhaseEnd] with
  * the measured duration (also on exception). No events and no allocation when the sink is disabled.
  */
-@ExperimentalMemoryApi
 public inline fun <T> TraceSink.phase(name: String, step: Int? = null, attributes: Map<String, String> = emptyMap(), block: () -> T): T {
     if (!isEnabled) return block()
     val t0 = TraceClock.nowNanos()
@@ -80,7 +74,6 @@ public inline fun <T> TraceSink.phase(name: String, step: Int? = null, attribute
 }
 
 /** Time [block] as a kernel run of [op] on [kernel]; the returned value is the kernel's result. */
-@ExperimentalMemoryApi
 public inline fun <T> TraceSink.kernel(
     op: String,
     kernel: String,

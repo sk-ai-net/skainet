@@ -1,4 +1,3 @@
-@file:OptIn(ExperimentalMemoryApi::class)
 
 package sk.ainet.apps.plan
 
@@ -8,7 +7,6 @@ import kotlinx.cli.default
 import sk.ainet.io.JvmRandomAccessSource
 import sk.ainet.io.gguf.StreamingGGUFReader
 import sk.ainet.io.gguf.planInput
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.plan.Budget
 import sk.ainet.lang.memory.plan.KvCacheMode
 import sk.ainet.lang.memory.plan.MemoryPlan

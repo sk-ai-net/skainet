@@ -1,6 +1,5 @@
 package sk.ainet.lang.tensor.data
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.PlatformStorage
 import sk.ainet.lang.memory.TernaryCodec
 import sk.ainet.lang.tensor.Shape
@@ -15,7 +14,6 @@ import kotlin.test.assertIs
  * historical heap-backed one, and [BitNetB158TensorData.set] must write through to the backing
  * storage rather than only updating the lazily materialized snapshot.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class BitNetB158TensorDataJvmTest {
 
     private fun ternaryValues(count: Int, seed: Int): FloatArray {

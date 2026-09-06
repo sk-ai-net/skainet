@@ -1,7 +1,6 @@
 package sk.ainet.io.gguf
 
 import sk.ainet.io.JvmRandomAccessSource
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.plan.Budget
 import sk.ainet.lang.memory.plan.MemoryPlans
 import sk.ainet.lang.tensor.storage.TensorEncoding
@@ -14,7 +13,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /** SKEEP-003 M0-F1: the plan comes from the GGUF header alone — tensor table + metadata, no tensor bytes. */
-@OptIn(ExperimentalMemoryApi::class)
 class GgufMemoryPlanTest {
 
     @Test

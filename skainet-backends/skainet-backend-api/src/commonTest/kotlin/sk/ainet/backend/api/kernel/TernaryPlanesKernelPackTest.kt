@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Scope
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
@@ -24,7 +23,6 @@ import kotlin.test.assertTrue
  * the view kernel's two-call combination (`s0 + s4/81`) must equal the full 8-plane reference —
  * the dispatch invariant *matmul == decoded matmul* holds exactly.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class TernaryPlanesKernelPackTest {
 
     private val k = 32

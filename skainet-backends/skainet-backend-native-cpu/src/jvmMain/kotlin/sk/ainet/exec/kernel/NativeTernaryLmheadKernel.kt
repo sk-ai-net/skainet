@@ -8,7 +8,6 @@ import java.lang.foreign.ValueLayout
 import java.lang.invoke.MethodHandle
 import sk.ainet.backend.api.kernel.TernaryLmheadNative
 import sk.ainet.backend.api.kernel.TernaryPlanesKernelPack
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * Native (FFM) downcall to the vendored NeoGPU fused 4-plane lm_head kernel (#1150).
@@ -31,7 +30,6 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * Copy-in/copy-out per call like every FFM kernel here — fine for benches and small heads;
  * a persistent off-heap weight arena is the follow-up for a 128k-vocab lm_head.
  */
-@OptIn(ExperimentalMemoryApi::class)
 public object NativeTernaryLmheadKernel : TernaryLmheadNative {
 
     override val name: String get() = "ffm"

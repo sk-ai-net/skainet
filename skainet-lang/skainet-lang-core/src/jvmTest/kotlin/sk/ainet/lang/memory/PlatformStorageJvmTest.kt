@@ -7,7 +7,6 @@ import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
-@OptIn(ExperimentalMemoryApi::class)
 class PlatformStorageJvmTest {
     @Test
     fun jvmBindsSegmentsAndMappedFiles() {

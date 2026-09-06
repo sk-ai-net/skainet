@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * No `ServiceLoader` on this platform, so there is nothing to discover: packs are installed
@@ -10,8 +9,6 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * calls `NativeKnTernaryF32Gemv.install()` / `NativeKnTernaryLmhead.install()` itself, or
  * dispatch serves the decoding reference kernels.
  */
-@ExperimentalMemoryApi
 internal actual fun installPlatformKernelPacks(): List<String> = emptyList()
 
-@ExperimentalMemoryApi
 internal actual fun installPlatformKernelProviders(): List<String> = emptyList()

@@ -1,3 +1,4 @@
+
 package sk.ainet.io.gguf
 
 import sk.ainet.context.ExecutionContext
@@ -548,7 +549,6 @@ public class StreamingGgufParametersLoader(
      * defined against.
      */
     @Suppress("UNCHECKED_CAST")
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     private fun <T : DType, V> i2sTensor(
         ctx: ExecutionContext,
         dtype: KClass<T>,
@@ -608,7 +608,6 @@ public class StreamingGgufParametersLoader(
      * about not holding the repack's result in managed-heap memory once it's large enough to
      * matter.
      */
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     private fun i2sPackedTensorData(shape: Shape, packedBytes: ByteArray): sk.ainet.lang.tensor.data.BitNetB158TensorData {
         val offHeapThreshold = sk.ainet.lang.memory.plan.PlannerProfile.OFF_HEAP_THRESHOLD
         if (packedBytes.size < offHeapThreshold || !sk.ainet.lang.memory.PlatformStorage.supports(sk.ainet.lang.tensor.storage.MemoryDomain.HOST_OFFHEAP)) {
@@ -636,7 +635,6 @@ public class StreamingGgufParametersLoader(
      * order put it. Before that, feed-order bytes in a type claiming to be canonical decoded to
      * plausible garbage (#1124, #973, #968).
      */
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     private fun feedOrdered(
         packed: sk.ainet.lang.tensor.storage.PackedBlockStorage,
         tensorInfo: StreamingTensorInfo,

@@ -3,7 +3,6 @@ package sk.ainet.io.gguf
 import kotlinx.coroutines.runBlocking
 import sk.ainet.context.DefaultDataExecutionContext
 import sk.ainet.io.JvmRandomAccessSource
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.TernaryCodec
 import sk.ainet.lang.memory.plan.EncodingRequest
 import sk.ainet.lang.memory.plan.WeightForm
@@ -28,7 +27,6 @@ import kotlin.test.assertTrue
  * weight (or an I2_S one) arrives as packed [BitNetPlanesTensorData], encoded once at load,
  * reconstructing within the format's truncation bound.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class PlanesRequantizeLoadTest {
 
     private val planesForm = WeightForm(

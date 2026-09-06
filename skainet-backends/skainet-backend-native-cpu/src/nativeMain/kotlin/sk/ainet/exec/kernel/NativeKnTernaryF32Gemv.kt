@@ -7,7 +7,6 @@ import kotlinx.cinterop.usePinned
 import sk.ainet.backend.api.kernel.TernaryF32GemvNative
 import sk.ainet.backend.api.kernel.TernaryF32KernelPack
 import sk.ainet.kernels.cinterop.skainet_ternary_f32_gemv
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * Kotlin/Native face of the vendored NeoGPU LUT kernel (#1139): calls
@@ -21,7 +20,7 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * exist. The arrays are pinned and base pointers passed; the C side applies
  * the offsets, no copy is made.
  */
-@OptIn(ExperimentalForeignApi::class, ExperimentalMemoryApi::class)
+@OptIn(ExperimentalForeignApi::class)
 public object NativeKnTernaryF32Gemv : TernaryF32GemvNative {
 
     override val name: String get() = "cinterop"

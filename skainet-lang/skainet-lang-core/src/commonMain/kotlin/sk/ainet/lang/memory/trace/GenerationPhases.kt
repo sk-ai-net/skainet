@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.trace
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.tensor.TensorId
 
 /**
@@ -8,7 +7,6 @@ import sk.ainet.lang.tensor.TensorId
  * helpers below; [GenerationMetrics] reads them back. Both sides use these constants, so a typo
  * cannot silently produce a metric of zero.
  */
-@ExperimentalMemoryApi
 public object Phases {
     /** Weights being read off disk / mapped. */
     public const val LOAD: String = "load"
@@ -29,7 +27,6 @@ public object Phases {
 }
 
 /** Counter names the metrics reader understands (`TraceEvent.Counter`). */
-@ExperimentalMemoryApi
 public object Counters {
     /** Resident set size, bytes. */
     public const val RSS: String = "rss"
@@ -48,17 +45,14 @@ public object Counters {
 }
 
 /** The prompt pass over [tokens] tokens. */
-@ExperimentalMemoryApi
 public inline fun <T> TraceSink.prefill(tokens: Int, block: () -> T): T =
     phase(Phases.PREFILL, attributes = mapOf(Phases.ATTR_TOKENS to tokens.toString()), block = block)
 
 /** One decode step; [step] is the token index (1-based). */
-@ExperimentalMemoryApi
 public inline fun <T> TraceSink.decodeStep(step: Int, block: () -> T): T =
     phase(Phases.DECODE, step, block = block)
 
 /** The sampling that turns this step's logits into a token. */
-@ExperimentalMemoryApi
 public inline fun <T> TraceSink.sample(step: Int? = null, block: () -> T): T =
     phase(Phases.SAMPLE, step, block = block)
 
@@ -66,17 +60,14 @@ public inline fun <T> TraceSink.sample(step: Int? = null, block: () -> T): T =
  * A module span nested inside the current phase — `model.layers[3].attn`, `model.lm_head`. These
  * are what [GenerationMetrics.modules] aggregates into the per-layer breakdown.
  */
-@ExperimentalMemoryApi
 public inline fun <T> TraceSink.module(path: String, step: Int? = null, block: () -> T): T =
     phase(path, step, mapOf(Phases.ATTR_KIND to Phases.KIND_MODULE), block)
 
 /** A module span named after [id]'s module path. */
-@ExperimentalMemoryApi
 public inline fun <T> TraceSink.module(id: TensorId, step: Int? = null, block: () -> T): T =
     module(id.modulePath.joinToString("."), step, block)
 
 /** Record a counter sample (RSS, page faults, a derived metric). */
-@ExperimentalMemoryApi
 public fun TraceSink.counter(name: String, value: Long, unit: String = "bytes") {
     if (isEnabled) emit(TraceEvent.Counter(name, value, unit))
 }

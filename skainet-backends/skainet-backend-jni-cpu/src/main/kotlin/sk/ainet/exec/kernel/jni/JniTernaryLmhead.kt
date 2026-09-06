@@ -2,7 +2,6 @@ package sk.ainet.exec.kernel.jni
 
 import sk.ainet.backend.api.kernel.TernaryLmheadNative
 import sk.ainet.backend.api.kernel.TernaryPlanesKernelPack
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * The vendored NeoGPU fused 4-plane lm_head as a [TernaryLmheadNative] (#1150) — the Android/JNI
@@ -11,7 +10,6 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * Like [JniTernaryF32Gemv], no capability split: the LUT kernel needs only baseline NEON, so the
  * BASELINE `libskainet_jni.so` carries the full SIMD path on every arm64 device.
  */
-@OptIn(ExperimentalMemoryApi::class)
 public object JniTernaryLmhead : TernaryLmheadNative {
 
     override val name: String get() = if (JniKernels.isLoaded) "neon" else "unloaded"

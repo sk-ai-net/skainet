@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.plan
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.tensor.storage.MemoryDomain
 import sk.ainet.lang.tensor.storage.TensorEncoding
@@ -15,7 +14,6 @@ import kotlin.test.assertTrue
  * #1039 (M2-F6, decision #11): the planner's device profiles — one test per rule, because each of
  * them is a number someone will otherwise "improve" by feel.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class PlannerProfileTest {
 
     private val mb = 1024L * 1024L

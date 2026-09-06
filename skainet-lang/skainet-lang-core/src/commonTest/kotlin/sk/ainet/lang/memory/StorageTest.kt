@@ -15,7 +15,6 @@ import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 /** SKEEP-003 rules 1–2 (one byte owner, ownership enforced) for the common Heap storage. */
-@OptIn(ExperimentalMemoryApi::class)
 class StorageTest {
 
     @Test

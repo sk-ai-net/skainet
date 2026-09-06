@@ -3,7 +3,6 @@ package sk.ainet.io.gguf
 import kotlinx.coroutines.runBlocking
 import sk.ainet.context.DefaultDataExecutionContext
 import sk.ainet.io.JvmRandomAccessSource
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.plan.EncodingRequest
 import sk.ainet.lang.memory.plan.WeightForm
 import sk.ainet.lang.memory.trace.RecordingTraceSink
@@ -21,7 +20,6 @@ import kotlin.test.assertTrue
  * The question this makes answerable is "why is this model bigger than the file". Before, the
  * answer lived in whoever remembered which policy was set.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class WeightFormTraceTest {
 
     private fun file(): File = SyntheticGguf.write(

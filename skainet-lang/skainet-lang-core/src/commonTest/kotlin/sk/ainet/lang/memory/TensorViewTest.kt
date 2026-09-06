@@ -19,7 +19,6 @@ import kotlin.test.assertTrue
  * SKEEP-003 rules 4–6: `get()` decodes (never a raw byte), views are zero-copy over the same
  * storage, `materialize()` is the only copy point.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class TensorViewTest {
 
     private fun denseView(vararg dims: Int): TensorView {

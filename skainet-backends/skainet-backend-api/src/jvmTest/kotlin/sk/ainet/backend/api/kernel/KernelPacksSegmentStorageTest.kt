@@ -1,7 +1,6 @@
 package sk.ainet.backend.api.kernel
 
 import java.lang.foreign.ValueLayout
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.SegmentStorage
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
@@ -21,7 +20,6 @@ import kotlin.test.assertTrue
  * (the crash this masked until #325/#341's readDense fix is a separate, already-fixed bug: the
  * reference kernel didn't even support element access over Segment storage at all).
  */
-@OptIn(ExperimentalMemoryApi::class)
 class KernelPacksSegmentStorageTest {
 
     @AfterTest fun cleanup() { KernelDispatch.clearForTesting(); KernelRegistry.clearForTesting() }

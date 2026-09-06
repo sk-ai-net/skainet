@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
@@ -30,7 +29,6 @@ import sk.ainet.lang.types.FP32
  * row-major order. Output `[rows, n]` FP32. The per-tensor scale is applied to the output —
  * native implementations ([TernaryF32GemvNative]) do not see it.
  */
-@ExperimentalMemoryApi
 public class TernaryF32GemvKernel(override val key: KernelKey) : ViewKernel {
 
     override val name: String get() = "ternary_f32_gemv/reference"

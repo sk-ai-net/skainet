@@ -1,6 +1,5 @@
 package sk.ainet.exec.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.TernaryCodec
 import kotlin.math.abs
 import kotlin.random.Random
@@ -17,7 +16,6 @@ import kotlin.test.assertTrue
  * Runs on the host archive AND under qemu-aarch64 (`-PcrossArm64=true`); the C kernel spawns its
  * 4 pthreads at any output_dim, so every case exercises its threading through cinterop.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class NativeKnTernaryLmheadParityTest {
 
     private fun reference(

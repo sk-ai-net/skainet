@@ -5,7 +5,6 @@ import sk.ainet.context.ExecutionContext
 import sk.ainet.context.ScheduledExecutionContext
 import sk.ainet.context.forwardScope
 import sk.ainet.context.withSchedule
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.trace.RecordingTraceSink
 import sk.ainet.lang.memory.trace.TraceEvent
 import sk.ainet.lang.memory.trace.TraceSink
@@ -19,7 +18,6 @@ import kotlin.test.assertTrue
  * context that cannot rebuild its ops reports an unhonoured request as a trace event (never a
  * silent downgrade), and the decorator survives the other decorators it composes with.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class ScheduledExecutionContextTest {
 
     /** A schedule that only counts; enough to prove which one a context carries. */

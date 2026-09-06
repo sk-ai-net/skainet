@@ -7,7 +7,6 @@ import sk.ainet.backend.api.kernel.KernelRegistry
 import sk.ainet.exec.golden.GoldenSupport.Packed
 import sk.ainet.exec.kernel.ScalarKernelProvider
 import sk.ainet.lang.memory.BlockOrder
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.PackedBlockDecoder
 import sk.ainet.lang.memory.Scope
 import sk.ainet.lang.memory.Storage
@@ -42,7 +41,6 @@ import kotlin.test.assertTrue
  * which is what `ScalarKernelGoldenTest` already pins. Every weight here is **three blocks wide**,
  * the case where the two orders differ.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class PackedDispatchBridgeGoldenTest {
 
     private companion object {

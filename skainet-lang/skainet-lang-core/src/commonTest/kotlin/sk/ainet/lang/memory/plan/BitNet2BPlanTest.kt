@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.plan
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.tensor.storage.TensorEncoding
 import sk.ainet.lang.types.BF16
@@ -23,7 +22,6 @@ import kotlin.test.assertTrue
  * disk); the embedding table and the output head stay bf16, which is what a b1.58 checkpoint ships
  * and, as the numbers below show, is where most of the resident memory actually goes.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class BitNet2BPlanTest {
 
     private val mb = 1024L * 1024L

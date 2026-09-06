@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.I8Absmax
 import sk.ainet.lang.memory.Scope
 import sk.ainet.lang.memory.Storage
@@ -23,7 +22,6 @@ import kotlin.time.TimeSource
  * shared CI hardware, and the acceptance measurement belongs on the reference device, where this
  * same test is run from the Kotlin/Native binary.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class BitNetGemvTimingTest {
 
     private companion object {

@@ -18,7 +18,6 @@ import sk.ainet.io.MappedRandomAccessSource
 import sk.ainet.io.gguf.StreamingGGUFReader
 import sk.ainet.io.gguf.StreamingGgufParametersLoader
 import sk.ainet.io.gguf.planInput
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.ForwardScope
 import sk.ainet.lang.memory.MemoryProbe
 import sk.ainet.lang.memory.ModelScope
@@ -82,7 +81,6 @@ import sk.ainet.lang.types.FP32
  * [KernelDispatch] out of a recycled [ForwardScope], and one token's K/V goes into a
  * model-scoped ring — the exact memory traffic of a decode step, which is what M2-A5 measures.
  */
-@OptIn(ExperimentalMemoryApi::class)
 @RunWith(AndroidJUnit4::class)
 class M2A5DeviceMeasurement {
 

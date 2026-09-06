@@ -25,7 +25,6 @@ import kotlin.test.assertTrue
  * decodes **bit-identically** to the existing block decoders and borrows the very bytes the loader
  * produced (rule 5 — nothing is copied, nothing is re-ordered).
  */
-@OptIn(ExperimentalMemoryApi::class)
 class PackedTensorDataViewTest {
 
     /** Deterministic bytes with sane FP16 scales, as in the golden parity fixtures. */

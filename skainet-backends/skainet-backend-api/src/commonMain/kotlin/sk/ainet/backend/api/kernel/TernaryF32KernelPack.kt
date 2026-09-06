@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
 import sk.ainet.lang.memory.TernaryCodec
@@ -17,7 +16,6 @@ import sk.ainet.lang.memory.TernaryCodec
  * per-tensor scale is NOT applied here — the wrapping view kernel owns it. `inputDim` must be a
  * multiple of 4 (the packing is byte-per-4-elements per row).
  */
-@ExperimentalMemoryApi
 public interface TernaryF32GemvNative {
     /** A name for logs and traces, e.g. `ffm`, `neon`. */
     public val name: String
@@ -44,7 +42,6 @@ public interface TernaryF32GemvNative {
      *
      * The default is still correct everywhere: one transient snapshot, then [gemvPacked].
      */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     public fun gemvPackedStorage(
         activation: FloatArray,
         activationOffset: Int,
@@ -74,7 +71,6 @@ public interface TernaryF32GemvNative {
  * Absence of the native artifact is a notice through [warn], never a crash — behavior is exactly
  * today's.
  */
-@ExperimentalMemoryApi
 public object TernaryF32KernelPack {
 
     /** What [install] returns when no native kernel is available and nothing was registered. */
@@ -119,7 +115,6 @@ public object TernaryF32KernelPack {
  * a strided view, or `k % 4 != 0` (the sequential packing crosses byte boundaries between rows
  * then) — instead of failing: the fast path is an optimization, never a correctness requirement.
  */
-@ExperimentalMemoryApi
 public class NativeTernaryF32ViewKernel(
     private val native: TernaryF32GemvNative,
     override val key: KernelKey,

@@ -93,7 +93,6 @@ public class CompressedKvAttention(
      * KV store needs no special case here; for the dense ring the halves are views over the ring
      * itself and nothing is copied at all.
      */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     public fun keyWindowForAttention(
         layer: Int,
         startPos: Int = 0,
@@ -101,7 +100,6 @@ public class CompressedKvAttention(
     ): sk.ainet.lang.memory.WindowedKV = cache.keyWindow(layer, startPos, endPos)
 
     /** The value window; see [keyWindowForAttention]. */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     public fun valueWindowForAttention(
         layer: Int,
         startPos: Int = 0,

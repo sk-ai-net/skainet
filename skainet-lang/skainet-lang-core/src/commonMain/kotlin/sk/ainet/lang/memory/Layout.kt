@@ -47,7 +47,6 @@ public enum class BlockOrder {
  *   [BlockOrder.ROW_MAJOR]: what a file holds. A buffer in kernel feed order says so here instead
  *   of leaving the next reader to guess (#973).
  */
-@ExperimentalMemoryApi
 public class Layout(
     public val shape: Shape,
     public val strides: IntArray,

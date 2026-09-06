@@ -1,7 +1,6 @@
 package sk.ainet.backend.api.kernel
 
 import sk.ainet.lang.memory.BlockOrder
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.PackedBlockDecoder
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
@@ -24,7 +23,6 @@ import kotlin.test.assertTrue
  * point of these tests is that there is now exactly one, that it is its own inverse, and that a
  * change to what "canonical" means fails a test rather than shipping.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class PackedWeightsTest {
 
     private val rows = 4

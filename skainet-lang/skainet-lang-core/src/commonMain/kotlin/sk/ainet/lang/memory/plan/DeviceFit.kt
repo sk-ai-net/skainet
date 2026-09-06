@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.plan
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * What a device has to offer, as **two pools** rather than one (SKEEP-002, #1038).
@@ -19,7 +18,6 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * @property heapMaxBytes the managed-heap cap (`Runtime.maxMemory()`)
  * @property heapUsedBytes managed heap in use right now
  */
-@ExperimentalMemoryApi
 public data class DeviceMemory(
     val totalRamBytes: Long,
     val availableRamBytes: Long,
@@ -50,7 +48,6 @@ public data class DeviceMemory(
 }
 
 /** One resource pool of a [DeviceFit]: what the plan needs from it, and what it has. */
-@ExperimentalMemoryApi
 public data class PoolFit(val name: String, val neededBytes: Long, val budgetBytes: Long) {
     public val fits: Boolean get() = neededBytes <= budgetBytes
     /** Bytes left over (negative when it does not fit). */
@@ -64,7 +61,6 @@ public data class PoolFit(val name: String, val neededBytes: Long, val budgetByt
  * @property weightsMapped whether the weights are loaded through `WeightResidency.MAPPED`, i.e. from
  *   file-backed pages that never count against the managed heap.
  */
-@ExperimentalMemoryApi
 public data class DeviceFit(
     val plan: MemoryPlan,
     val device: DeviceMemory,
@@ -113,7 +109,6 @@ public data class DeviceFit(
  *
  * @param weightsMapped weights come from file-backed pages (`WeightResidency.MAPPED`)
  */
-@ExperimentalMemoryApi
 public fun MemoryPlan.fitOn(device: DeviceMemory, weightsMapped: Boolean): DeviceFit {
     val heapNeeded = kvBytes + forwardBytes + headroomBytes + if (weightsMapped) 0L else weightsBytes
     val heap = PoolFit("managed heap", heapNeeded, device.heapFreeBytes)

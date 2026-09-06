@@ -54,7 +54,6 @@ public class MemorySegmentTensorData<T : DType> private constructor(
      * data's [segment] — nothing is copied and a migrated kernel unwraps it once with
      * `SegmentStorage.segment()`.
      */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     override val view: sk.ainet.lang.memory.TensorView
         get() = sk.ainet.lang.memory.TensorView.dense(
             sk.ainet.lang.memory.SegmentStorage.borrow(

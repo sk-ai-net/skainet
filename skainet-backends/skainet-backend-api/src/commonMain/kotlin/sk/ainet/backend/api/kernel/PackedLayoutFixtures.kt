@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.blockSpec
 import sk.ainet.lang.tensor.storage.TensorEncoding
 
@@ -21,7 +20,6 @@ import sk.ainet.lang.tensor.storage.TensorEncoding
  * Every fixture is **three blocks wide** on purpose. At one block per row the two orders coincide,
  * which is exactly the shape that hid #968.
  */
-@ExperimentalMemoryApi
 public object PackedLayoutFixtures {
 
     /** The formats the contract covers — everything with a block geometry and a matmul kernel. */

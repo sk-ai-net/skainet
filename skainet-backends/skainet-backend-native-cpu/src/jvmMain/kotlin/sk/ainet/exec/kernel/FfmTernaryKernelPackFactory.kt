@@ -1,7 +1,6 @@
 package sk.ainet.exec.kernel
 
 import sk.ainet.backend.api.kernel.ViewKernelPack
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * `ServiceLoader` entry for the ternary kernels (#1240) — the missing sibling of
@@ -16,7 +15,6 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * `install(native?)`, which registers nothing when the bundled native library is missing —
  * discovery on such a machine costs a lookup and leaves dispatch to the reference kernels.
  */
-@OptIn(ExperimentalMemoryApi::class)
 public class FfmTernaryKernelPackFactory : ViewKernelPack {
     override val name: String get() = "ffm-ternary"
     override fun install() {

@@ -15,7 +15,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-@OptIn(ExperimentalMemoryApi::class)
 class DescribeTest {
 
     @Test

@@ -10,7 +10,6 @@ import sk.ainet.lang.tensor.data.Q5_KBlockTensorData
 import sk.ainet.lang.tensor.data.Q6_KBlockTensorData
 import sk.ainet.lang.tensor.data.Q8_0BlockTensorData
 import sk.ainet.lang.tensor.data.Ternary2BitTensorData
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
 import sk.ainet.lang.memory.TernaryBlockDecoder
@@ -24,7 +23,6 @@ import kotlin.test.Test
  * bit-identical floats for the same bytes. Guards the TensorData → TensorView façade migration
  * (M1) and every later refactor of the packed storage types.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class PackedDecodeGoldenTest {
 
     private companion object {

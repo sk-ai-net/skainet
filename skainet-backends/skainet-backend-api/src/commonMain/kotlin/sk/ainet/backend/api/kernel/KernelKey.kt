@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.TensorView
 import sk.ainet.lang.tensor.storage.TensorEncoding
@@ -14,7 +13,6 @@ import sk.ainet.lang.tensor.storage.TensorEncoding
  * Keys are values: equal keys select the same kernel, and a key prints as something a log or an
  * `UnsupportedKernel` message can show: `matmul(F32/Dense(4B) contiguous × F32/Q4_K blocked) @host`.
  */
-@ExperimentalMemoryApi
 public data class KernelKey(
     val op: String,
     val operands: List<OperandKey>,
@@ -43,7 +41,6 @@ public data class KernelKey(
 }
 
 /** One operand of a [KernelKey]: its [Format] plus the layout class the kernel must cope with. */
-@ExperimentalMemoryApi
 public data class OperandKey(val format: Format, val layout: LayoutClass) {
     override fun toString(): String = "$format ${layout.name.lowercase()}"
 
@@ -77,7 +74,6 @@ public data class OperandKey(val format: Format, val layout: LayoutClass) {
  * orders, and #973 is what happens when that is left implicit. A kernel declares which one it
  * takes, and the dispatcher relayouts when the operand disagrees.
  */
-@ExperimentalMemoryApi
 public enum class LayoutClass {
     CONTIGUOUS,
     STRIDED,
@@ -94,7 +90,6 @@ public enum class LayoutClass {
 }
 
 /** Thrown when no registered kernel and no adapter chain can serve a key; lists what is registered. */
-@ExperimentalMemoryApi
 public class UnsupportedKernelException(
     public val key: KernelKey,
     public val candidates: List<String>,
@@ -102,7 +97,6 @@ public class UnsupportedKernelException(
 ) : IllegalArgumentException(message)
 
 /** The encoding name a [KernelKey] uses for a format, matching `KernelProvider.supports`' dtype keys. */
-@ExperimentalMemoryApi
 public val Format.kernelEncodingName: String
     get() = when (val e = encoding) {
         is TensorEncoding.Dense -> dtype.name

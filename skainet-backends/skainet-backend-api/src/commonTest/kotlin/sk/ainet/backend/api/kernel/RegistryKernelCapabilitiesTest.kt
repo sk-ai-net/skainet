@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.tensor.storage.TensorEncoding
 import kotlin.test.AfterTest
 import kotlin.test.Test
@@ -10,7 +9,6 @@ import kotlin.test.assertTrue
 /**
  * #1109 slice 1: the capability answer comes from the registry, so it cannot disagree with dispatch.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class RegistryKernelCapabilitiesTest {
 
     @AfterTest fun cleanup() { KernelDispatch.clearForTesting(); KernelRegistry.clearForTesting() }

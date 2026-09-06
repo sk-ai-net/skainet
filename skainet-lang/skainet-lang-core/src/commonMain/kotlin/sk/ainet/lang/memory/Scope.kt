@@ -17,7 +17,6 @@ import sk.ainet.lang.tensor.storage.MemoryDomain
  * model-lifetime arena (tens of GB pinned) and per-call arenas (leak per matmul). A `Forward`
  * scope matches the forward-pass lifetime; a `Model` scope the model's.
  */
-@ExperimentalMemoryApi
 public sealed interface Scope : AutoCloseable {
     public val kind: ScopeKind
     /** Bytes currently owned and alive in this scope. */
@@ -48,7 +47,6 @@ public sealed interface Scope : AutoCloseable {
  * (deterministic: the JVM unmaps the file, native `free`s/`munmap`s). Idiomatic use:
  * `ModelScope().use { model -> … }`.
  */
-@ExperimentalMemoryApi
 public class ModelScope(override val sink: TraceSink = NoopTraceSink, public val name: String = "model") : Scope {
     override val kind: ScopeKind get() = ScopeKind.MODEL
     private val owned = ArrayList<Storage>()
@@ -107,7 +105,6 @@ public class ModelScope(override val sink: TraceSink = NoopTraceSink, public val
  * in [overflowBytes] so the planner can resize the slab). Outputs that must outlive the step are
  * copied out with [retain].
  */
-@ExperimentalMemoryApi
 public class ForwardScope(
     public val slabFloats: Int,
     override val sink: TraceSink = NoopTraceSink,

@@ -2,7 +2,6 @@ package sk.ainet.exec.tensor.ops
 
 import sk.ainet.backend.api.kernel.DispatchMode
 import sk.ainet.context.DirectCpuExecutionContext
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.tensor.Shape
 import sk.ainet.lang.tensor.data.Q4_KBlockTensorData
 import sk.ainet.lang.tensor.data.Q8_0BlockTensorData
@@ -20,7 +19,6 @@ import kotlin.test.assertTrue
  * activation whose `TensorData` subtype the fast path did not accept). Both must produce correct,
  * finite numbers — and the registry path and the legacy path must agree.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class RegistryMatmulDispatchTest {
 
     @AfterTest fun reset() { DispatchMode.overrideEnabled = null }

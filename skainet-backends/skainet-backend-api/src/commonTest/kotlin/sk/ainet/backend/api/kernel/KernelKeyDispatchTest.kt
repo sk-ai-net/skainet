@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.ForwardScope
 import sk.ainet.lang.memory.ScopeKind
@@ -29,7 +28,6 @@ import kotlin.test.assertTrue
  * format — so the #993 (rank-1 decode step × packed weight) and #991 (activation subtype) cases
  * cannot crash.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class KernelKeyDispatchTest {
 
     @AfterTest fun cleanup() { KernelDispatch.clearForTesting() }

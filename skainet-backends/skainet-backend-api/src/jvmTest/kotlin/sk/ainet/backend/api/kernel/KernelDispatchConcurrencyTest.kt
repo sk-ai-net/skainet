@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.TensorView
 import sk.ainet.lang.types.FP32
@@ -19,7 +18,6 @@ import kotlin.test.assertTrue
  * concurrent reads while writes stay serialized — no `ConcurrentModificationException`, no
  * double auto-install, no lost registration.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class KernelDispatchConcurrencyTest {
 
     @AfterTest fun cleanup() { KernelDispatch.clearForTesting(); KernelRegistry.clearForTesting() }

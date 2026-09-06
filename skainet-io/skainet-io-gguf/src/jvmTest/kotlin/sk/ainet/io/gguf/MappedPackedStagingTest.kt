@@ -9,7 +9,6 @@ import kotlinx.coroutines.runBlocking
 import sk.ainet.context.DefaultDataExecutionContext
 import sk.ainet.io.JvmRandomAccessSource
 import sk.ainet.lang.memory.BlockOrder
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.plan.WeightForm
 import sk.ainet.lang.memory.plan.WeightResidency
 import sk.ainet.lang.tensor.Tensor
@@ -26,7 +25,6 @@ import sk.ainet.lang.types.FP32
  * must be identical to the heap load; StagingPolicyParityTest asserts that across policies,
  * this test pins the *representation*.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class MappedPackedStagingTest {
 
     private fun file(): File = SyntheticGguf.write(

@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
@@ -21,7 +20,6 @@ import sk.ainet.lang.types.FP32
  * the dispatcher relayouts. That distinction is what #1029 was missing and what made mixing the two
  * a silent-wrong-numbers bug rather than a crash (#968, #971).
  */
-@ExperimentalMemoryApi
 public object KernelPacks {
 
     /** Capability marker for a provider that needs an explicit vector unit (Panama, NEON, …). */
@@ -81,7 +79,6 @@ public object KernelPacks {
  * output-major (`[n, k]`, the shape SKaiNET's dispatch normalises to). Unwraps each view once —
  * per the Phase-2 spike (#1016) — and calls the pack's strided GEMM.
  */
-@ExperimentalMemoryApi
 public class Fp32ViewMatmulKernel(
     providerName: String,
     private val kernel: Fp32MatmulKernel,

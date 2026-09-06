@@ -20,7 +20,6 @@ import kotlin.test.assertTrue
  * the wrong element order still produces plausible-looking numbers, so the interleave is pinned
  * explicitly rather than only round-tripped.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class TernaryEncodingTest {
 
     private fun ternary(n: Int, seed: Int = 1): FloatArray {

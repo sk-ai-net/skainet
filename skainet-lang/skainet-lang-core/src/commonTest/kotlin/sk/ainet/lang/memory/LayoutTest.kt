@@ -10,7 +10,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /** SKEEP-003 §0 *Layout*: strides, offset and contiguity of a view — metadata only. */
-@OptIn(ExperimentalMemoryApi::class)
 class LayoutTest {
 
     private val f32 = Format.dense(FP32)

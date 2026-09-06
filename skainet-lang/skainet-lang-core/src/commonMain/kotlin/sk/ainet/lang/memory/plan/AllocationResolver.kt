@@ -1,7 +1,6 @@
 package sk.ainet.lang.memory.plan
 
 import sk.ainet.lang.memory.AllocationSpec
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.PlatformStorage
 import sk.ainet.lang.memory.ScopeKind
@@ -12,7 +11,6 @@ import sk.ainet.lang.tensor.storage.TensorEncoding
  * What the running platform's storage can actually do — the third input of [AllocationResolver],
  * separated from [PlatformStorage] so a test can resolve for a platform it is not running on.
  */
-@ExperimentalMemoryApi
 public data class StorageCapabilities(
     val supportsMappedFiles: Boolean,
     val supportsOffHeap: Boolean = true,
@@ -69,7 +67,6 @@ public data class StorageCapabilities(
  * platform can do* ([StorageCapabilities]). Consumers — the plan, the loader, a context — carry the
  * result; none of them decide. Nothing here allocates.
  */
-@ExperimentalMemoryApi
 public object AllocationResolver {
 
     /**

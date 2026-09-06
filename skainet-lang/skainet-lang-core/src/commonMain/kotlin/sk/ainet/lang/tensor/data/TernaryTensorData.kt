@@ -50,7 +50,6 @@ public class Ternary2BitTensorData(
 ) : TernaryTensorData, PackedBlockStorage {
 
     /** The façade over the packed bytes (SKEEP-003 §4.1): see [PackedBlockStorage.packedView]. */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     override val view: sk.ainet.lang.memory.TensorView get() = packedView
 
     override val shape: Shape = Shape(initialShape.dimensions.copyOf())
@@ -140,7 +139,6 @@ public class Ternary2BitTensorData(
             // TQ2_0 interleaves: byte `j + m` holds four elements 32 apart, so the bytes cannot be
             // adopted verbatim — decode them through the reference codec (#1033) and re-pack into
             // this type's four-consecutive-elements-per-byte layout.
-            @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
             val codes = sk.ainet.lang.memory.TernaryCodec.codesTq2_0(blockData, minOf(shape.volume, 256))
             return fromTernaryValues(shape, codes.copyOf(shape.volume), scale)
         }

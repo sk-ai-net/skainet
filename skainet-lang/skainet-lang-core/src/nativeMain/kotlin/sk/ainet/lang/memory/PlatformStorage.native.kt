@@ -5,7 +5,6 @@ import sk.ainet.lang.tensor.TensorId
 import sk.ainet.lang.tensor.storage.MemoryDomain
 
 /** Kotlin/Native: off-heap = `malloc` ([NativeMallocStorage]), mapped = `mmap` ([NativeMappedStorage]). */
-@ExperimentalMemoryApi
 public actual object PlatformStorage {
     public actual fun supports(domain: MemoryDomain): Boolean = domain == MemoryDomain.HOST_HEAP || domain == MemoryDomain.HOST_OFFHEAP || domain == MemoryDomain.MMAP_FILE
     public actual val supportsMappedFiles: Boolean get() = true

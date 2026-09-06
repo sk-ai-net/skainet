@@ -7,7 +7,6 @@ import kotlinx.cinterop.usePinned
 import sk.ainet.backend.api.kernel.TernaryLmheadNative
 import sk.ainet.backend.api.kernel.TernaryPlanesKernelPack
 import sk.ainet.kernels.cinterop.skainet_ternary_lmhead_stage1
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * Kotlin/Native face of the vendored NeoGPU fused 4-plane lm_head (#1150): calls
@@ -17,7 +16,7 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * derived at `rowScaleByteOffset` (2-byte aligned by the seam's contract — unaligned uint16
  * reads are legal on AArch64 anyway).
  */
-@OptIn(ExperimentalForeignApi::class, ExperimentalMemoryApi::class)
+@OptIn(ExperimentalForeignApi::class)
 public object NativeKnTernaryLmhead : TernaryLmheadNative {
 
     override val name: String get() = "cinterop"

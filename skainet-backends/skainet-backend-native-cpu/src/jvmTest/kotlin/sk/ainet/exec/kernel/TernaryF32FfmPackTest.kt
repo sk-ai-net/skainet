@@ -2,7 +2,6 @@ package sk.ainet.exec.kernel
 
 import sk.ainet.backend.api.kernel.KernelDispatch
 import sk.ainet.backend.api.kernel.TernaryF32GemvKernel
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Scope
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
@@ -26,7 +25,6 @@ import kotlin.test.assertTrue
  * the NeoGPU LUT kernel serves the exact key — no requantize adapter, results equal to the f32
  * reference.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class TernaryF32FfmPackTest {
 
     private val k = 2560 // BitNet-2B hidden size

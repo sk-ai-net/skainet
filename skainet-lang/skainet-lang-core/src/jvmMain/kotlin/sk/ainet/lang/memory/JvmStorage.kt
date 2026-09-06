@@ -18,7 +18,6 @@ import java.nio.file.StandardOpenOption
  * own `Arena.ofShared()` and closes it on [close]; milestone slice #1021 (`Scope`) passes the
  * scope's arena instead, so `Forward` becomes a recycled bump slab.
  */
-@ExperimentalMemoryApi
 public class SegmentStorage private constructor(
     override val id: StorageId,
     private val seg: MemorySegment,
@@ -87,7 +86,6 @@ public class SegmentStorage private constructor(
  * shared across processes; closing the storage unmaps (SKEEP-003 §4.8.1). Packed GGUF weights and
  * embedding tables live here.
  */
-@ExperimentalMemoryApi
 public class MappedFileStorage private constructor(
     override val id: StorageId,
     public val path: Path,
