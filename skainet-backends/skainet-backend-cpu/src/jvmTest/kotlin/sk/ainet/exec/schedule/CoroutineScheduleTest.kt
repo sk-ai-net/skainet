@@ -1,6 +1,7 @@
 package sk.ainet.exec.schedule
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import sk.ainet.context.schedule.Schedule
@@ -8,6 +9,9 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.trace.RecordingTraceSink
 import sk.ainet.lang.memory.trace.TraceEvent
 import java.util.BitSet
+import java.util.concurrent.CyclicBarrier
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -60,16 +64,20 @@ class CoroutineScheduleTest {
     }
 
     @Test
-    fun callerThreadRunsTheFirstChunkAndWorkersRunTheRest() {
+    fun callerThreadRunsTheFirstChunkAndWorkersHelpWithTheRest() {
         val schedule = CoroutineSchedule(parallelism = 4)
         val caller = Thread.currentThread()
         val onCaller = AtomicInteger()
         val elsewhere = AtomicInteger()
-        schedule.forRange(4000, grain = 1) { _, _ ->
+        var first: Thread? = null
+        schedule.forRange(4000, grain = 1) { s, _ ->
+            if (s == 0) first = Thread.currentThread()
             if (Thread.currentThread() === caller) onCaller.incrementAndGet() else elsewhere.incrementAndGet()
+            Thread.sleep(30)   // long enough for the pool to claim the other chunks
         }
-        assertEquals(1, onCaller.get(), "the caller runs exactly one chunk itself")
-        assertEquals(3, elsewhere.get(), "the other chunks run on the dispatcher")
+        assertSame(caller, first, "the caller runs the first chunk itself")
+        assertTrue(elsewhere.get() >= 1, "at least one chunk ran on the dispatcher")
+        assertEquals(4, onCaller.get() + elsewhere.get(), "every chunk ran exactly once")
     }
 
     @Test
@@ -117,6 +125,33 @@ class CoroutineScheduleTest {
             jobs.forEach { it.join() }
         }
         assertEquals(4 * 4096, total.get())
+    }
+
+    /**
+     * The CI deadlock: every thread of the schedule's own pool enters a region at once, so no
+     * pool thread is free to run the helpers. The caller must finish the region by itself. With
+     * the old `runBlocking { coroutineScope { … } }` region this hung forever on a pool of any
+     * size, because the scope waited for children the pool could never start.
+     */
+    @Test
+    fun aRegionEnteredFromEveryThreadOfItsOwnPoolStillCompletes() {
+        val poolSize = 2
+        val pool = Executors.newFixedThreadPool(poolSize)
+        try {
+            val schedule = CoroutineSchedule(dispatcher = pool.asCoroutineDispatcher(), parallelism = 4)
+            val allInside = CyclicBarrier(poolSize)
+            val total = AtomicInteger()
+            val futures = List(poolSize) {
+                pool.submit {
+                    allInside.await(10, TimeUnit.SECONDS)
+                    schedule.forRange(4096, grain = 1) { s, e -> total.addAndGet(e - s) }
+                }
+            }
+            futures.forEach { it.get(30, TimeUnit.SECONDS) }
+            assertEquals(poolSize * 4096, total.get())
+        } finally {
+            pool.shutdownNow()
+        }
     }
 
     @Test
