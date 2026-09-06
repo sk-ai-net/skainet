@@ -37,7 +37,6 @@ public class JvmMappedFile private constructor(
      * of the one file mapping (#1189) — the packed counterpart of [denseFloats]: zero heap bytes,
      * blocks left in canonical row-major file order for the buffer-reading kernels.
      */
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     override fun packedTensor(
         byteOffset: Long,
         shape: Shape,

@@ -226,7 +226,6 @@ internal class DefaultCpuOpsJvm(
      * ([MemorySegmentBackedData]), and TensorData whose VIEW presents a
      * [sk.ainet.lang.memory.SegmentStorage] (SKEEP-004 off-heap scope allocations).
      */
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     private fun <T : DType, V> segmentActivationToHeap(x: Tensor<T, V>): Tensor<T, V>? {
         if (x.dtype != FP32::class) return null
         val count = x.shape.volume
@@ -1019,7 +1018,6 @@ internal class DefaultCpuOpsJvm(
     /** Dense-FP32 window (array + base offset): plain array data at 0, slab-backed data (#1173) at its arrayOffset. */
     private class FloatWin(@JvmField val arr: FloatArray, @JvmField val off: Int)
 
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     private fun floatWinOf(d: sk.ainet.lang.tensor.data.TensorData<*, *>): FloatWin? = when (d) {
         is FloatArrayTensorData<*> -> FloatWin(d.buffer, 0)
         is sk.ainet.lang.tensor.data.StorageFloatTensorData<*> -> {

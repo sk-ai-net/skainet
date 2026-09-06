@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.I8Absmax
 import sk.ainet.lang.memory.Storage
@@ -20,7 +19,6 @@ import sk.ainet.lang.types.FP32
  * why this one can be bridged into the view registry while those still wait on #973: there is no
  * ambiguity here, and the parity test pins it.
  */
-@ExperimentalMemoryApi
 public interface BitNetGemvNative {
     /** A name for logs and traces, e.g. `neon-dotprod`. */
     public val name: String
@@ -47,7 +45,6 @@ public interface BitNetGemvNative {
  * registered, so dispatch keeps working at reference speed and the caller is *told* through [warn]
  * rather than left to wonder why decode got slower.
  */
-@ExperimentalMemoryApi
 public object TernaryKernelPacks {
 
     /** Capability a `bitnet_gemv` pack declares when it needs ARMv8.2 dot-product instructions. */
@@ -97,7 +94,6 @@ public object TernaryKernelPacks {
  * activation (prefill) or storage that is not a heap array — instead of failing: the fast path is
  * an optimization, never a correctness requirement.
  */
-@ExperimentalMemoryApi
 public class NativeBitNetGemvKernel(
     private val native: BitNetGemvNative,
     override val key: KernelKey,

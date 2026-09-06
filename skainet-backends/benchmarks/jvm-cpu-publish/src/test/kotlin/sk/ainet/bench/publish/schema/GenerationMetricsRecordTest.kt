@@ -1,7 +1,6 @@
 package sk.ainet.bench.publish.schema
 
 import kotlinx.serialization.json.Json
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.trace.GenerationMetrics
 import sk.ainet.lang.memory.trace.ModuleCost
 import java.io.File
@@ -17,7 +16,6 @@ import kotlin.test.assertTrue
  * The written fixture is the script's own test input: `./scripts/check_engine_json.sh
  * skainet-backends/benchmarks/jvm-cpu-publish/build/engine-json-check` must pass on it.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class GenerationMetricsRecordTest {
 
     private val json = Json { prettyPrint = true; encodeDefaults = true; explicitNulls = false }

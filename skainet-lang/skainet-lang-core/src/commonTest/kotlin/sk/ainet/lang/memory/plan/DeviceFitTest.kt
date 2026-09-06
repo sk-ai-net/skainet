@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.plan
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.tensor.storage.TensorEncoding
 import sk.ainet.lang.types.FP32
@@ -19,7 +18,6 @@ import kotlin.test.assertTrue
  * unremarkable when its weights are mapped — one total cannot express that, so this asserts the
  * two-pool arithmetic and the advice it produces.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class DeviceFitTest {
 
     private val mb = 1024L * 1024L

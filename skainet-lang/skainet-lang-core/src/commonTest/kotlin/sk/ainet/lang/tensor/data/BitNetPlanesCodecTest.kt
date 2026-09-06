@@ -1,6 +1,5 @@
 package sk.ainet.lang.tensor.data
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.TernaryCodec
 import sk.ainet.lang.tensor.Shape
 import sk.ainet.lang.tensor.storage.TensorEncoding
@@ -15,7 +14,6 @@ import kotlin.test.assertTrue
  * Eight planes of ±0.5-threshold round-to-trit with ×3 residual scaling reconstruct the row
  * within `rowScale / (2·3⁷)` — the format's defined truncation bound.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class BitNetPlanesCodecTest {
 
     @Test

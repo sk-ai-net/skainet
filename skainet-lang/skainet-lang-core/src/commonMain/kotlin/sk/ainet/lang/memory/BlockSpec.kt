@@ -4,7 +4,6 @@ import sk.ainet.lang.tensor.storage.TensorEncoding
 import sk.ainet.lang.types.Int8
 
 /** Where an encoding keeps the scale that turns a stored code back into a value. */
-@ExperimentalMemoryApi
 public enum class ScalePlacement {
     /** No scale in the bytes — the codes *are* the values, or the scale lives outside the buffer. */
     NONE,
@@ -34,7 +33,6 @@ public enum class ScalePlacement {
  * @property activation the format a kernel is expected to quantize the *other* operand to
  *   (`W1.58A8` → `Format(Int8, Dense(1))`), or `null` when the kernel consumes floats.
  */
-@ExperimentalMemoryApi
 public data class BlockSpec(
     val blockSize: Int,
     val bytesPerBlock: Int,
@@ -73,7 +71,6 @@ public data class BlockSpec(
  * ([TernaryCodec]), the fixture generators and `EncodingSpecTest` all read it, so a wrong constant
  * fails a test rather than silently mis-decoding a file.
  */
-@ExperimentalMemoryApi
 public val TensorEncoding.blockSpec: BlockSpec?
     get() = when (this) {
         is TensorEncoding.Dense -> null
@@ -107,7 +104,6 @@ public val TensorEncoding.blockSpec: BlockSpec?
     }
 
 /** True when this encoding stores ternary values (`-1, 0, +1`) — the M2 kernel family. */
-@ExperimentalMemoryApi
 public val TensorEncoding.isTernary: Boolean
     get() = this == TensorEncoding.TQ1_0 || this == TensorEncoding.TQ2_0 ||
         this == TensorEncoding.TernaryPacked || this == TensorEncoding.BITNET_B1_58

@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.trace
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.ScopeKind
 import sk.ainet.lang.tensor.TensorId
@@ -18,7 +17,6 @@ import kotlin.test.assertTrue
  * effective bandwidth, the per-module breakdown — is asserted exactly and identically on every
  * target, instead of depending on how coarse the platform clock happens to be.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class GenerationMetricsTest {
 
     private val ms = 1_000_000L

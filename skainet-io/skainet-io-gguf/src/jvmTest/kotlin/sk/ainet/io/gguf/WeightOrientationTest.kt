@@ -5,7 +5,6 @@ import sk.ainet.context.DefaultDataExecutionContext
 import sk.ainet.io.JvmRandomAccessSource
 import sk.ainet.lang.memory.plan.WeightForm
 import sk.ainet.lang.memory.plan.WeightShapeOrientation
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.tensor.Shape
 import sk.ainet.lang.tensor.Tensor
 import sk.ainet.lang.types.FP32
@@ -22,7 +21,6 @@ import kotlin.test.assertEquals
  * The guard that refuses a wrongly-labelled weight lives with the relayout, and is tested in
  * `PackedWeightsTest`.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class WeightOrientationTest {
 
     /** A Q8_0 weight whose two dimensions differ and where only one of them is block-aligned. */

@@ -15,7 +15,6 @@ import sk.ainet.lang.memory.trace.counter
  * Every value is `null` where the platform cannot answer — a browser has no `/proc`, and neither
  * has a Wasm host. Callers report "—", they do not guess.
  */
-@ExperimentalMemoryApi
 public expect object MemoryProbe {
     /** Resident set size in bytes, or `null` when the platform cannot say. */
     public fun rssBytes(): Long?
@@ -28,7 +27,6 @@ public expect object MemoryProbe {
 }
 
 /** One sample of the process-level counters, with the fields the platform could answer. */
-@ExperimentalMemoryApi
 public data class ProcessMemorySample(
     val rssBytes: Long?,
     val majorFaults: Long?,
@@ -56,6 +54,5 @@ public data class ProcessMemorySample(
 }
 
 /** Sample all three counters at once. */
-@ExperimentalMemoryApi
 public fun MemoryProbe.sample(): ProcessMemorySample =
     ProcessMemorySample(rssBytes(), majorFaults(), minorFaults())

@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * A installable set of [ViewKernel]s for [KernelDispatch] — the view-keyed sibling of
@@ -21,7 +20,6 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * equivalent on Kotlin/Native, wasm or JS, so those platforms install their packs manually (see
  * `installPlatformKernelPacks`).
  */
-@ExperimentalMemoryApi
 public interface ViewKernelPack {
 
     /** Stable identifier, used for logging and de-duplication (e.g. `"ffm-rowmajor"`). */
@@ -42,7 +40,6 @@ public interface ViewKernelPack {
  * JVM: `ServiceLoader`-discovered, mirroring [KernelServiceLoader]. Everywhere else: no discovery
  * mechanism exists, so this returns an empty list and the consumer installs packs explicitly.
  */
-@ExperimentalMemoryApi
 internal expect fun installPlatformKernelPacks(): List<String>
 
 /**
@@ -52,5 +49,4 @@ internal expect fun installPlatformKernelPacks(): List<String>
  * which is `null` on an empty registry — a bootstrap that runs before any ops instance exists
  * would otherwise install nothing but the reference kernel.
  */
-@ExperimentalMemoryApi
 internal expect fun installPlatformKernelProviders(): List<String>

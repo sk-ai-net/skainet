@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.plan
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.ScopeKind
 import sk.ainet.lang.tensor.TensorId
@@ -14,7 +13,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /** SKEEP-003 M0-A4: plan arithmetic, fit check and suggestions — from shapes and encodings only. */
-@OptIn(ExperimentalMemoryApi::class)
 class MemoryPlanTest {
 
     /** Llama-3.2-1B-like geometry. */

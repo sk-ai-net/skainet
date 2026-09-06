@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.plan
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.tensor.storage.TensorEncoding
 import sk.ainet.lang.types.FP32
 import kotlin.test.Test
@@ -15,7 +14,6 @@ import kotlin.test.assertTrue
  * one absent, under both a desktop and a 2 GB profile, and each cell states what should come out
  * and why. If a rule changes, this table is where it changes.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class WeightFormResolverTest {
 
     private val packed: List<TensorEncoding> = listOf(

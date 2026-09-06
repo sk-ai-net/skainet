@@ -14,7 +14,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /** SKEEP-003 Phase 0: `AllocationSpec` replaced the never-consumed `StorageSpec` (deleted in #1142). */
-@OptIn(ExperimentalMemoryApi::class)
 class AllocationSpecTest {
 
     @Test

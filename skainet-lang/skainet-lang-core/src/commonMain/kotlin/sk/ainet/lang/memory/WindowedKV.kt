@@ -22,7 +22,6 @@ import sk.ainet.lang.tensor.TensorId
  * @property head the first (older) run — the only one when the window does not wrap
  * @property tail the second (newer) run, present only after the ring wraps
  */
-@ExperimentalMemoryApi
 public class WindowedKV(
     public val head: TensorView,
     public val tail: TensorView? = null,

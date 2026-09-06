@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.TensorView
 
@@ -9,7 +8,6 @@ import sk.ainet.lang.memory.TensorView
  * *Kernel*, §5.2). Custom kernels are written against views and registered — an author never
  * touches a `TensorData` subclass.
  */
-@ExperimentalMemoryApi
 public interface ViewKernel {
     /** What this kernel serves. */
     public val key: KernelKey
@@ -39,7 +37,6 @@ public interface ViewKernel {
  * `out = a × bᵀ` in the shapes SKaiNET's dispatch normalises to: `a` is `[m, k]`, `b` is `[n, k]`
  * (a weight stored output-major, as GGUF does), `out` is `[m, n]`.
  */
-@ExperimentalMemoryApi
 public class ReferenceMatmulKernel(override val key: KernelKey) : ViewKernel {
     override val name: String get() = "reference"
 
@@ -61,7 +58,6 @@ public class ReferenceMatmulKernel(override val key: KernelKey) : ViewKernel {
 
     public companion object {
         /** The reference kernel for the formats of [a] and [b]. */
-        @ExperimentalMemoryApi
         public fun forOperands(a: Format, b: Format): ReferenceMatmulKernel =
             ReferenceMatmulKernel(KernelKey("matmul", listOf(OperandKey.contiguous(a), OperandKey.contiguous(b))))
     }

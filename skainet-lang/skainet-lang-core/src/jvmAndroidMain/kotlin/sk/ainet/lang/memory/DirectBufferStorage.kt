@@ -17,7 +17,6 @@ import java.nio.file.StandardOpenOption
  * the buffer becomes unreachable (direct buffers have no explicit free on Android); [close] marks
  * the storage dead so no late access can see it. Use [SegmentStorage] where FFM is available.
  */
-@ExperimentalMemoryApi
 public class DirectBufferStorage private constructor(
     override val id: StorageId,
     private val buf: ByteBuffer,
@@ -76,7 +75,6 @@ public class DirectBufferStorage private constructor(
  * — weights outside ART entirely (SKEEP-002 / #921). Unmapped when the buffer becomes unreachable;
  * [close] marks the storage dead.
  */
-@ExperimentalMemoryApi
 public class MappedBufferStorage private constructor(
     override val id: StorageId,
     public val path: Path,

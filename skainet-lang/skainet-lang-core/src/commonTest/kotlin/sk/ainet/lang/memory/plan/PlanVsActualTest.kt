@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.plan
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.ForwardScope
 import sk.ainet.lang.memory.ModelScope
@@ -19,7 +18,6 @@ import kotlin.test.assertTrue
  * SKEEP-003 §4.9 / PRD M1-F8: the plan is compared with what a run actually allocated, and a drift
  * beyond the tolerance fails — which is what keeps the planner honest as kernels change.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class PlanVsActualTest {
 
     private val geometry = ModelGeometry(layers = 2, heads = 4, kvHeads = 2, headDim = 16, valueDim = 16, embeddingLength = 64, feedForwardLength = 128, vocabSize = 256)

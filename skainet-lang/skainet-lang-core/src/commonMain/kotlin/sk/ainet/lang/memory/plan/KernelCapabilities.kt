@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.plan
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.blockSpec
 import sk.ainet.lang.tensor.storage.TensorEncoding
 
@@ -16,7 +15,6 @@ import sk.ainet.lang.tensor.storage.TensorEncoding
  * [PlannerProfile] and the two are used together, while the backend modules are downstream. The
  * registry-backed implementation is over there, where the providers are.
  */
-@ExperimentalMemoryApi
 public interface KernelCapabilities {
 
     /**

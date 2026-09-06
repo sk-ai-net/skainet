@@ -11,7 +11,6 @@ import sk.ainet.lang.tensor.TensorId
  * per allocation; on, it keeps a bounded ledger of live storages plus hooks a debugger or a test
  * can break on.
  */
-@ExperimentalMemoryApi
 public object MemoryDebug {
 
     /** Environment variable and system property that enable debug mode. */
@@ -145,9 +144,7 @@ public object MemoryDebug {
 }
 
 /** Platform reading of [MemoryDebug.ENV] / [MemoryDebug.PROPERTY]. */
-@ExperimentalMemoryApi
 internal expect fun platformMemoryDebugEnabled(): Boolean
 
 /** The current call site, when the platform can cheaply produce one (JVM: a stack frame). */
-@ExperimentalMemoryApi
 internal expect fun platformCallSite(): String?

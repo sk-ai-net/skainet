@@ -23,7 +23,6 @@ import kotlin.math.roundToInt
  * Byte layout of a `[rows, cols]` activation: `rows * cols` codes, row-major, then `rows`
  * little-endian FP32 scales. `value ≈ code * scale(row)`.
  */
-@ExperimentalMemoryApi
 public object I8Absmax {
 
     /** The activation format: int8 values, per-token absmax scale. */

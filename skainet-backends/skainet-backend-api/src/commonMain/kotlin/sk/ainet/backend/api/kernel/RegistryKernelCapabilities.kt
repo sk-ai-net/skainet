@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.plan.KernelCapabilities
 import sk.ainet.lang.tensor.storage.TensorEncoding
 
@@ -26,7 +25,6 @@ import sk.ainet.lang.tensor.storage.TensorEncoding
  * CPU cannot feed anything, whatever it declares. Dispatch kernels carry their requirements in
  * their key's capability set instead, and are filtered when they are selected.
  */
-@ExperimentalMemoryApi
 public object RegistryKernelCapabilities : KernelCapabilities {
 
     /** The activation dtype every packed matmul kernel in the tree takes. */

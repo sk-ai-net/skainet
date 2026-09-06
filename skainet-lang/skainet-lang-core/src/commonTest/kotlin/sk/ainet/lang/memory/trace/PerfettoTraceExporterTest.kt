@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.trace
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.ScopeKind
 import sk.ainet.lang.tensor.TensorId
@@ -11,7 +10,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 /** SKEEP-003 §4.9 / PRD M1-A7: one track per scope, kernel spans labelled by TensorId, a live-bytes counter. */
-@OptIn(ExperimentalMemoryApi::class)
 class PerfettoTraceExporterTest {
 
     private fun decodeStepEvents(): List<TraceEvent> {

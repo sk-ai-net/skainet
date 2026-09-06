@@ -15,7 +15,6 @@ import kotlin.test.assertTrue
  * platform either answers with something plausible or says `null`, and whatever it answers reaches
  * the trace as a counter. The numbers themselves are read on the reference device.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class MemoryProbeTest {
 
     @Test

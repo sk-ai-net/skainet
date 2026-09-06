@@ -3,7 +3,6 @@ package sk.ainet.io.gguf
 import kotlinx.coroutines.runBlocking
 import sk.ainet.context.DefaultDataExecutionContext
 import sk.ainet.lang.memory.plan.WeightForm
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.plan.DeviceMemory
 import sk.ainet.lang.memory.plan.PlannerProfile
 import sk.ainet.lang.tensor.Tensor
@@ -29,7 +28,6 @@ import kotlin.test.assertTrue
  * `AndroidGguf.deviceMemory(context)` needs a real `Context` and belongs to the instrumented smoke
  * test; everything downstream of it takes a [DeviceMemory] so it can be checked here.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class AndroidGgufLoadingHostTest {
 
     private val mb = 1024L * 1024L

@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.plan
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.tensor.storage.TensorEncoding
 import sk.ainet.lang.types.FP32
@@ -12,7 +11,6 @@ import kotlin.test.assertTrue
  * #1116: a declared form changes the plan, so a dequantization is a line in a table rather than an
  * OOM at load.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class WeightFormPlanPricingTest {
 
     private val elements = 1L shl 20   // 1 Mi weights, so the numbers are legible

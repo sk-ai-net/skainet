@@ -1,6 +1,5 @@
 package sk.ainet.lang.tensor.storage
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.ModelScope
 import sk.ainet.lang.memory.ScopeKind
 import sk.ainet.lang.memory.plan.ActualMemory
@@ -16,7 +15,6 @@ import kotlin.test.assertTrue
  * bytes are tracked, traced and released with the model — and the memory plan's KV line can be
  * checked against what the store actually took (#1074).
  */
-@OptIn(ExperimentalMemoryApi::class)
 class KvCacheModelScopeTest {
 
     private val config = KvCacheConfig(numLayers = 4, numHeads = 2, headDim = 8, maxSeqLen = 16)

@@ -9,7 +9,6 @@ import sk.ainet.lang.tensor.storage.MemoryDomain
  * to the heap (the planner records the fallback); files arrive through fetch/range requests into
  * heap slabs, so [mapFile] is unsupported here.
  */
-@ExperimentalMemoryApi
 public actual object PlatformStorage {
     public actual fun supports(domain: MemoryDomain): Boolean = domain == MemoryDomain.HOST_HEAP
     public actual val supportsMappedFiles: Boolean get() = false

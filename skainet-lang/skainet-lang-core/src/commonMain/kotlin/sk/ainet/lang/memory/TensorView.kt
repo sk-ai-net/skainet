@@ -21,7 +21,6 @@ import sk.ainet.lang.types.FP32
  * reference path; a production kernel unwraps the storage once per call
  * ([Storage.Heap.floats] / `SegmentStorage.segment()`), as the Phase-2 spike (#1016) requires.
  */
-@ExperimentalMemoryApi
 public class TensorView(
     public val shape: Shape,
     public val format: Format,
@@ -350,7 +349,6 @@ public class TensorView(
  * Decodes one block of a packed encoding out of a [Storage] — the bridge between the block formats
  * (`PackedBlockStorage` implementations today, `Encoding` descriptors in M2) and [TensorView].
  */
-@ExperimentalMemoryApi
 public interface BlockDecoder {
     public val blockSize: Int
     public val bytesPerBlock: Int
@@ -377,7 +375,6 @@ public interface BlockDecoder {
  * is what keeps rule 4 true across a relayout: `get()` on a prepacked view returns the same value
  * it returned before (#973).
  */
-@ExperimentalMemoryApi
 public class RelayoutedBlockDecoder(
     private val delegate: BlockDecoder,
     private val rows: Int,
@@ -408,7 +405,6 @@ public class RelayoutedBlockDecoder(
 }
 
 /** A [BlockDecoder] backed by an existing [PackedBlockStorage] implementation (the M1 bridge). */
-@ExperimentalMemoryApi
 public class PackedBlockDecoder(private val packed: PackedBlockStorage) : BlockDecoder {
     override val blockSize: Int get() = packed.blockSize
     override val bytesPerBlock: Int get() = (packed.physicalBytes / maxOf(packed.blockCount, 1)).toInt()
@@ -421,7 +417,6 @@ public class PackedBlockDecoder(private val packed: PackedBlockStorage) : BlockD
  * Decoder for 16-bit narrow floats (FP16 / BF16) held two bytes per element — the "block" is one
  * element, so a narrow-float view decodes element by element through its [codec].
  */
-@ExperimentalMemoryApi
 public class NarrowFloatDecoder(private val codec: sk.ainet.lang.types.NarrowFloatCodec) : BlockDecoder {
     override val blockSize: Int get() = 1
     override val bytesPerBlock: Int get() = codec.bytesPerElement

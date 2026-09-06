@@ -1,6 +1,5 @@
 package sk.ainet.context
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.ForwardScope
 import sk.ainet.lang.memory.StorageClosedException
 import sk.ainet.lang.tensor.Shape
@@ -17,7 +16,6 @@ import kotlin.test.assertTrue
  * path; a ForwardScope makes creation draw from the slab, `reset()` recycles it, and a
  * use-after-reset is a loud [StorageClosedException] rather than silent garbage.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class ExecutionContextScopeTest {
 
     @Test

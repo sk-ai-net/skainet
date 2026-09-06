@@ -1,7 +1,6 @@
 package sk.ainet.backend.api.kernel
 
 import sk.ainet.lang.memory.BlockOrder
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.Scope
 import sk.ainet.lang.memory.TensorView
@@ -23,7 +22,6 @@ import sk.ainet.lang.tensor.storage.TensorEncoding
  * Adapters allocate in the caller's [Scope] (a `Forward` scope in a generation loop) and are
  * emitted as [TraceEvent.AdapterInserted] — the "hidden 12 GB" of #782 becomes a visible event.
  */
-@ExperimentalMemoryApi
 public object KernelDispatch {
 
     /**
@@ -255,7 +253,6 @@ public object KernelDispatch {
 }
 
 /** A view of the same contiguous bytes under a different shape (rule 5: reshape is a view). */
-@ExperimentalMemoryApi
 public fun TensorView.reshapeContiguous(newShape: Shape): TensorView {
     require(isContiguous) { "reshape needs a contiguous view" }
     require(newShape.volume.toLong() == elementCount) { "reshape must keep the element count ($elementCount), got ${newShape.volume}" }

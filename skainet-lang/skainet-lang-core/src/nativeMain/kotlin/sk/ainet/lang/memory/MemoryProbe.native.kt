@@ -12,7 +12,6 @@ import platform.posix.fopen
  * them (macOS, iOS) `fopen` fails and every value is `null`, which is the honest answer.
  */
 @OptIn(ExperimentalForeignApi::class)
-@ExperimentalMemoryApi
 public actual object MemoryProbe {
 
     private const val PAGE_SIZE: Long = 4096L

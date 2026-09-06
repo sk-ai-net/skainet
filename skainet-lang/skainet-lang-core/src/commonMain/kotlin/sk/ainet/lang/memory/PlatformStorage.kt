@@ -14,7 +14,6 @@ import sk.ainet.lang.tensor.storage.MemoryDomain
  * a request for those resolves to [Storage.Heap] and [PlatformStorage.supports] says so, so the
  * planner can note the fallback).
  */
-@ExperimentalMemoryApi
 public expect object PlatformStorage {
     /** Whether this target can honour [domain] natively (false = [allocate] falls back to the heap). */
     public fun supports(domain: MemoryDomain): Boolean
@@ -34,7 +33,6 @@ public expect object PlatformStorage {
 }
 
 /** The kinds a target binds, for diagnostics (`describe()`, the planner's notes). */
-@ExperimentalMemoryApi
 public data class PlatformStorageInfo(val offHeap: String, val mapped: String) {
     override fun toString(): String = "OffHeap=$offHeap · Mapped=$mapped"
 }

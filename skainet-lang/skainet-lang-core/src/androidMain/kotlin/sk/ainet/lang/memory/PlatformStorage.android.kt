@@ -6,7 +6,6 @@ import sk.ainet.lang.tensor.storage.MemoryDomain
 import java.nio.file.Path
 
 /** Android: off-heap = direct `ByteBuffer` (outside the ART heap limit, #922), mapped = `MappedByteBuffer` (SKEEP-002 / #921). */
-@ExperimentalMemoryApi
 public actual object PlatformStorage {
     public actual fun supports(domain: MemoryDomain): Boolean = domain == MemoryDomain.HOST_HEAP || domain == MemoryDomain.HOST_OFFHEAP || domain == MemoryDomain.MMAP_FILE
     public actual val supportsMappedFiles: Boolean get() = true

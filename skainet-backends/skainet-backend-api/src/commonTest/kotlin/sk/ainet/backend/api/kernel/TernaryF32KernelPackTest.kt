@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Owner
 import sk.ainet.lang.memory.Scope
 import sk.ainet.lang.memory.ScopeKind
@@ -29,7 +28,6 @@ import kotlin.test.assertTrue
  * and its absence changes nothing — FP32 activations keep flowing through the int8-requantize →
  * `bitnet_gemv` path exactly as before, with a notice instead of a crash.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class TernaryF32KernelPackTest {
 
     private val k = 64

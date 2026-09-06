@@ -1,7 +1,6 @@
 package sk.ainet.backend.api.kernel
 
 import sk.ainet.lang.memory.BlockOrder
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
@@ -20,7 +19,6 @@ import sk.ainet.lang.types.FP32
  * One row at a time: the SPI is a matrix-vector kernel, so an activation of `m` rows is `m` calls,
  * which is what the decode path does anyway (`m == 1`).
  */
-@ExperimentalMemoryApi
 public class PackedViewMatmulKernel(
     providerName: String,
     private val encodingName: String,

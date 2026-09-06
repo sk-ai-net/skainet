@@ -1,7 +1,6 @@
 package sk.ainet.backend.api.kernel
 
 import sk.ainet.lang.memory.BlockOrder
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Scope
 import sk.ainet.lang.memory.blockSpec
 import sk.ainet.lang.memory.TensorView
@@ -23,7 +22,6 @@ import sk.ainet.lang.tensor.storage.TensorEncoding
  * The relayout is O(bytes). Call it **once, at load**; a weight prepacked at load hits the packed
  * kernel's key directly and the dispatcher copies nothing per call (#1095).
  */
-@ExperimentalMemoryApi
 public object PackedWeights {
 
     /**

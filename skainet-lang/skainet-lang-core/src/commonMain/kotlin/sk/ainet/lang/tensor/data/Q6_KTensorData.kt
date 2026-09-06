@@ -91,7 +91,6 @@ public class Q6_KBlockTensorData(
 ) : Q6_KTensorData, PackedBlockStorage {
 
     /** The façade over the packed bytes (SKEEP-003 §4.1): see [PackedBlockStorage.packedView]. */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     override val view: sk.ainet.lang.memory.TensorView get() = packedView
 
     override val shape: Shape = Shape(initialShape.dimensions.copyOf())

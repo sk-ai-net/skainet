@@ -7,7 +7,6 @@ import sk.ainet.io.gguf.GGMLQuantizationType
 import sk.ainet.io.gguf.I2sGgufLayout
 import sk.ainet.io.gguf.StreamingGgufParametersLoader
 import sk.ainet.io.gguf.SyntheticGguf
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.plan.WeightForm
 import sk.ainet.lang.memory.plan.WeightResidency
@@ -32,7 +31,6 @@ import kotlin.test.assertIs
  * path afterwards, proving this is a real substitute for #1204's on-device sidecar cache, not
  * just a same-cost repack moved earlier.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class I2sAotConverterTest {
 
     private fun groupPayload(codes: IntArray, qk: Int): ByteArray {

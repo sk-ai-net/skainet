@@ -31,6 +31,15 @@
   custom quantized payloads) instead of failing on the first unmapped one. Threaded through
   `withPolicy`.
 
+### Changed
+
+- **`ExperimentalMemoryApi` opt-in gate removed** (SKEEP-003): the `sk.ainet.lang.memory` API
+  (`Storage`, `Scope`, `Format`, `Layout`, `TensorView`, `WeightForm`, `WeightByteOrder`, …) no
+  longer requires `@OptIn(ExperimentalMemoryApi::class)` to use. The annotation's own message —
+  "usable, but may change until milestone M1 is complete" — was stale: M0/M1/M2 all shipped
+  complete in 0.49.0. `ExperimentalMemoryApi` is deleted along with every `@OptIn`/
+  `@ExperimentalMemoryApi` annotation referencing it.
+
 ## [0.53.0] - 2026-09-02
 
 Headline: **the export pipeline emits billion-parameter models.** Tracing a 4.5B-parameter

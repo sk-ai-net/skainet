@@ -6,7 +6,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import sk.ainet.backend.api.kernel.KernelDispatch
 import sk.ainet.backend.api.kernel.KernelProvider
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.plan.StorageCapabilities
 import sk.ainet.lang.tensor.storage.TensorEncoding
 
@@ -24,7 +23,6 @@ import sk.ainet.lang.tensor.storage.TensorEncoding
  * probes the JDK incubator module / the loaded `.so`), so their *capability* is declared
  * here (the single place to edit when a provider gains a kernel) rather than probed.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class KernelSupportMatrixTest {
 
     @AfterTest

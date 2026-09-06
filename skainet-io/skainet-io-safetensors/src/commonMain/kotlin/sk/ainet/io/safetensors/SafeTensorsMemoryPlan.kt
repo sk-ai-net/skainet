@@ -1,6 +1,5 @@
 package sk.ainet.io.safetensors
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.plan.PlanInput
 import sk.ainet.lang.memory.plan.PlanTensor
@@ -24,7 +23,6 @@ import sk.ainet.lang.types.Int8
  * Per-tensor byte counts come from the header's `data_offsets` — authoritative even for dtypes
  * with no fixed per-element width.
  */
-@ExperimentalMemoryApi
 public fun StreamingSafeTensorsReader.planInput(
     modelName: String,
     ctx: Int = 1,
@@ -48,7 +46,6 @@ public fun StreamingSafeTensorsReader.planInput(
 }
 
 /** The [Format] a safetensors dtype string describes; unknown dtypes become an opaque encoding priced by [sizeInBytes]. */
-@ExperimentalMemoryApi
 public fun safeTensorsFormat(dtype: String, sizeInBytes: Long): Format {
     val known: Pair<DType, Int>? = when (dtype) {
         "F32" -> FP32 to 4

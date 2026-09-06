@@ -5,7 +5,6 @@ import sk.ainet.backend.api.kernel.KernelRegistry
 import sk.ainet.context.DirectCpuExecutionContext
 import sk.ainet.exec.kernel.ScalarKernelProvider
 import sk.ainet.io.JvmRandomAccessSource
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.plan.EncodingRequest
 import sk.ainet.lang.memory.plan.KernelCapabilities
 import sk.ainet.lang.memory.plan.MemoryPlans
@@ -37,7 +36,6 @@ import kotlin.test.assertTrue
  * no policy, no profile and no form, and is called identically on both paths. If honouring a device
  * ever required the caller to say something, this file would have to change to keep passing.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class WeightFormAcceptanceTest {
 
     @BeforeTest

@@ -2,7 +2,6 @@ package sk.ainet.exec.harness
 
 import sk.ainet.backend.api.kernel.KernelDispatch
 import sk.ainet.backend.api.kernel.TernaryKernelPacks
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.ForwardScope
 import sk.ainet.lang.memory.I8Absmax
@@ -36,7 +35,6 @@ import sk.ainet.lang.types.FP32
  * BitNet-2B numbers belong to the decode sample in SKaiNET-transformers; what belongs here is that
  * the memory behaviour holds, on every target, including a 2 GB ARM board.
  */
-@OptIn(ExperimentalMemoryApi::class)
 public class TernaryDecodeHarness(
     public val layers: Int = 2,
     public val hidden: Int = 256,

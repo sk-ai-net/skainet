@@ -1,6 +1,5 @@
 package sk.ainet.lang.tensor.data
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Scope
 import sk.ainet.lang.tensor.Shape
 import sk.ainet.lang.types.DType
@@ -25,7 +24,6 @@ import kotlin.reflect.KClass
  * contract is zero-copy over a caller-owned array (loaders use them for weights), and neither
  * copying them into a slab nor letting them die at `reset()` would honour it.
  */
-@ExperimentalMemoryApi
 public class ScopedTensorDataFactory(
     private val base: TensorDataFactory,
     private val scope: () -> Scope,

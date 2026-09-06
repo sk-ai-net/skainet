@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.plan
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.blockSpec
 import sk.ainet.lang.tensor.storage.TensorEncoding
 import sk.ainet.lang.types.FP32
@@ -14,7 +13,6 @@ import sk.ainet.lang.types.FP32
  * weights should be held is a function of three things the author does not know and the loader
  * does.
  */
-@ExperimentalMemoryApi
 public object WeightFormResolver {
 
     /**
@@ -103,7 +101,6 @@ public object WeightFormResolver {
  * discovered when the load runs out of memory. Weights whose format has no encoding — dense ones —
  * resolve to a pass-through form and change nothing.
  */
-@ExperimentalMemoryApi
 public fun PlanInput.resolveWeightForms(
     profile: PlannerProfile,
     capabilities: KernelCapabilities,

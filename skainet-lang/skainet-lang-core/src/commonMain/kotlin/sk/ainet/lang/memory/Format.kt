@@ -14,7 +14,6 @@ import sk.ainet.lang.types.DType
  *
  * `Format` is pure metadata: it owns no bytes and carries no shape.
  */
-@ExperimentalMemoryApi
 public data class Format(val dtype: DType, val encoding: TensorEncoding) {
 
     /** True when the bytes are the dtype's own dense representation (no block packing). */
@@ -39,13 +38,11 @@ public data class Format(val dtype: DType, val encoding: TensorEncoding) {
  *
  * @throws IllegalStateException if [Tensor.dtype] is not a concrete dtype class (e.g. `DType::class`)
  */
-@ExperimentalMemoryApi
 public val Tensor<*, *>.format: Format
     get() = formatOrNull
         ?: throw IllegalStateException("Tensor.dtype ${this.dtype} is not a concrete DType witness; cannot derive a Format")
 
 /** The [Format] of this tensor, or `null` if its dtype witness is not a concrete dtype class. */
-@ExperimentalMemoryApi
 public val Tensor<*, *>.formatOrNull: Format?
     get() {
         val dt = DType.fromWitnessOrNull(this.dtype) ?: return null
@@ -53,6 +50,5 @@ public val Tensor<*, *>.formatOrNull: Format?
     }
 
 /** The [Format] of this storage descriptor: `(dtype, encoding)`. */
-@ExperimentalMemoryApi
 public val TensorStorage.format: Format
     get() = Format(dtype, encoding)

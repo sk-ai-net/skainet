@@ -1,7 +1,6 @@
 package sk.ainet.exec.kernel.jni
 
 import sk.ainet.backend.api.kernel.ViewKernelPack
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * `ServiceLoader` entry for the ternary kernels on Android (#1240) — the JNI counterpart of
@@ -14,7 +13,6 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * [JniMappedKernelPackFactory] applies — a build that strips `META-INF/services` can still
  * call the installs directly.
  */
-@OptIn(ExperimentalMemoryApi::class)
 public class JniTernaryKernelPackFactory : ViewKernelPack {
     override val name: String get() = "jni-ternary"
     override fun install() {

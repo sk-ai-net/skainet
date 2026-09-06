@@ -16,7 +16,6 @@ import kotlin.jvm.JvmInline
  * debugger keys on. One `TensorId` maps to many storage ids over time (a `Forward` scope is
  * recycled every step); one storage may back many `TensorId`s (views, KV ring).
  */
-@ExperimentalMemoryApi
 @JvmInline
 public value class StorageId(public val value: Long) {
     override fun toString(): String = "#$value"
@@ -34,7 +33,6 @@ public value class StorageId(public val value: Long) {
  * [Alias] keeps its parent alive and cannot free or resize, [Owned] storage is freed exactly once,
  * by its scope.
  */
-@ExperimentalMemoryApi
 public sealed interface Owner {
     /** We allocated the bytes; the scope of [scope] kind frees them. */
     public data class Owned(val scope: ScopeKind) : Owner
@@ -47,7 +45,6 @@ public sealed interface Owner {
 }
 
 /** Thrown on any access to a storage after its scope or the storage itself was closed (SKEEP-003 rule 2). */
-@ExperimentalMemoryApi
 public class StorageClosedException(
     public val storageId: StorageId,
     public val origin: TensorId?,
@@ -65,7 +62,6 @@ public class StorageClosedException(
  * is released (forgotten) but never freed; every access after close throws
  * [StorageClosedException] carrying the id and origin — not a JVM crash, not silent corruption.
  */
-@ExperimentalMemoryApi
 public sealed class Storage : AutoCloseable {
     public abstract val id: StorageId
     public abstract val sizeBytes: Long

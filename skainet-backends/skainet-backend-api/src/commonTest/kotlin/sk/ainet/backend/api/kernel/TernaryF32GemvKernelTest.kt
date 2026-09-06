@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
 import sk.ainet.lang.memory.TernaryBlockDecoder
@@ -18,7 +17,6 @@ import kotlin.test.assertTrue
  * *decoded* weight ([TernaryCodec.decodeBitNet]). The codes-dot is exact; only summation
  * order may differ.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class TernaryF32GemvKernelTest {
 
     private fun ternaryValues(count: Int, seed: Int): FloatArray {

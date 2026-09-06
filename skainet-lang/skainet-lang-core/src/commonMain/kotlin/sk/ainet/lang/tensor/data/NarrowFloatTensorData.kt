@@ -67,7 +67,6 @@ public open class NarrowFloatDenseTensorData(
      * The dtype is the codec's (FP16 or BF16) and the encoding `Dense(2)`; `view.get()` returns the
      * decoded float, exactly like [get].
      */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     override val view: sk.ainet.lang.memory.TensorView
         get() = sk.ainet.lang.memory.TensorView(
             shape = shape,

@@ -20,7 +20,6 @@ import kotlin.test.assertTrue
  * plausible, finite, wrong numbers. That is the failure #968/#971 shipped, and the reason the order
  * is now carried rather than guessed.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class BlockOrderTest {
 
     private val rows = 4

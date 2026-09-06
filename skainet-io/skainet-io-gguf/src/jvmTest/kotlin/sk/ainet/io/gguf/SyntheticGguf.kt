@@ -91,7 +91,6 @@ object SyntheticGguf {
      * from [TernaryCodec], the same reference encoder the decoder is defined against, so this
      * fixture exercises the real GGML layout (interleave included) rather than a plausible one.
      */
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     fun ternary(
         name: String,
         type: GGMLQuantizationType,

@@ -12,7 +12,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /** SKEEP-003 §4.7 / §8 item 4, PRD M1-F9: the debug mode that would have found #782 in one run. */
-@OptIn(ExperimentalMemoryApi::class)
 class MemoryDebugTest {
 
     @BeforeTest fun on() { MemoryDebug.overrideEnabled = true; MemoryDebug.reset() }

@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
@@ -22,7 +21,6 @@ import sk.ainet.lang.types.FP32
  * is how [NativeTernaryPlanesViewKernel] keeps the dispatch invariant *matmul == decoded matmul*.
  * `inputDim % 4 == 0`; [rowScaleByteOffset] must be 2-byte aligned.
  */
-@ExperimentalMemoryApi
 public interface TernaryLmheadNative {
     /** A name for logs and traces, e.g. `ffm`. */
     public val name: String
@@ -46,7 +44,6 @@ public interface TernaryLmheadNative {
  * [TernaryF32KernelPack]: registration **only with a native kernel** — without it, dispatch falls
  * back to the decoding reference matmul (correct, slow), told through [warn], never a crash.
  */
-@ExperimentalMemoryApi
 public object TernaryPlanesKernelPack {
 
     /** What [install] returns when no native kernel is available and nothing was registered. */
@@ -77,7 +74,6 @@ public object TernaryPlanesKernelPack {
  * row scale) through [TernaryCodec] and accumulates in FP32. The correctness oracle and the
  * in-kernel fallback; deliberately not a dispatch entry on its own.
  */
-@ExperimentalMemoryApi
 public class TernaryPlanesMatmulKernel(override val key: KernelKey) : ViewKernel {
 
     override val name: String get() = "ternary_planes_matmul/reference"
@@ -134,7 +130,6 @@ public class TernaryPlanesMatmulKernel(override val key: KernelKey) : ViewKernel
  *
  * Falls back to the reference for non-heap storage, strided views, or `k % 4 != 0`.
  */
-@ExperimentalMemoryApi
 public class NativeTernaryPlanesViewKernel(
     private val native: TernaryLmheadNative,
     override val key: KernelKey,

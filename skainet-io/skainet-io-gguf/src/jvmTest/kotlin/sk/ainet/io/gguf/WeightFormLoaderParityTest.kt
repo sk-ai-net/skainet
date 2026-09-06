@@ -3,7 +3,6 @@ package sk.ainet.io.gguf
 import kotlinx.coroutines.runBlocking
 import sk.ainet.context.DefaultDataExecutionContext
 import sk.ainet.io.JvmRandomAccessSource
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.plan.EncodingRequest
 import sk.ainet.lang.memory.plan.WeightByteOrder
 import sk.ainet.lang.memory.plan.WeightForm
@@ -23,7 +22,6 @@ import kotlin.test.assertTrue
  * matrix this file used to hold retired with the flags themselves; what remains pins the form
  * axes the loader validates and honours.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class WeightFormLoaderParityTest {
 
     /** Mixed encodings, and a 2-D weight so the shape axis has something to reverse. */

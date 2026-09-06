@@ -6,7 +6,6 @@ import sk.ainet.context.DirectCpuExecutionContext
 import sk.ainet.exec.kernel.ScalarKernelProvider
 import sk.ainet.io.JvmRandomAccessSource
 import sk.ainet.lang.memory.BlockOrder
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.plan.WeightByteOrder
 import sk.ainet.lang.memory.plan.WeightForm
 import sk.ainet.lang.memory.plan.WeightShapeOrientation
@@ -33,7 +32,6 @@ import kotlin.test.assertTrue
  * Feed order is only meaningful at three-plus blocks per row — at one block per row the two orders
  * coincide and every assertion below would hold vacuously (#968).
  */
-@OptIn(ExperimentalMemoryApi::class)
 class KernelFeedOrderTest {
 
     private val outDim = 32

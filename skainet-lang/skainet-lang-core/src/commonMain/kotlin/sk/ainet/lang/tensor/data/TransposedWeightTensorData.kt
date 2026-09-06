@@ -61,7 +61,6 @@ public class TransposedWeightTensorData<T : DType, V>(
      * layout by moving `blockAxis` with the axes (#1034) — the view knows where its blocks run, so
      * decoding through it addresses the right elements.
      */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     override val view: sk.ainet.lang.memory.TensorView? get() = weight.view?.transpose()
 
     override fun get(vararg indices: Int): V {

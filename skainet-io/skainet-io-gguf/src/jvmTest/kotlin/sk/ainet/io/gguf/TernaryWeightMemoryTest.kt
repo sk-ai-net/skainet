@@ -3,7 +3,6 @@ package sk.ainet.io.gguf
 import kotlinx.coroutines.runBlocking
 import sk.ainet.context.DefaultDataExecutionContext
 import sk.ainet.io.JvmRandomAccessSource
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.plan.EncodingRequest
 import sk.ainet.lang.memory.plan.WeightForm
 import sk.ainet.lang.tensor.Tensor
@@ -23,7 +22,6 @@ import kotlin.test.assertTrue
  * keep-packed vs FP32-widened, byte counts compared. The packed path must hold the ~16× ratio —
  * 0.25 bytes per weight plus one FP32 scale against 4 bytes per weight.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class TernaryWeightMemoryTest {
 
     private fun i2sTensor(name: String, elements: Int, seed: Int): SyntheticGguf.TestTensor {

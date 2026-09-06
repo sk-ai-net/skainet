@@ -1,8 +1,6 @@
-@file:OptIn(ExperimentalMemoryApi::class)
 
 package sk.ainet.apps.plan
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.plan.Budget
 import sk.ainet.lang.memory.plan.MemoryPlans

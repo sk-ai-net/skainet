@@ -5,7 +5,6 @@ import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import sk.ainet.context.schedule.Schedule
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.trace.RecordingTraceSink
 import sk.ainet.lang.memory.trace.TraceEvent
 import java.util.BitSet
@@ -20,7 +19,6 @@ import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 /** SKEEP-005: the JVM schedule honours the [Schedule.forRange] contract. */
-@OptIn(ExperimentalMemoryApi::class)
 class CoroutineScheduleTest {
 
     private fun coverage(schedule: Schedule, n: Int, grain: Int): Pair<BitSet, Int> {

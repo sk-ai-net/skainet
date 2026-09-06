@@ -21,7 +21,6 @@ import kotlin.math.round
  *
  * Both round-trip exactly for ternary input: `decode(encode(v)) == v * fp16(amax)`.
  */
-@ExperimentalMemoryApi
 public object TernaryCodec {
 
     /** Powers of three, as `dequantize_row_tq1_0`'s `pow3` table. */
@@ -390,7 +389,6 @@ public object TernaryCodec {
  * the descriptor-driven path a `TensorView` over `TQ1_0`/`TQ2_0`/BitNet bytes decodes through
  * (SKEEP-003 §4.4: `get()` decodes, never a raw byte).
  */
-@ExperimentalMemoryApi
 public class TernaryBlockDecoder private constructor(
     private val encoding: TensorEncoding,
     override val blockSize: Int,

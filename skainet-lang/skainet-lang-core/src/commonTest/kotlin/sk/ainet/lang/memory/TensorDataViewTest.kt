@@ -23,7 +23,6 @@ import kotlin.test.assertTrue
  * SKEEP-003 §4.1: `TensorData` becomes a façade over `TensorView` — the view is over the *same*
  * bytes (borrowed, zero-copy), reads agree with the data's own accessors, and nothing is copied.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class TensorDataViewTest {
 
     @Test

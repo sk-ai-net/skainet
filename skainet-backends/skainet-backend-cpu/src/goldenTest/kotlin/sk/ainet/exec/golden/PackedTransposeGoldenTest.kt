@@ -2,7 +2,6 @@ package sk.ainet.exec.golden
 
 import sk.ainet.context.DirectCpuExecutionContext
 import sk.ainet.exec.golden.GoldenSupport.Packed
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.tensor.Shape
 import sk.ainet.lang.tensor.Tensor
 import sk.ainet.lang.tensor.data.Q4_0BlockTensorData
@@ -32,7 +31,6 @@ import kotlin.test.assertTrue
  * Both must describe the *same matrix*. This asserts exactly that, for every packed encoding, on
  * JVM and Kotlin/Native alike — and records the transposed values as goldens.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class PackedTransposeGoldenTest {
 
     private companion object {

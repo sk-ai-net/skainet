@@ -3,7 +3,6 @@ package sk.ainet.io.gguf
 import kotlinx.coroutines.runBlocking
 import sk.ainet.context.DefaultDataExecutionContext
 import sk.ainet.io.JvmRandomAccessSource
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TernaryCodec
 import sk.ainet.lang.memory.plan.PlannerProfile
@@ -23,7 +22,6 @@ import kotlin.test.assertIs
  * storage instead of a permanent `ByteArray` — the fix for #1198's ART-heap-cap OOM risk — and
  * decodes to exactly the same values a heap-backed load would produce.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class I2sOffHeapLoadTest {
 
     /** BitNet.cpp's GROUP_128 packing + 32-byte trailer, sized to cross the off-heap threshold. */

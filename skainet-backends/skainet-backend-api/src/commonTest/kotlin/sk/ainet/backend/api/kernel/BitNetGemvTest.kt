@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.ForwardScope
 import sk.ainet.lang.memory.I8Absmax
@@ -24,7 +23,6 @@ import kotlin.test.assertTrue
 /**
  * #1040 (M2-F3): int8 activations against ternary weights, and the adapter that produces them.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class BitNetGemvTest {
 
     private val k = 256          // one TQ block

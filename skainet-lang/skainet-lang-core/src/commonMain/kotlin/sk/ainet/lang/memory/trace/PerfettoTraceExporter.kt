@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.trace
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.ScopeKind
 
 /**
@@ -18,7 +17,6 @@ import sk.ainet.lang.memory.ScopeKind
  *
  * Timestamps are microseconds (Perfetto's unit) derived from the events' nanosecond clock.
  */
-@ExperimentalMemoryApi
 public object PerfettoTraceExporter {
 
     private const val PID: Int = 1

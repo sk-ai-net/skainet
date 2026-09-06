@@ -8,7 +8,6 @@ import java.lang.foreign.ValueLayout
 import java.lang.invoke.MethodHandle
 import sk.ainet.backend.api.kernel.TernaryF32GemvNative
 import sk.ainet.backend.api.kernel.TernaryF32KernelPack
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.SegmentStorage
 import sk.ainet.lang.memory.Storage
 
@@ -39,7 +38,6 @@ import sk.ainet.lang.memory.Storage
  * seam so [install] can hand it to `TernaryF32KernelPack` (#1138) — the
  * first ternary FFM consumer.
  */
-@OptIn(ExperimentalMemoryApi::class)
 public object NativeTernaryF32GemvKernel : TernaryF32GemvNative {
 
     override val name: String get() = "ffm"
@@ -123,7 +121,6 @@ public object NativeTernaryF32GemvKernel : TernaryF32GemvNative {
      * Activation/output still stage through a small confined arena — they're `k`/`n` floats, not
      * the weight matrix, so the cost is the same as [gemvPacked] pays today for those two.
      */
-    @OptIn(ExperimentalMemoryApi::class)
     override fun gemvPackedStorage(
         activation: FloatArray, activationOffset: Int,
         weight: Storage, weightByteOffset: Int,

@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.plan
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.ScopeKind
 import sk.ainet.lang.memory.trace.RecordingTraceSink
 import sk.ainet.lang.memory.trace.TraceEvent
@@ -11,7 +10,6 @@ import sk.ainet.lang.memory.trace.TraceEvent
  * predicted. The point is to keep the planner honest as kernels change — a plan that drifts from
  * reality is worse than no plan, so CI compares them and fails past a threshold.
  */
-@ExperimentalMemoryApi
 public data class ActualMemory(
     /** Peak live bytes per scope over the run. */
     val peakByScope: Map<ScopeKind, Long>,
@@ -60,7 +58,6 @@ public data class ActualMemory(
 }
 
 /** One line of the comparison: what the plan said, what the run did, and by how much they differ. */
-@ExperimentalMemoryApi
 public data class PlanVsActualLine(val section: String, val plannedBytes: Long, val actualBytes: Long) {
     /** Signed relative difference (`actual/planned - 1`); `null` when nothing was planned. */
     val relativeDrift: Double? get() = if (plannedBytes == 0L) null else (actualBytes - plannedBytes).toDouble() / plannedBytes
@@ -77,7 +74,6 @@ public data class PlanVsActualLine(val section: String, val plannedBytes: Long, 
  * `check()` is what a CI acceptance run calls — a drift beyond the tolerance fails, which keeps the
  * planner honest as kernels change.
  */
-@ExperimentalMemoryApi
 public data class PlanVsActual(
     val plan: MemoryPlan,
     val actual: ActualMemory,

@@ -1,7 +1,6 @@
 package sk.ainet.lang.memory.plan
 
 import sk.ainet.lang.memory.AllocationSpec
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.tensor.TensorId
 import sk.ainet.lang.tensor.storage.TensorEncoding
@@ -10,7 +9,6 @@ import sk.ainet.lang.tensor.storage.TensorEncoding
  * One weight tensor as the planner sees it — shape and format only, never bytes (SKEEP-003 §8 item 1,
  * PRD M0-F1). [id] is the [TensorId] the checkpoint's `NameMap` produced, `null` when unmapped.
  */
-@ExperimentalMemoryApi
 public data class PlanTensor(
     val name: String,
     val id: TensorId?,
@@ -54,7 +52,6 @@ public data class PlanTensor(
 }
 
 /** The transformer geometry the KV-cache and forward-slab estimates need (from the GGUF header). */
-@ExperimentalMemoryApi
 public data class ModelGeometry(
     val layers: Int,
     val heads: Int,
@@ -72,7 +69,6 @@ public data class ModelGeometry(
 )
 
 /** How the KV cache is stored. */
-@ExperimentalMemoryApi
 public enum class KvCacheMode(public val label: String) {
     /**
      * 4 bytes per element — what `DefaultKvCacheStore` actually stores today (dense FloatArray
@@ -100,11 +96,9 @@ public enum class KvCacheMode(public val label: String) {
  * guessing a [KvCacheMode] (#1077). A dense FP32 ring reports 4 bytes per element, a bf16 ring 2, a
  * TurboQuant ring its packed width.
  */
-@ExperimentalMemoryApi
 public fun kvBytesFor(format: Format, elements: Long): Long =
     format.physicalBytes(elements) ?: (format.dtype.sizeInBytes.toLong() * elements)
 
-@ExperimentalMemoryApi
 public data class PlanInput(
     val modelName: String,
     val architecture: String,
@@ -128,7 +122,6 @@ public data class PlanInput(
  * Memory budget the plan is checked against (decision #11): an explicit number of bytes, or
  * `available − reserve` for a platform.
  */
-@ExperimentalMemoryApi
 public data class Budget(val bytes: Long, val description: String) {
     public companion object {
         /** Reserve the OS/app needs on Android and desktop JVMs (decision #11). */
@@ -147,7 +140,6 @@ public data class Budget(val bytes: Long, val description: String) {
  * A [mapped] line is file-backed page cache — resident in RSS but evictable, and **not** charged
  * against the heap [Budget] (#1189: a mapped 1 GB model runs under a 256 MB ART cap).
  */
-@ExperimentalMemoryApi
 public data class PlanLine(
     val section: String,
     val detail: String,
@@ -157,7 +149,6 @@ public data class PlanLine(
 )
 
 /** A concrete way to make a plan fit, with the bytes it saves. */
-@ExperimentalMemoryApi
 public data class Suggestion(val text: String, val savesBytes: Long)
 
 /**
@@ -166,7 +157,6 @@ public data class Suggestion(val text: String, val savesBytes: Long)
  * allocated (PRD M0-F1..F3). The estimates are deliberately simple and documented in
  * [MemoryPlans]; milestone M1's plan-vs-actual check calibrates them against real allocations.
  */
-@ExperimentalMemoryApi
 public data class MemoryPlan(
     val input: PlanInput,
     val weightsBytes: Long,
@@ -305,7 +295,6 @@ public data class MemoryPlan(
 }
 
 /** The arithmetic behind [MemoryPlan]. */
-@ExperimentalMemoryApi
 public object MemoryPlans {
 
     /** Fixed heap headroom the JVM/ART runtime needs besides tensors (decision #11 profile). */

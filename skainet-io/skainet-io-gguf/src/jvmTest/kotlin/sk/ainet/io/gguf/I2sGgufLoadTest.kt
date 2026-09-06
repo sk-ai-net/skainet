@@ -3,7 +3,6 @@ package sk.ainet.io.gguf
 import kotlinx.coroutines.runBlocking
 import sk.ainet.context.DefaultDataExecutionContext
 import sk.ainet.io.JvmRandomAccessSource
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.TernaryCodec
 import sk.ainet.lang.memory.plan.EncodingRequest
 import sk.ainet.lang.memory.plan.WeightForm
@@ -32,7 +31,6 @@ import kotlin.test.assertTrue
  *
  * The first ternary GGUF type that does not take the #1033 FP32 widening.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class I2sGgufLoadTest {
 
     private fun randomCodes(count: Int, seed: Int): IntArray {

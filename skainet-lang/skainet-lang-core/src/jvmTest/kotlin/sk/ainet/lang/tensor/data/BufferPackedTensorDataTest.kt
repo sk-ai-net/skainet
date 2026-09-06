@@ -9,7 +9,6 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 import sk.ainet.lang.memory.BlockOrder
 import sk.ainet.lang.memory.DirectBufferStorage
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.MappedBufferStorage
 import sk.ainet.lang.tensor.Shape
 import sk.ainet.lang.tensor.storage.TensorEncoding
@@ -18,7 +17,6 @@ import sk.ainet.lang.tensor.storage.TensorEncoding
  * #1189: a [BufferPackedTensorData] over off-heap bytes must decode exactly like the heap
  * `TensorData` for the same bytes — mapped file or direct buffer, Q4_K and Q6_K.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class BufferPackedTensorDataTest {
 
     private fun randomPayload(numBlocks: Int, bytesPerBlock: Int, fp16At: IntArray, seed: Int): ByteArray {

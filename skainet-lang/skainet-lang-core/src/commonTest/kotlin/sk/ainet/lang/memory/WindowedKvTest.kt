@@ -16,7 +16,6 @@ import kotlin.test.assertTrue
  * #1036 (M2-F5, M2-A4): a sliding-window KV cache hands attention the one or two runs the ring
  * physically holds, and the answer is the same as if the window had never wrapped.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class WindowedKvTest {
 
     private val heads = 2

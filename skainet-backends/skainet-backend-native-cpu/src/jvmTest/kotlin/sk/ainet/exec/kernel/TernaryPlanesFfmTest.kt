@@ -2,7 +2,6 @@ package sk.ainet.exec.kernel
 
 import sk.ainet.backend.api.kernel.KernelDispatch
 import sk.ainet.backend.api.kernel.TernaryPlanesMatmulKernel
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Scope
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.TensorView
@@ -25,7 +24,6 @@ import kotlin.test.assertTrue
  * Kotlin reference. The C kernel spawns its 4 pthreads at any output_dim, so every case here
  * also exercises its internal threading.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class TernaryPlanesFfmTest {
 
     @BeforeTest fun setUp() {

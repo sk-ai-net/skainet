@@ -40,7 +40,6 @@ public interface PackedBlockStorage {
      * bytes actually live off-heap or mapped (e.g. a large ternary weight, to stay off the ART
      * heap cap) overrides this to expose its real backing storage instead.
      */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     public val packedStorage: sk.ainet.lang.memory.Storage
         get() = sk.ainet.lang.memory.Storage.Heap.wrap(packedData, mutable = false)
 
@@ -93,7 +92,6 @@ public interface PackedBlockStorage {
      * `view.get(...)` decodes through [dequantizeBlock] (rule 4) — it never returns a raw byte,
      * unlike this data's own `get`, which stays as it is for source compatibility.
      */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     public val packedView: sk.ainet.lang.memory.TensorView
         get() = sk.ainet.lang.memory.TensorView.packed(
             storage = packedStorage,

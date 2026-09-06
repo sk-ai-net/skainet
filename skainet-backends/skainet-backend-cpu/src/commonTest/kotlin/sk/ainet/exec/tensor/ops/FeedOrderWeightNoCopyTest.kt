@@ -2,7 +2,6 @@ package sk.ainet.exec.tensor.ops
 
 import sk.ainet.context.DirectCpuExecutionContext
 import sk.ainet.lang.memory.BlockOrder
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.tensor.Shape
 import sk.ainet.lang.tensor.Tensor
 import sk.ainet.lang.tensor.data.Q8_0BlockTensorData
@@ -23,7 +22,6 @@ import kotlin.test.assertTrue
  * once per weight stops running at all. Asserted structurally rather than by timing: the bytes the
  * kernels are handed must be *the same array*, not an equal one.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class FeedOrderWeightNoCopyTest {
 
     private val ctx = DirectCpuExecutionContext()

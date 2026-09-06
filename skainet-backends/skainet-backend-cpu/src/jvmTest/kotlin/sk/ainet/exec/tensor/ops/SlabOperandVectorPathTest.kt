@@ -2,7 +2,6 @@ package sk.ainet.exec.tensor.ops
 
 import sk.ainet.context.DirectCpuExecutionContext
 import sk.ainet.context.forwardScope
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.tensor.Shape
 import sk.ainet.lang.tensor.Tensor
 import sk.ainet.lang.tensor.data.StorageFloatTensorData
@@ -18,7 +17,6 @@ import kotlin.test.assertTrue
  * bit-for-bit against the Ambient result — the tightest possible guard against off-by-offset
  * reads, which produce plausible garbage rather than crashes.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class SlabOperandVectorPathTest {
 
     private val n = 67 // deliberately not a multiple of any vector species length

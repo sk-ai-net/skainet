@@ -22,7 +22,6 @@ import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 /** SKEEP-003 §4.8.1/§4.8.2: OffHeap (MemorySegment / direct ByteBuffer) and Mapped (FileChannel.map) storage kinds. */
-@OptIn(ExperimentalMemoryApi::class)
 class JvmStorageTest {
 
     @Test

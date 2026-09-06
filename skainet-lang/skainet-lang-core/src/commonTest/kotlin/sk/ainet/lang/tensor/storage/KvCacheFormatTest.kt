@@ -1,6 +1,5 @@
 package sk.ainet.lang.tensor.storage
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.plan.kvBytesFor
 import sk.ainet.lang.types.BF16
@@ -13,7 +12,6 @@ import kotlin.test.assertTrue
  * #1077: a KV store declares its `Format` (dtype **and** encoding), so the planner reads the byte
  * width instead of guessing it — the drift that made a dense FP32 ring be planned as bf16.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class KvCacheFormatTest {
 
     @Test

@@ -2,7 +2,6 @@ package sk.ainet.exec.kernel.jni
 
 import sk.ainet.backend.api.kernel.TernaryF32GemvNative
 import sk.ainet.backend.api.kernel.TernaryF32KernelPack
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * The vendored NeoGPU LUT kernel as a [TernaryF32GemvNative] (#1139) — the Android/JNI face of
@@ -13,7 +12,6 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * arm64 device can load, Cortex-A72/Pi-class included — carries the full SIMD path. Whichever
  * variant the loader picked, the kernel is the same.
  */
-@OptIn(ExperimentalMemoryApi::class)
 public object JniTernaryF32Gemv : TernaryF32GemvNative {
 
     override val name: String get() = if (JniKernels.isLoaded) "neon" else "unloaded"

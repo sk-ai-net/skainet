@@ -3,7 +3,6 @@ package sk.ainet.lang.tensor.data
 import java.nio.ByteBuffer
 import sk.ainet.lang.memory.BlockOrder
 import sk.ainet.lang.memory.DirectBufferStorage
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.MappedBufferStorage
 import sk.ainet.lang.memory.PackedBlockDecoder
 import sk.ainet.lang.memory.Storage
@@ -38,7 +37,6 @@ import sk.ainet.lang.types.FP32
  * exists to avoid. Readers that need bytes go through [packedView]'s storage; readers that need
  * values go through [dequantizeBlock].
  */
-@ExperimentalMemoryApi
 public class BufferPackedTensorData(
     initialShape: Shape,
     /** Off-heap storage holding exactly this tensor's packed blocks (payload only, offset 0). */

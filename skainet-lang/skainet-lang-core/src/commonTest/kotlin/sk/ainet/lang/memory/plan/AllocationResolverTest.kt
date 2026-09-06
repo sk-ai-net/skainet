@@ -1,6 +1,5 @@
 package sk.ainet.lang.memory.plan
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.ScopeKind
 import sk.ainet.lang.tensor.storage.MemoryDomain
@@ -17,7 +16,6 @@ import kotlin.test.assertTrue
  * an [sk.ainet.lang.memory.AllocationSpec] out. These tests pin the rules the old
  * `PlanTensor.allocation` hardcode ignored.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class AllocationResolverTest {
 
     private val q4k = Format(FP32, TensorEncoding.Q4_K)

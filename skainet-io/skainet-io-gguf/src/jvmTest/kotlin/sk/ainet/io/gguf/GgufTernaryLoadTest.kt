@@ -5,7 +5,6 @@ import sk.ainet.context.DefaultDataExecutionContext
 import sk.ainet.io.JvmRandomAccessSource
 import sk.ainet.lang.memory.plan.EncodingRequest
 import sk.ainet.lang.memory.plan.WeightForm
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.TernaryCodec
 import sk.ainet.lang.memory.blockSpec
 import sk.ainet.lang.tensor.Tensor
@@ -25,7 +24,6 @@ import kotlin.test.assertEquals
  * match `dequantize_row_tq{1,2}_0` (four *consecutive* elements per byte instead of four 32 apart),
  * and the loader described them as `Opaque`, so nothing downstream knew their geometry.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class GgufTernaryLoadTest {
 
     @Test

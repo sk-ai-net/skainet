@@ -2,7 +2,6 @@ package sk.ainet.exec.kernel.jni
 
 import sk.ainet.backend.api.kernel.BitNetGemvNative
 import sk.ainet.backend.api.kernel.TernaryKernelPacks
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * The NEON `bitnet_gemv` as a [BitNetGemvNative] (SKEEP-003 §5.2/§5.3, #1041, M2-F4).
@@ -12,7 +11,6 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * instructions is what [JniKernels.variant] already decided from `/proc/cpuinfo`, so the name — and
  * the capability the kernel is registered with — follows that decision rather than guessing again.
  */
-@OptIn(ExperimentalMemoryApi::class)
 public object JniBitNetGemv : BitNetGemvNative {
 
     override val name: String

@@ -16,7 +16,6 @@ import sk.ainet.lang.tensor.Tensor
  */
 
 /** This tensor as a [TensorView] over the *same* bytes, or `null` if its data cannot expose one. */
-@ExperimentalMemoryApi
 public fun Tensor<*, *>.viewOrNull(): TensorView? = data.view
 
 /**
@@ -25,7 +24,6 @@ public fun Tensor<*, *>.viewOrNull(): TensorView? = data.view
  * @throws UnsupportedOperationException if the tensor's data has no view (a backend type that owns
  *   its bytes elsewhere, e.g. device-resident data); use `copyToFloatArray()` for those.
  */
-@ExperimentalMemoryApi
 public fun Tensor<*, *>.view(): TensorView = viewOrNull() ?: throw UnsupportedOperationException(
     "${data::class.simpleName} does not expose a TensorView; it holds its bytes somewhere this milestone cannot address"
 )
@@ -37,7 +35,6 @@ public fun Tensor<*, *>.view(): TensorView = viewOrNull() ?: throw UnsupportedOp
  * The result is an ordinary [TensorView] — the same type [narrow], [transpose], [unsqueeze] and
  * [squeeze] return, which is the whole point of #1034.
  */
-@ExperimentalMemoryApi
 public fun TensorView.slice(slices: List<Slice<*, *>>): TensorView {
     require(slices.size == shape.rank) {
         "expected one slice per axis (${shape.rank}), got ${slices.size}"
@@ -60,5 +57,4 @@ public fun TensorView.slice(slices: List<Slice<*, *>>): TensorView {
 }
 
 /** [slice] with the slices spelled out positionally. */
-@ExperimentalMemoryApi
 public fun TensorView.slice(vararg slices: Slice<*, *>): TensorView = slice(slices.toList())

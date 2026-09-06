@@ -2,7 +2,6 @@ package sk.ainet.sk.ainet.exec.tensor.ops
 
 import sk.ainet.context.DirectCpuExecutionContext
 import sk.ainet.context.forwardScope
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.tensor.Shape
 import sk.ainet.lang.tensor.data.StorageFloatTensorData
 import sk.ainet.lang.types.FP32
@@ -17,7 +16,6 @@ import kotlin.test.assertTrue
  * deliberately stays off `FloatArrayTensorData`, so real CPU ops must produce numbers identical
  * to the Ambient path — for tensors sliced from anywhere in the slab, across resets.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class ScopedCreationOpsParityTest {
 
     @Test

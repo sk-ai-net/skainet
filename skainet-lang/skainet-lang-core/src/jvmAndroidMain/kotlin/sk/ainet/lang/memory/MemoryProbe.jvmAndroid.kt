@@ -11,7 +11,6 @@ import java.io.File
  *
  * Returns `null` off Linux (macOS, Windows), where these files do not exist.
  */
-@ExperimentalMemoryApi
 public actual object MemoryProbe {
 
     private val pageSize: Long = 4096L

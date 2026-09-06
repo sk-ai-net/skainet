@@ -34,7 +34,6 @@ import kotlin.test.assertTrue
  * SKEEP-003 M0-A3: every tensor reports a coherent `Format(dtype, encoding)`; a packed weight is
  * logically FP32 with its block encoding — never a `Byte`-typed tensor.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class FormatTest {
 
     @Suppress("UNCHECKED_CAST")

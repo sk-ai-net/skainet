@@ -13,7 +13,6 @@ import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 /** SKEEP-003 §4.5: Forward (recycled per step), Model (closed with the model), Ambient (GC) — M1-F3 / M1-F4. */
-@OptIn(ExperimentalMemoryApi::class)
 class ScopeTest {
 
     @Test

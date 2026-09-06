@@ -1,7 +1,6 @@
 package sk.ainet.exec.kernel
 
 import sk.ainet.backend.api.kernel.ViewKernelPack
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * `ServiceLoader`-friendly wrapper around [FfmRowMajorKernelPack] — the same shape
@@ -13,7 +12,6 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * anything. [FfmRowMajorKernelPack.install] is already a no-op when the native library is missing,
  * so discovery on a machine without it costs a lookup and registers nothing.
  */
-@OptIn(ExperimentalMemoryApi::class)
 public class FfmRowMajorKernelPackFactory : ViewKernelPack {
     override val name: String get() = "ffm-rowmajor"
     override fun install(): Unit = FfmRowMajorKernelPack.install()

@@ -806,14 +806,12 @@ public object DequantOps {
      * defined once by [sk.ainet.lang.memory.TernaryCodec], next to the `TensorEncoding.TQ2_0`
      * descriptor, so the loader and the ternary kernels cannot decode the same bytes differently.
      */
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     private fun dequantTQ2_0FromBytes(bytes: ByteArray, nElems: Int): FloatArray {
         val blocks = bytes.size / sk.ainet.lang.tensor.storage.TensorEncoding.TQ2_0.BYTES_PER_BLOCK
         return sk.ainet.lang.memory.TernaryCodec.decodeTq2_0(bytes, blocks * 256)
     }
 
     /** `TQ1_0` → floats through the shared reference codec (#1033); see [dequantTQ2_0FromBytes]. */
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     private fun dequantTQ1_0FromBytes(bytes: ByteArray, nElems: Int): FloatArray {
         val blocks = bytes.size / sk.ainet.lang.tensor.storage.TensorEncoding.TQ1_0.BYTES_PER_BLOCK
         return sk.ainet.lang.memory.TernaryCodec.decodeTq1_0(bytes, blocks * 256)

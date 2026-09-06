@@ -15,7 +15,6 @@ import sk.ainet.backend.api.kernel.ReferenceMatmulKernel
 import sk.ainet.backend.api.kernel.ViewKernel
 import sk.ainet.lang.memory.BlockOrder
 import sk.ainet.lang.memory.DirectBufferStorage
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.MappedBufferStorage
 import sk.ainet.lang.memory.Storage
@@ -40,7 +39,6 @@ import sk.ainet.lang.types.FP32
  * Activations and outputs are heap `FloatArray`s staged per call (small: `k` and `n` floats).
  * Fallbacks to the decoding reference are announced to the trace sink (#1193) — never silent.
  */
-@ExperimentalMemoryApi
 public class FfmRowMajorMatmulKernel internal constructor(
     encodingName: String,
     override val key: KernelKey,
@@ -139,7 +137,6 @@ public class FfmRowMajorMatmulKernel internal constructor(
  * Android's `JniMappedKernelPack.install()`. No-op when the native library is unavailable;
  * a symbol that fails to bind simply leaves that encoding to the reference kernel.
  */
-@ExperimentalMemoryApi
 public object FfmRowMajorKernelPack {
 
     private val DESCRIPTOR = FunctionDescriptor.ofVoid(

@@ -1,7 +1,6 @@
 package sk.ainet.backend.api.kernel
 
 import java.util.ServiceLoader
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 
 /**
  * JVM discovery for [ViewKernelPack], mirroring [KernelServiceLoader]'s handling of
@@ -13,7 +12,6 @@ import sk.ainet.lang.memory.ExperimentalMemoryApi
  * optional backend must not take the process down, and the reference kernel still serves every
  * format correctly.
  */
-@ExperimentalMemoryApi
 internal actual fun installPlatformKernelPacks(): List<String> =
     runCatching {
         ServiceLoader.load(ViewKernelPack::class.java)
@@ -21,6 +19,5 @@ internal actual fun installPlatformKernelPacks(): List<String> =
             .toList()
     }.getOrElse { emptyList() }
 
-@ExperimentalMemoryApi
 internal actual fun installPlatformKernelProviders(): List<String> =
     runCatching { KernelServiceLoader.installAll() }.getOrElse { emptyList() }

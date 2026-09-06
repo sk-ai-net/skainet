@@ -1,6 +1,5 @@
 package sk.ainet.backend.api.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.I8Absmax
 import sk.ainet.lang.memory.Scope
@@ -28,7 +27,6 @@ import kotlin.test.assertTrue
  * around it, which every target can check: who gets registered, what happens without the artifact,
  * and that the native path is only taken for the shapes it declares.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class TernaryKernelPacksTest {
 
     private val k = 256

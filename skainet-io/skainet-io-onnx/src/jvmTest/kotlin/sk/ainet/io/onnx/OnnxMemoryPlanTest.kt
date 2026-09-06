@@ -7,7 +7,6 @@ import onnx.TensorProto
 import pbandk.ByteArr
 import pbandk.encodeToByteArray
 import sk.ainet.io.JvmRandomAccessSource
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import java.nio.file.Files
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -18,7 +17,6 @@ import kotlin.test.assertTrue
  * #1169: footprint planning from an ONNX initializer table — including `external_data`, whose
  * lengths previously reported ~0 bytes for exactly the >2 GB models that do not fit.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class OnnxMemoryPlanTest {
 
     private fun model(vararg tensors: TensorProto): ByteArray =

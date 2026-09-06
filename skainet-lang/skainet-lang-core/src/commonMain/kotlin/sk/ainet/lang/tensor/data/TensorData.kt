@@ -91,7 +91,6 @@ public interface TensorData<T : DType, V> : ItemsAccessor<V> {
      * copied. Per-element access stays on this interface's own fast path — the Phase-2 spike
      * (#1016) showed a view is for unwrapping once per call, not for per-element reads.
      */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     public val view: sk.ainet.lang.memory.TensorView? get() = null
 
     /**
@@ -135,7 +134,6 @@ public interface FloatArrayTensorData<T : DType> : TensorData<T, Float> {
     override fun copyToFloatArray(): FloatArray = buffer.copyOf()
 
     /** A dense FP32 view borrowing [buffer] — zero-copy, the same bytes this data reads and writes. */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     override val view: sk.ainet.lang.memory.TensorView
         get() = sk.ainet.lang.memory.TensorView.dense(
             sk.ainet.lang.memory.Storage.Heap.wrap(buffer),
@@ -151,7 +149,6 @@ public interface IntArrayTensorData<T : DType> : TensorData<T, Int> {
     public val buffer: IntArray
 
     /** A dense Int32 view borrowing [buffer] — zero-copy, the same bytes this data reads and writes. */
-    @sk.ainet.lang.memory.ExperimentalMemoryApi
     override val view: sk.ainet.lang.memory.TensorView
         get() = sk.ainet.lang.memory.TensorView.dense(
             sk.ainet.lang.memory.Storage.Heap.wrap(buffer),

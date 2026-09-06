@@ -1,7 +1,6 @@
 package sk.ainet.io.gguf
 
 import sk.ainet.io.RandomAccessSource
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.plan.AllocationResolver
 import sk.ainet.lang.memory.plan.KernelCapabilities
 import sk.ainet.lang.memory.plan.PlanInput
@@ -30,7 +29,6 @@ import sk.ainet.lang.memory.trace.TraceSink
  * dense, on the managed heap. Tensors it returns `null` for get the resolver's answer. The plan and
  * the explanations are computed *after* overrides are applied, so what you print is what you load.
  */
-@ExperimentalMemoryApi
 public object ResolvedGguf {
 
     /** What [resolve] decided: the loader that obeys it, and the resolved input that explains it. */

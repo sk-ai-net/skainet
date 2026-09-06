@@ -1,6 +1,5 @@
 package sk.ainet.io.onnx
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.plan.PlanInput
 import sk.ainet.lang.memory.plan.PlanTensor
@@ -23,7 +22,6 @@ import sk.ainet.lang.types.Int8
  * ONNX carries no transformer-geometry metadata, so [PlanInput.geometry] is `null` and the plan
  * is weights-only: KV cache and forward slab are not modelled, and the caller should say so.
  */
-@ExperimentalMemoryApi
 public fun StreamingOnnxReader.planInput(
     modelName: String,
     ctx: Int = 1,
@@ -47,7 +45,6 @@ public fun StreamingOnnxReader.planInput(
 }
 
 /** The [Format] an ONNX `TensorProto.DataType` describes; unknown types become an opaque encoding priced by [sizeInBytes]. */
-@ExperimentalMemoryApi
 public fun onnxFormat(dataType: Int, dataTypeName: String, sizeInBytes: Long): Format {
     val known: Pair<DType, Int>? = when (dataType) {
         1 -> FP32 to 4      // FLOAT

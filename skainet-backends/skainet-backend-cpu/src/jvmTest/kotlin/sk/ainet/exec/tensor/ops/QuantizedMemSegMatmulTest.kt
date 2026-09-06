@@ -308,7 +308,6 @@ class QuantizedMemSegMatmulTest {
         arena.close()
     }
 
-    @OptIn(sk.ainet.lang.memory.ExperimentalMemoryApi::class)
     @Test
     fun `Q8 matmul with a slab-backed scoped activation matches the dense-activation result`() {
         val arena = Arena.ofConfined()

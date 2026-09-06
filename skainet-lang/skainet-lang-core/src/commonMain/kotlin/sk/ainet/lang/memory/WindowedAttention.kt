@@ -16,7 +16,6 @@ import kotlin.math.sqrt
  * A kernel that cannot do this calls [WindowedKV.gather] instead and gets one contiguous view plus
  * one traced adapter; both paths are asserted to agree.
  */
-@ExperimentalMemoryApi
 public object WindowedAttention {
 
     /**

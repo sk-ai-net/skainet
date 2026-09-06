@@ -1,6 +1,5 @@
 package sk.ainet.exec.kernel
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.SegmentStorage
 import sk.ainet.lang.memory.Storage
 import kotlin.math.abs
@@ -181,7 +180,6 @@ class NativeTernaryF32GemvKernelTest {
      * it's the same native call, just handed the weight's `MemorySegment` directly instead of a
      * copy staged into a fresh arena.
      */
-    @OptIn(ExperimentalMemoryApi::class)
     @Test
     fun gemvPackedStorage_matches_gemvPacked_on_a_segment_backed_weight() {
         val inputDim = 2560
@@ -208,7 +206,6 @@ class NativeTernaryF32GemvKernelTest {
     }
 
     /** A storage kind the FFM face can't read directly (here: plain Heap) falls back correctly. */
-    @OptIn(ExperimentalMemoryApi::class)
     @Test
     fun gemvPackedStorage_falls_back_correctly_for_non_segment_storage() {
         val inputDim = 256

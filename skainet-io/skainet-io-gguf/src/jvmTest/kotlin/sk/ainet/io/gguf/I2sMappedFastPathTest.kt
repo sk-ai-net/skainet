@@ -3,7 +3,6 @@ package sk.ainet.io.gguf
 import kotlinx.coroutines.runBlocking
 import sk.ainet.context.DefaultDataExecutionContext
 import sk.ainet.io.JvmRandomAccessSource
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Storage
 import sk.ainet.lang.memory.plan.WeightForm
 import sk.ainet.lang.memory.plan.WeightResidency
@@ -24,7 +23,6 @@ import kotlin.test.assertIs
  * override it) must load through [sk.ainet.io.JvmMappedFile]'s mmap branch — zero heap bytes,
  * zero repack — while every other case keeps today's heap-staged repack path.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class I2sMappedFastPathTest {
 
     private fun sequentialPayload(codes: IntArray): ByteArray {

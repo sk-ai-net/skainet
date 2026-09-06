@@ -10,7 +10,6 @@ import sk.ainet.backend.api.kernel.ReferenceMatmulKernel
 import sk.ainet.backend.api.kernel.ViewKernel
 import sk.ainet.lang.memory.BlockOrder
 import sk.ainet.lang.memory.DirectBufferStorage
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.MappedBufferStorage
 import sk.ainet.lang.memory.Storage
@@ -36,7 +35,6 @@ import sk.ainet.lang.types.FP32
  * Contrast with [sk.ainet.backend.api.kernel.PackedViewMatmulKernel], which serves the same
  * encodings from heap bytes in `BLOCKED_INPUT_MAJOR` (prepacked feed) order.
  */
-@ExperimentalMemoryApi
 public class JniRowMajorMatmulKernel(
     encodingName: String,
     override val key: KernelKey,
@@ -138,7 +136,6 @@ public class JniRowMajorMatmulKernel(
  * `KernelPacks.install(JniKernelProvider)` on Android — without it a canonical packed weight
  * (mapped OR un-prepacked heap) falls back to the decoding reference.
  */
-@ExperimentalMemoryApi
 public object JniMappedKernelPack {
     public fun install() {
         if (!JniKernelProvider.isAvailable()) return

@@ -1,7 +1,6 @@
 package sk.ainet.io.gguf
 
 import sk.ainet.io.weights.NameMap
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.Format
 import sk.ainet.lang.memory.plan.KvCacheMode
 import sk.ainet.lang.memory.plan.ModelGeometry
@@ -23,7 +22,6 @@ import sk.ainet.lang.types.Int8
  * architecture metadata keys; no tensor bytes are read (PRD M0-F1). [ctx] defaults to the trained
  * context length of the model when the header has one.
  */
-@ExperimentalMemoryApi
 public fun StreamingGGUFReader.planInput(
     ctx: Int? = null,
     prefillChunk: Int = PlanInput.DEFAULT_PREFILL_CHUNK,
@@ -56,7 +54,6 @@ public fun StreamingGGUFReader.planInput(
 }
 
 /** Architecture metadata (`<arch>.block_count`, `<arch>.attention.head_count`, …) as a [ModelGeometry], or `null` if the header lacks it. */
-@ExperimentalMemoryApi
 public fun StreamingGGUFReader.ggufGeometry(architecture: String? = fields["general.architecture"] as? String): ModelGeometry? {
     val arch = architecture ?: return null
     fun int(key: String): Int? = (fields["$arch.$key"] as? Number)?.toInt() ?: (fields["$arch.$key"] as? UInt)?.toInt()
@@ -73,7 +70,6 @@ public fun StreamingGGUFReader.ggufGeometry(architecture: String? = fields["gene
 }
 
 /** `Format` of a GGUF tensor type: quantized types are logically FP32 with their block encoding. */
-@ExperimentalMemoryApi
 public fun ggufFormat(type: GGMLQuantizationType, nBytes: Long): Format {
     val dtype: DType = when (type) {
         GGMLQuantizationType.F32 -> FP32; GGMLQuantizationType.F16 -> FP16; GGMLQuantizationType.BF16 -> BF16; GGMLQuantizationType.F64 -> FP64

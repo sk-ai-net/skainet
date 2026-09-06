@@ -5,7 +5,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.asExecutor
 import sk.ainet.context.schedule.Schedule
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.trace.NoopTraceSink
 import sk.ainet.lang.memory.trace.TraceClock
 import sk.ainet.lang.memory.trace.TraceEvent
@@ -38,7 +37,6 @@ import java.util.concurrent.atomic.AtomicReference
  * region entered from `Dispatchers.Default` deadlocked as soon as every worker was inside one —
  * routinely on a 4-vCPU CI runner, never on a 14-core laptop.
  */
-@OptIn(ExperimentalMemoryApi::class)
 public open class CoroutineSchedule @JvmOverloads constructor(
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
     final override val parallelism: Int = Runtime.getRuntime().availableProcessors(),
@@ -178,7 +176,6 @@ public open class CoroutineSchedule @JvmOverloads constructor(
 }
 
 /** [CoroutineSchedule] over an owned thread pool; [close] shuts the pool down. */
-@OptIn(ExperimentalMemoryApi::class)
 public class DedicatedCoroutineSchedule internal constructor(
     private val executor: ExecutorService,
     parallelism: Int,

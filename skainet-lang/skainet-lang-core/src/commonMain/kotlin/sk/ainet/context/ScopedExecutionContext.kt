@@ -1,6 +1,5 @@
 package sk.ainet.context
 
-import sk.ainet.lang.memory.ExperimentalMemoryApi
 import sk.ainet.lang.memory.ForwardScope
 import sk.ainet.lang.memory.Scope
 import sk.ainet.lang.tensor.Shape
@@ -22,7 +21,6 @@ import kotlin.reflect.KClass
  * workspace inside one op invocation; `memoryScope` governs *inter-op* activation lifetime across
  * a step. They stay separate.
  */
-@ExperimentalMemoryApi
 public class ScopedExecutionContext(
     private val base: ExecutionContext,
     override val memoryScope: Scope,
@@ -84,7 +82,6 @@ public class ScopedExecutionContext(
  * }
  * ```
  */
-@ExperimentalMemoryApi
 public inline fun <R> ExecutionContext.forwardScope(
     slabFloats: Int,
     block: (ctx: ScopedExecutionContext, scope: ForwardScope) -> R,

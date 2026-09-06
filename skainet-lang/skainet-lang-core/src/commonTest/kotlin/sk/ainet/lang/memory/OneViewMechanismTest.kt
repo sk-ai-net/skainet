@@ -25,7 +25,6 @@ import kotlin.test.assertTrue
  * answers as each of them, over the same `Storage`, and that every view operation returns the same
  * type so they compose.
  */
-@OptIn(ExperimentalMemoryApi::class)
 class OneViewMechanismTest {
 
     private fun rampTensor(vararg dims: Int): Tensor<FP32, Float> {

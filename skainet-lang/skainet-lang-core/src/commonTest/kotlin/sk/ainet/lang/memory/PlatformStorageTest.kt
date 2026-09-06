@@ -11,7 +11,6 @@ import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 /** SKEEP-003 §4.8: one common door to the platform's storage kinds; heap everywhere, off-heap where the target has it. */
-@OptIn(ExperimentalMemoryApi::class)
 class PlatformStorageTest {
 
     @Test
