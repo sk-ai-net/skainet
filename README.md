@@ -51,7 +51,7 @@ Add the core dependencies (Gradle Kotlin DSL):
 ```kotlin
 dependencies {
     // Recommended: import the umbrella BOM and drop versions on the engine modules.
-    implementation(platform("sk.ainet:skainet-bom:0.53.0"))
+    implementation(platform("sk.ainet:skainet-bom:0.54.0"))
 
     implementation("sk.ainet.core:skainet-lang-core")
     implementation("sk.ainet.core:skainet-backend-cpu")
@@ -308,27 +308,26 @@ val withoutLabel = dataPipeline<RawDataset>()
 
 ---
 
-## What's New in 0.53.0
+## What's New in 0.54.0
 
-The export pipeline emits billion-parameter models:
+Structured concurrency lands as a first-class citizen — and the CI run that exercised it found a
+real deadlock:
 
-- **Full Gemma 3n E2B export** — the DSL → tape → StableHLO path traced a 4.5B-parameter model
-  into an OOM at a 46 GB heap; the same repro now exports the whole model in under a minute.
-  Shape-only tracing no longer materializes zero buffers, graph constants alias the live weights
-  instead of copying them, and ≥2 GiB constants travel as `BufferHandle.Floats` — an aliased
-  float array — because the tied embedding is exactly one byte over what a JVM byte array holds.
-- **Conversion fails loudly** — `StableHloConverter` is strict by default: an unconvertible node
-  throws `HloConversionException`, an unresolved operand throws `MissingOperandException`, and a
-  packed weight reaching constant extraction throws `PackedConstantException` instead of silently
-  becoming a function argument. `ConversionErrorPolicy.LENIENT` restores the old
-  comment-and-continue behavior for inspection.
-- **Sharded SafeTensors in the engine** — `ShardedSafeTensorsParametersLoader` consumes
-  `model.safetensors.index.json` with the single-file loader's BF16/FP16 policies, a fail-fast
-  dtype pre-scan, and a `tensorFilter` hook; the per-family hand-rolled loaders downstream can
-  collapse onto it.
-- **Registry gaps the strictness surfaced** — `clamp` and the camelCase `indexSelect` the tracer
-  actually emits now lower, and `createBasic` registers the neural-net converter like
-  `createExtended` does.
+- **`Schedule` on every `ExecutionContext`** (SKEEP-005) — `sk.ainet.context.schedule.Schedule`
+  splits *what* an op computes from *how its independent chunks spread across cores*.
+  `scaledDotProductAttention` is the first scheduled op, `parallelChunks` no longer hides a
+  `runBlocking(Dispatchers.Default)` island, and the JVM `CoroutineSchedule.hardware()` default
+  spreads chunks across cores while `Schedule.Sequential` keeps every kernel single-threaded.
+- **A real deadlock, found by turning scheduling on** — `CoroutineSchedule.forRange`'s region
+  waited on children the pool had no thread left to run, once every worker was itself inside a
+  region; it looked like the OOM hang a first CI fix assumed. A region is now a shared chunk
+  queue, so a caller can always finish its own region alone, whatever the pool is doing.
+- **`tensorFilter` on the single-file `SafeTensorsParametersLoader`** — parity with the sharded
+  loader; lets a family load selectively from a checkpoint that carries tensors the requested
+  dtype can't accept.
+- **`ExperimentalMemoryApi` opt-in gate removed** — SKEEP-003's M0–M2 shipped complete back in
+  0.49.0, so `Storage`, `Scope`, `Format`, `TensorView`, `WeightForm`, and the rest of
+  `sk.ainet.lang.memory` no longer need `@OptIn`.
 
 See [CHANGELOG.md](CHANGELOG.md) for full release notes, including every prior release.
 
@@ -353,6 +352,13 @@ We love contributions! Whether it's a new operator, documentation, or a bug fix:
 3. Open a discussion or issue on [GitHub](https://github.com/SKaiNET-developers/SKaiNET/issues); the issue chooser has templates for DARC features, lane tasks and SKEEP proposals.
 
 Browse the full codebase documentation on [DeepWiki](https://deepwiki.com/SKaiNET-developers/SKaiNET).
+
+### Contributors (0.54.0)
+
+- **Michal Harakal** ([@michalharakal](https://github.com/michalharakal)) — the SKEEP-005
+  structured-concurrency Schedule API, the coroutine-pool deadlock it uncovered on CI and its
+  shared-chunk-queue fix, `SafeTensorsParametersLoader` `tensorFilter` parity, and retiring the
+  `ExperimentalMemoryApi` opt-in gate now that SKEEP-003 has shipped
 
 ### Contributors (0.53.0)
 
