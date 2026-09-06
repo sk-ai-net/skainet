@@ -1,7 +1,7 @@
 = Kernel × platform support matrix
 :description: Which compute-kernel provider serves each weight format on each KMP target.
 
-Generated from `kernel-support.json` (version `0.53.0`) by `KernelSupportMatrixTest` — registry introspection of the registered `KernelProvider` implementations. Do not edit by hand; run `./gradlew generateKernelMatrix` to refresh.
+Generated from `kernel-support.json` (version `0.54.0`) by `KernelSupportMatrixTest` — registry introspection of the registered `KernelProvider` implementations. Do not edit by hand; run `./gradlew generateKernelMatrix` to refresh.
 
 Each cell is the best (highest-priority) provider that serves `Float32 × format` `matmul` on that platform: *native-ffm* (100) → *panama-vector* (50) → *scalar* (0). An empty cell (`—`) means no provider carries a kernel there (the format is dequant-to-FP32 only).
 

@@ -1,7 +1,7 @@
 = Operator Coverage Matrix
 :description: Cross-backend status for every operator function in SKaiNET.
 
-Generated from `operators.json` version `0.53.0` on 2026-09-02.
+Generated from `operators.json` version `0.54.0` on 2026-09-06.
 
 Rows are `Operator.function` pairs. The `Validated` column shows whether the function's documentation has been DARC-validated by a reviewer (see xref:contributing/darc-workflow.adoc[DARC workflow]). Remaining columns are backends that appear in any function's `statusByBackend` map — a missing entry means the backend makes no claim about the function (treat it as "unknown", not "not supported").
 
