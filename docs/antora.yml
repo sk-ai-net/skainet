@@ -15,7 +15,7 @@ asciidoc:
     framework_name: SKaiNET
     # Current SKaiNET release — bump once per release; referenced as
     # {skainet_version} in dependency snippets (blocks need subs="attributes+").
-    skainet_version: 0.53.0
+    skainet_version: 0.54.0
     ksp_version: 2.2.21-2.0.5
     dokka_version: 2.1.0
     asciidoctorj_version: 3.0.0

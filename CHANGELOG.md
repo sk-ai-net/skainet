@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+## [0.54.0] - 2026-09-06
+
+Headline: **every `ExecutionContext` gets a `Schedule` — and the CI run that exercised it found a
+real deadlock.** `sk.ainet.context.schedule.Schedule` splits *what* an op computes from *how its
+independent chunks spread across cores*: `scaledDotProductAttention` is the first scheduled op,
+`parallelChunks` no longer hides a `runBlocking(Dispatchers.Default)` island, and a JVM
+`CoroutineSchedule` spreads chunks across a shared pool. Turning it on deadlocked
+`skainet-backend-cpu:jvmTest` on CI's 4-vCPU runner for three of the last four `test (jvm)` runs —
+not the OOM a first pass assumed, but a `coroutineScope` waiting on children the pool had no thread
+left to run. A region is now a shared chunk queue instead: whatever the pool is doing, the caller
+can always finish its own region alone. Also in this release: `SafeTensorsParametersLoader`'s
+`tensorFilter` reaches parity with the sharded loader, and the `sk.ainet.lang.memory` API drops its
+`ExperimentalMemoryApi` opt-in gate now that SKEEP-003's M0–M2 have shipped.
+
 ### Added
 
 - **Schedules — the compute-level algorithm/schedule split (SKEEP-005)**
@@ -39,6 +53,23 @@
   "usable, but may change until milestone M1 is complete" — was stale: M0/M1/M2 all shipped
   complete in 0.49.0. `ExperimentalMemoryApi` is deleted along with every `@OptIn`/
   `@ExperimentalMemoryApi` annotation referencing it.
+
+### Fixed
+
+- **`CoroutineSchedule` deadlock when a region is entered from its own pool**
+  ([#1262](https://github.com/SKaiNET-developers/SKaiNET/issues/1262),
+  [#1264](https://github.com/SKaiNET-developers/SKaiNET/issues/1264),
+  [#1266](https://github.com/SKaiNET-developers/SKaiNET/pull/1266)): `CoroutineSchedule.forRange`
+  ran a region as `runBlocking { coroutineScope { launch(Dispatchers.Default) … } }`, and a
+  `coroutineScope` waits for every child — including ones the pool never got a thread for. Once
+  every `Dispatchers.Default` worker was itself inside a region (routine on a 4-vCPU CI runner;
+  never reproduced on a many-core laptop), nobody was left to run the children and the JVM parked
+  forever — the intermittent `test (jvm)` timeout that #1264's "force fully serial" fix mistook for
+  an OOM hang. A region is now a shared chunk queue: `tasks - 1` helpers dispatch to the pool, the
+  caller runs chunk 0 and then drains the queue itself, and waits only for chunks a thread has
+  already claimed — a caller can always finish its own region alone, whatever the pool is doing.
+  Contract unchanged (first failure wins, nested regions run inline, writes happen-before return);
+  public API unchanged.
 
 ## [0.53.0] - 2026-09-02
 
