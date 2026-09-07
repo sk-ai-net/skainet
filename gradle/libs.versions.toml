@@ -50,8 +50,10 @@ kotest = "6.2.4"
 npm-ws = "8.21.1"   # GHSA-96hv-2xvq-fx4p
 npm-js-yaml = "4.3.1"              # GHSA-5p4m-2wfm-xmqj
 npm-socketio-parser = "4.2.7"      # GHSA-2m8v-j782-fhvr
-npm-fast-uri = "3.1.5"             # GHSA-7p8r-x3mc-p8w7, GHSA-v2hh-gcrm-f6hx
+npm-fast-uri = "3.1.6"             # GHSA-7p8r-x3mc-p8w7, GHSA-v2hh-gcrm-f6hx, GHSA-jqff-g426-hqxp,
+                                    # GHSA-f65p-4m7j-42xc, GHSA-fph4-wmhf-6fwf, GHSA-5jgf-p345-68v8
 npm-serialize-javascript = "7.0.5" # GHSA-5c6j-r48x-rmvq, GHSA-qj8w-gfj5-8c6v
+npm-qs = "6.16.0"                  # GHSA-4mjr-xmp4-gh2g, GHSA-x5fp-wj9c-mxmx
 # One pin covers both major lines in the graph: minimatch 3.x asks for ^1.1.7 and
 # minimatch 9.x for ^2.0.2, and a Yarn resolution is global. 2.1.4 clears the fixed
 # set of both advisories (<1.1.18 and >=2.0.0 <2.1.4); the exported API is unchanged
