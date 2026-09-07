@@ -14,7 +14,7 @@ plugins {
     alias(libs.plugins.skainet.docs)
     alias(libs.plugins.skainet.npmPins)
     alias(libs.plugins.skainet.mavenPins)
-    id("org.jetbrains.kotlinx.benchmark") version "0.4.19" apply false
+    id("org.jetbrains.kotlinx.benchmark") version "0.5.0" apply false
 }
 
 allprojects {
