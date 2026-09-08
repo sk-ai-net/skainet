@@ -37,6 +37,7 @@ skainet {
         pin("socket.io-parser", libs.versions.npm.socketio.parser, NpmPinTarget.JS)
         pin("fast-uri", libs.versions.npm.fast.uri, NpmPinTarget.JS)
         pin("serialize-javascript", libs.versions.npm.serialize.javascript, NpmPinTarget.JS)
+        pin("qs", libs.versions.npm.qs, NpmPinTarget.JS)
         pin("brace-expansion", libs.versions.npm.brace.expansion, NpmPinTarget.JS)
         pin("diff", libs.versions.npm.diff, NpmPinTarget.JS)
         pin("webpack", libs.versions.npm.webpack, NpmPinTarget.JS)
